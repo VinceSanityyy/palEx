@@ -18,9 +18,21 @@ Route::get('/login', function () {
 });
 
 Auth::routes();
-Route::get('/getUsers',[App\Http\Controllers\NewsfeedController::class, 'getUsers']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/getUsers', [App\Http\Controllers\NewsfeedController::class, 'getUsers']);
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
-Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );
+// Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );
+// Route::get('{path}',)->where( 'path', '([A-z]+)?' );
+Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
+
+// Route::get('/vendor/orders', [App\Http\Controllers\HomeController::class, 'index']);
+// Route::get('/vendor/products', [App\Http\Controllers\HomeController::class, 'index']);
+// Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'index']);
+
+
+
+// Route::get('/admin/users', [App\Http\Controllers\HomeController::class, 'index']);
+// Route::get('/admin/feeds', [App\Http\Controllers\HomeController::class, 'index']);
+// Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
