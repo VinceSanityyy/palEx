@@ -19,6 +19,13 @@ Route::get('/login', function () {
 
 Auth::routes();
 Route::get('/getUsers',[App\Http\Controllers\NewsfeedController::class, 'getUsers']);
+Route::post('/approveUser',[App\Http\Controllers\NewsfeedController::class,'approveUser']);
+Route::get('/countVendors',[App\Http\Controllers\HomeController::class, 'countVendors']);
+Route::get('/countCustomers',[App\Http\Controllers\HomeController::class, 'countCustomers']);
+Route::get('/countAcceptedVendors',[App\Http\Controllers\HomeController::class, 'countAcceptedVendors']);
+//Feeds
+Route::post('/addFeed',[App\Http\Controllers\NewsfeedController::class, 'createFeeds']);
+Route::get('/getFeeds',[App\Http\Controllers\NewsfeedController::class, 'getFeeds']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 

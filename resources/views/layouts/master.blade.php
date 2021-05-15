@@ -64,7 +64,7 @@
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/vendors" class="nav-link">
+                <router-link to="/feeds" class="nav-link">
                     <i class="nav-icon fas fa-newspaper"></i>
                   <p>
                     Feeds 

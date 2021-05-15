@@ -32,6 +32,7 @@ const routes = [
     { path: '/vendors', component: require('./components/Vendor.vue').default },
     { path: '/home', component: require('./components/Home.vue').default },
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/feeds', component: require('./components/Feeds.vue').default },
   ]
 
 const router = new VueRouter({

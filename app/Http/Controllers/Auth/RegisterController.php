@@ -53,7 +53,9 @@ class RegisterController extends Controller
      */
     protected function validator(Request $request)
     {
+        dd($request->all());
         $name = \Request::input('identity');
+        dd($name);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string'],
@@ -71,6 +73,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        dd(json_encode($data));
         $name = $data['identity']->getClientOriginalName();
         $path = $data['identity']->store('public/images');
 
@@ -87,8 +90,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-       
-    
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string'],
@@ -101,7 +102,6 @@ class RegisterController extends Controller
         if($validated){
             $name = $request->file('identity')->getClientOriginalName();
             $path = $request->file('identity')->store('public/images');
-            // dd($path);
             return User::create([
                 'name' => $request->name,
                 'role' => $request->role,
