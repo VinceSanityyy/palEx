@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" v-model="password"> 
+          <input type="password" class="form-control" placeholder="Password" v-model="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -88,7 +88,9 @@ export default {
             }).then((res)=>{
                 console.log(res)
                 loader.hide();
-                window.location.href = '/index';
+                window.location.href = '/admin';
+                // window.location.href = '/vendor';
+                // window.location.href = '/customer';
             }).catch((err)=>{
                 loader.hide();
                 // console.log()
