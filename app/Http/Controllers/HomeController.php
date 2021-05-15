@@ -25,5 +25,20 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function countVendors(){
+        $count = User::where('role', 1)->count();
+        return response()->json($count);
+    }
+
+    public function countCustomers(){
+        $count = User::where('role', 2)->count();
+        return response()->json($count);
+    }
+
+    public function countAcceptedVendors(){
+        $count = User::where('status', 1)->where('role',1)->count();
+        return response()->json($count);
+    }
     
 }

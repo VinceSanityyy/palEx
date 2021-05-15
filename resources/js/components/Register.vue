@@ -37,7 +37,7 @@
            <select v-model="role" name="role" class="form-control" id="role">
                     <option value = "" selected disabled>Role</option>
                     <option value = "1">Vendor</option>
-                    <option value = "2">Custoemr</option>
+                    <option value = "2">Customer</option>
             </select>
           <div class="input-group-append">
             <div class="input-group-text">
@@ -119,7 +119,7 @@ data(){
                     bodyForm.append('identity', this.image)
 
                     axios.post('register',bodyForm).then((res)=>{
-                        loader.hide();
+                        // loader.hide();
                         // console.log(res)
                         window.location.href = '/home'
                     }).catch((err)=>{

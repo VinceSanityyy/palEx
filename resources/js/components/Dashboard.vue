@@ -10,9 +10,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{vendorsCount}}</h3>
 
-                <p>New Orders</p>
+                <p>Total Vendors</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -25,9 +25,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{customersCount}}</h3>
 
-                <p>Bounce Rate</p>
+                <p>Total Customers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -40,9 +40,9 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{acceptedVendors}}</h3>
 
-                <p>User Registrations</p>
+                <p>Vendors Accepted</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -72,7 +72,35 @@
 
 <script>
 export default {
-
+ data(){
+     return{
+         vendorsCount: 0,
+         customersCount: 0,
+         acceptedVendors:0
+     }
+ },
+ methods:{
+     getVendorsCount(){
+         axios.get('/countVendors').then((res)=>{
+             this.vendorsCount = res.data
+         })
+     },
+     getCustomersCount(){
+         axios.get('/countCustomers').then((res)=>{
+             this.customersCount = res.data
+         })
+     },
+    getAcceptedVendorsCount(){
+        axios.get('/countAcceptedVendors').then((res)=>{
+             this.acceptedVendors = res.data
+         })
+     }
+ },
+ created(){
+     this.getVendorsCount()
+     this.getCustomersCount()
+     this.getAcceptedVendorsCount()
+ }
 }
 </script>
 
