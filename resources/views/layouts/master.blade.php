@@ -47,6 +47,14 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+                <router-link to="/vendors" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    User Management
+                  </p>
+                </router-link>
+              </li>
           <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link"
             onclick="event.preventDefault();
