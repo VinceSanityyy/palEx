@@ -27,6 +27,9 @@
     "dependencies": {
         "admin-lte": "^3.1.0",
         "sweetalert2": "^9.10.9",
-        "vue-loading-overlay": "^3.3.2"
+        "vue-loading-overlay": "^3.3.2",
+        "vue-router": "^3.1.6",
+        "alertify": "^0.3.0",
+        "alertifyjs": "^1.13.1"
     }
 }

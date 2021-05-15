@@ -18,6 +18,9 @@ Route::get('/login', function () {
 });
 
 Auth::routes();
-
+Route::get('/getUsers',[App\Http\Controllers\NewsfeedController::class, 'getUsers']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/index', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
+
+
+Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );

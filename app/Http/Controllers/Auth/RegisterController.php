@@ -79,6 +79,7 @@ class RegisterController extends Controller
             'role' => $data['role'],
             'email' => $data['email'],
             'phone' => $data['phone'],
+            'status' => 0,
             'identity' => $path,
             'password' => Hash::make($data['password']),
         ]);
@@ -106,6 +107,7 @@ class RegisterController extends Controller
                 'role' => $request->role,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'status' => 0,
                 'identity' => $path,
                 'password' => Hash::make($request->password),
             ]);
