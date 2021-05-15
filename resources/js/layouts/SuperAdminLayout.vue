@@ -52,19 +52,19 @@
 						data-accordion="false"
 					>
 						<li class="nav-item">
-							<router-link to="/dashboard" class="nav-link">
+							<router-link to="/admin" class="nav-link">
 								<i class="nav-icon fas fa-circle"></i>
 								<p>Dashboard</p>
 							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/vendors" class="nav-link">
+							<router-link to="/admin/vendors" class="nav-link">
 								<i class="nav-icon fas fa-users"></i>
 								<p>User Management</p>
 							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/vendors" class="nav-link">
+							<router-link to="/admin/feeds" class="nav-link">
 								<i class="nav-icon fas fa-newspaper"></i>
 								<p>Feeds</p>
 							</router-link>

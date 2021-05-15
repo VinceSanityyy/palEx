@@ -35,6 +35,7 @@ import CustomerLayout from './layouts/CustomerLayout.vue';
 // Admin Pages
 import AdminDashboard from './pages/admin/index.vue';
 import AdminUsers from './pages/admin/users.vue';
+import AdminVendors from './pages/admin/vendors.vue';
 import AdminFeeds from './pages/admin/feeds.vue';
 
 
@@ -67,7 +68,7 @@ const routes = [
                 component: AdminDashboard
             },
             {
-                path: '/admin/users',
+                path: 'users',
                 name: 'admin-feeds',
                 components: {
                     helper: AdminUsers
@@ -78,6 +79,13 @@ const routes = [
                 name: 'admin-feeds',
                 components: {
                     helper: AdminFeeds
+                }
+            },
+            {
+                path: 'vendors',
+                name: 'admin-vendors',
+                components: {
+                    helper: AdminVendors
                 }
             },
         ],

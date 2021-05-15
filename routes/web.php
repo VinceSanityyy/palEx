@@ -31,14 +31,11 @@ Route::get('/getFeeds',[App\Http\Controllers\NewsfeedController::class, 'getFeed
 
 
 // Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );
-// Route::get('{path}',)->where( 'path', '([A-z]+)?' );
 Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
 
 // Route::get('/vendor/orders', [App\Http\Controllers\HomeController::class, 'index']);
 // Route::get('/vendor/products', [App\Http\Controllers\HomeController::class, 'index']);
 // Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'index']);
-
-
 
 // Route::get('/admin/users', [App\Http\Controllers\HomeController::class, 'index']);
 // Route::get('/admin/feeds', [App\Http\Controllers\HomeController::class, 'index']);
