@@ -44,8 +44,7 @@ import VendorProducts from './pages/vendor/products.vue';
 // Customer Pages
 import CustomerProfile from './pages/customer/index.vue';
 import CustomerOrders from './pages/customer/orders.vue';
-
-
+import CustomerFeeds from './pages/customer/feeds.vue';
 
 
 window.swal = swal;
@@ -126,6 +125,13 @@ const routes = [
                 name: 'CustomerOrders',
                 components: {
                     helper: CustomerOrders
+                }
+            },
+            {
+                path: 'feeds',
+                name: 'customerFeeds',
+                components: {
+                    helper: CustomerFeeds
                 }
             },
         ],

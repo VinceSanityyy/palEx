@@ -25,7 +25,7 @@
 							</div>
 							<div class="card-body table-responsive">
 								<table
-									id="mytable"
+									id="mytableProducts"
 									class="table table-bordered table-striped dt-responsive display nowrap"
 								>
 									<thead>
@@ -107,7 +107,7 @@
 		methods: {
 			myTable() {
 				$(document).ready(function () {
-					$("#mytable").DataTable({
+					$("#mytableProducts").DataTable({
 						responsive: true,
 					});
 				});

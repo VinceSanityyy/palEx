@@ -8,7 +8,7 @@ use App\Models\User;
 class NewsfeedController extends Controller
 {
     public function getUsers(){
-        $users = User::all();
+        $users = User::whereIn('role',['1','2'])->get();
         return response()->json($users,200);
     }
 

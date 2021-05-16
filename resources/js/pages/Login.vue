@@ -69,7 +69,8 @@ export default {
     data(){
         return{
             email:'',
-            password:''
+            password:'',
+            me:[]
         }
     },
     methods:{
@@ -86,17 +87,25 @@ export default {
                 email: this.email,
                 password: this.password
             }).then((res)=>{
-                console.log(res)
-                loader.hide();
-                window.location.href = '/admin';
-                // window.location.href = '/vendor';
-                // window.location.href = '/customer';
+                this.getCurrentAuth()
             }).catch((err)=>{
                 loader.hide();
-                // console.log()
-                toastr.error(err.response.data.message)
+                console.log(err)
+                toastr.error(err.res.data.message)
             })
-        }
+        },
+      getCurrentAuth(){
+        axios.get('/me').then((res)=>{
+          console.log(res.data)
+          if(res.data.role == 0){
+            window.location.href = '/admin'
+          }else if (res.data.role == 1){
+            window.location.href = '/vendor'
+          }else{
+            window.location.href = '/customer'
+          }
+        })
+      },
     },
     created(){
         console.log('Created')

@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', function () {
     return view('login');
 });
-
+//me
+Route::get('/me',[App\Http\Controllers\HomeController::class, 'getAuthenticateduser']);
 Auth::routes();
 Route::get('/getUsers',[App\Http\Controllers\NewsfeedController::class, 'getUsers']);
 Route::post('/approveUser',[App\Http\Controllers\NewsfeedController::class,'approveUser']);
@@ -31,12 +32,16 @@ Route::get('/getFeeds',[App\Http\Controllers\NewsfeedController::class, 'getFeed
 
 
 // Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );
-Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
+// Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
 
-// Route::get('/vendor/orders', [App\Http\Controllers\HomeController::class, 'index']);
-// Route::get('/vendor/products', [App\Http\Controllers\HomeController::class, 'index']);
-// Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/vendor/orders', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/vendor/products', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'index']);
 
-// Route::get('/admin/users', [App\Http\Controllers\HomeController::class, 'index']);
-// Route::get('/admin/feeds', [App\Http\Controllers\HomeController::class, 'index']);
-// Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/admin/users', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/admin/feeds', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
+
+Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+Route::get('/customer/profile', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+Route::get('/customer/feeds', [App\Http\Controllers\HomeController::class, 'customerIndex']);

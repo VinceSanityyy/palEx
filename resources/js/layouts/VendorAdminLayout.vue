@@ -68,7 +68,7 @@
 		class="img-circle elevation-2" alt="User Image"/>
         </div>
         <div class="info">
-          <a href="#" class="d-block">Pelex Super Admin</a>
+          <a href="#" class="d-block">{{user.name}}</a>
         </div>
       </div>
 
@@ -96,7 +96,7 @@
 		  	</router-link>
 		  </li>
 		  <li class="nav-item">
-		  	<a href="" class="nav-link" onclick="">
+		  	<a  @click="logout" class="nav-link" onclick="">
 		  		<i class="nav-icon fas fa-times"></i>
 		  		<p>Log out</p>
 		  	</a>
@@ -124,3 +124,28 @@
   </footer>
 </div>
 </template>
+
+<script>
+export default {
+  data(){
+    return{
+      user:[]
+    }
+  },
+  methods:{
+    getCurrentAuth(){
+      axios.get('/me').then((res)=>{
+        this.user = res.data
+      })
+    },
+    logout(){
+      axios.post('/logout').then((res)=>{
+        window.location.href = '/login'
+      })
+    }
+  },
+  mounted(){
+    this.getCurrentAuth()
+  }
+}
+</script>

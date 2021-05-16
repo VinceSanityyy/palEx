@@ -26,6 +26,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function customerIndex()
+    {
+        return view('homeCustomer');
+    }
+
     public function countVendors(){
         $count = User::where('role', 1)->count();
         return response()->json($count);
@@ -39,6 +44,10 @@ class HomeController extends Controller
     public function countAcceptedVendors(){
         $count = User::where('status', 1)->where('role',1)->count();
         return response()->json($count);
+    }
+    public function getAuthenticateduser(){
+        $user = \Auth::user();
+        return response()->json($user);
     }
     
 }

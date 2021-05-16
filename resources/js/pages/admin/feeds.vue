@@ -28,7 +28,7 @@
                                             <button  data-toggle="modal" data-target="#exampleModal" style="float:right" type="button" class="btn btn-primary">Add feed</button>
                                         </div>
                                         <div class="card-body table-responsive">
-                                            <table id="mytable" class="table table-bordered table-striped dt-responsive display nowrap" >
+                                            <table id="mytableFeeds" class="table table-bordered table-striped dt-responsive display nowrap" >
                                                 <thead>
                                                     <tr>
                                                             <th>Title</th>
@@ -92,12 +92,17 @@ export default{
     methods:{
         myTable(){
             $(document).ready(function(){
-                $('#mytable').DataTable({
+                $('#mytableFeeds').DataTable({
                     responsive: true
                 })
             })
         },
         getFeeds(){
+            axios.get('/getFeeds').then((res)=>{
+                this.feeds = res.data
+            })
+        },
+        getFeedsInit(){
             axios.get('/getFeeds').then((res)=>{
                 this.feeds = res.data
                 this.myTable()
@@ -108,16 +113,16 @@ export default{
                 title: this.title,
                 body: this.body
             }).then((res)=>{
-                toastr.success('Added!')
                 this.getFeeds()
-                this.myTable()
+                $('#exampleModal').modal('hide')
+                toastr.success('Added!')
                 this.title = ''
                 this.body = ''
             })
         }
     },
     created(){
-        this.getFeeds()
+        this.getFeedsInit()
     }
 }
 </script>
