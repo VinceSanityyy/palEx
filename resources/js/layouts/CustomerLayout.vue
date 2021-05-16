@@ -19,6 +19,10 @@
           <li class="nav-item">
             <a @click="methodNotYet"  class="nav-link">Home</a>
           </li>
+		  	<li class="nav-item">
+            <router-link to="/products" class="nav-link">
+			<p>Browse</p>
+			</router-link>
           <li class="nav-item">
             <a @click="methodNotYet" class="nav-link">Profile</a>
           </li>
