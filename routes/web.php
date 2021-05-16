@@ -45,3 +45,5 @@ Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customerIndex']);
 Route::get('/customer/profile', [App\Http\Controllers\HomeController::class, 'customerIndex']);
 Route::get('/customer/feeds', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+Route::get('/products', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+// Route::get('/productscopy', [App\Http\Controllers\HomeController::class, 'customerIndex']);

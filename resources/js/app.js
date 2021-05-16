@@ -45,6 +45,8 @@ import VendorProducts from './pages/vendor/products.vue';
 import CustomerProfile from './pages/customer/index.vue';
 import CustomerOrders from './pages/customer/orders.vue';
 import CustomerFeeds from './pages/customer/feeds.vue';
+import ProductsPage from './pages/customer/products.vue';
+// import productscopy from './pages/customer/productscopy.vue';
 
 
 window.swal = swal;
@@ -136,6 +138,30 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/products',
+        component: CustomerLayout,
+        children: [
+            {
+                path: '',
+                name: 'ProductsPage',
+                component: ProductsPage
+            },
+        ],
+    },
+    // {
+    //     path: '/productscopy',
+    //     component: CustomerLayout,
+    //     children: [
+    //         {
+    //             path: '',
+    //             name: 'ProductsCopy',
+    //             component: productscopy
+    //         },
+    //     ],
+    // },
+
+
 ]
 
 const router = new VueRouter({
