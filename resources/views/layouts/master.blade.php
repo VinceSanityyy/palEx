@@ -9,7 +9,9 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
-<body class="sidebar-mini layout-fixed control-sidebar-open text-sm">
+{{-- <body class="sidebar-mini layout-fixed control-sidebar-open text-sm"> --}}
+{{-- <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> --}}
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div id="app" class="wrapper">
     @yield('content')
   <!-- Navbar -->
