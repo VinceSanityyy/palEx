@@ -121,7 +121,7 @@ data(){
                     axios.post('register',bodyForm).then((res)=>{
                         loader.hide();
                         // console.log(res)
-                        window.location.href = '/home'
+                        this.logout()
                     }).catch((err)=>{
                         loader.hide();
 
@@ -141,6 +141,11 @@ data(){
           let file = e.target.files[0];
           this.image = file
         },
+        logout(){
+          axios.post('/logout').then((res)=>{
+             window.location.href = '/login'
+          })
+        }
     },
     created(){
         console.log('compoent created')
