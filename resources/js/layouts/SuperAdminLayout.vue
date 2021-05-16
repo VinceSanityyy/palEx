@@ -195,7 +195,7 @@ export default {
       })
     },
     logout(){
-      axios.post('logout').then((res)=>{
+      axios.post('/logout').then((res)=>{
         window.location.href = '/login'
       })
     }
