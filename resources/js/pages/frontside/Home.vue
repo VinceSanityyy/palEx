@@ -20,6 +20,9 @@
 
 		<!-- Main content -->
 		<section class="content">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-12">
 			<!-- Default box -->
 			<div class="card card-solid">
 				<div class="card-body pb-0">
@@ -110,7 +113,11 @@
 				<!-- /.card-footer -->
 			</div>
 			<!-- /.card -->
+            </div>
+            </div>
+            </div>
 		</section>
+
 		<!-- /.content -->
 	</div>
 </template>

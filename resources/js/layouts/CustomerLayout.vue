@@ -89,24 +89,9 @@
   <!-- /.navbar -->
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="min-height: 855px;">
-    <!-- Content Header (Page header) -->
-    <!-- /.content-header -->
+  <router-view />
+  <router-view name="helper" />
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container">
-        <div class="row">
-		<router-view />
-		
-		<router-view name="helper" />
-          <!-- /.col-md-6 -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-  </div>
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
@@ -126,9 +111,6 @@
   </footer>
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
 </template>
 
 <script>

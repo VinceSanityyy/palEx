@@ -12,9 +12,8 @@
 {{-- <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> --}}
 <body class="layout-top-nav layout-navbar-fixed">
 <div id="app" class="wrapper">
-   <router-view/>
+    <router-view></router-view>
 </div>
-
 
 <script src="{{asset('js/app.js')}}"></script>
 </body>
