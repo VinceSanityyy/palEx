@@ -91,7 +91,8 @@ export default {
             }).catch((err)=>{
                 loader.hide();
                 console.log(err)
-                toastr.error(err.res.data.message)
+                // toastr.error(err.data)
+                toastr.error(err.response.data.message)
             })
         },
       getCurrentAuth(){

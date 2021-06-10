@@ -34,16 +34,23 @@ Route::get('/getFeeds',[App\Http\Controllers\NewsfeedController::class, 'getFeed
 // Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );
 // Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
 
-Route::get('/vendor/orders', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/vendor/products', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'index']);
+Route::middleware('isVendor')->group(function(){
+    Route::get('/vendor/orders', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/vendor/products', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'index']);
+});
 
-Route::get('/admin/users', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/admin/feeds', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
+Route::middleware('isAdmin')->group(function(){
+    Route::get('/admin/users', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/admin/feeds', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
+});
 
-Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customerIndex']);
-Route::get('/customer/profile', [App\Http\Controllers\HomeController::class, 'customerIndex']);
-Route::get('/customer/feeds', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+Route::middleware('isCustomer')->group(function(){
+    Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+    Route::get('/customer/profile', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+    Route::get('/customer/feeds', [App\Http\Controllers\HomeController::class, 'customerIndex']);
+});
+
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'customerIndex']);
 // Route::get('/productscopy', [App\Http\Controllers\HomeController::class, 'customerIndex']);
