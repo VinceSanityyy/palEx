@@ -10,7 +10,7 @@
 </head>
 {{-- <body class="sidebar-mini layout-fixed control-sidebar-open text-sm"> --}}
 {{-- <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> --}}
-<body class="layout-top-nav">
+<body class="layout-top-nav layout-navbar-fixed">
 <div id="app" class="wrapper">
    <router-view/>
 </div>
