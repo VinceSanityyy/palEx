@@ -142,6 +142,17 @@ const routes = [
         ],
     },
     {
+        path: '/',
+        component: CustomerLayout,
+        children: [
+            {
+                path: '',
+                name: 'Index',
+                component: ProductsPage
+            },
+        ],
+    },
+    {
         path: '/products',
         component: CustomerLayout,
         children: [
