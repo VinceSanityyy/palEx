@@ -56,7 +56,7 @@
                                                 <span class="badge bg-success" v-else>Approved</span>
                                             </td>
                                             <td>
-                                                <button v-if="user.status == 0" @click="viewDetails(user.id)" class="btn btn-primary">Accept Account</button>
+                                                <button v-if="user.status == 0 " @click="viewDetails(user.id)" class="btn btn-primary">Accept Account</button>
                                                 <button v-else disabled class="btn btn-warning">Accepted</button>
                                             </td>
                                         </tr>
