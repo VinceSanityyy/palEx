@@ -37,6 +37,9 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/vendor/orders', [App\Http\Controllers\BacksideController::class, 'index']);
         Route::get('/vendor/products', [App\Http\Controllers\BacksideController::class, 'index']);
         Route::get('/vendor', [App\Http\Controllers\BacksideController::class, 'index']);
+
+        Route::post('/vendor/createProduct',[App\Http\Controllers\ProductController::class, 'addProduct']);
+        Route::get('/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
     });
 
     Route::middleware('isAdmin')->group(function(){

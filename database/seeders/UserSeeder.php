@@ -13,12 +13,29 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('users')->insert([
-            'name' => 'Super Admin',
-            'email' => 'palex_admin@gmail.com',
-            'password' => \Hash::make('123123123'),
-            'role' => 0,
-            'status' => 1
-        ]);
+        $data = [
+            [
+                'name' => 'Super Admin',
+                'email' => 'palex_admin@gmail.com',
+                'password' => \Hash::make('123123123'),
+                'role' => 0,
+                'status' => 1
+            ],
+            [
+                'name' => 'Customer Test',
+                'email' => 'c@gmail.com',
+                'password' => \Hash::make('123123123'),
+                'role' => 2,
+                'status' => 1
+            ],
+            [
+                'name' => 'Vendor Test',
+                'email' => 'v@gmail.com',
+                'password' => \Hash::make('123123123'),
+                'role' => 1,
+                'status' => 1
+            ]
+        ];
+        \DB::table('users')->insert($data);
     }
 }

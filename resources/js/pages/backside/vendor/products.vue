@@ -58,11 +58,14 @@
 													"
 												/>
 											</td>
-											<td>{{ item.product_name }}</td>
+											<td>{{ item.name }}</td>
 											<td>{{ item.price }}</td>
 											<td>{{ item.unit }}</td>
-											<td>{{ item.category_name }}</td>
-											<td>{{ item.product_status }}</td>
+											<td>{{ item.category }}</td>
+											<td>
+												<span class="badge bg-success" v-if="item.status == 1">Available</span>
+												<span class="badge bg-danger" v-else>Out of Stock</span>
+											</td>
 											<td>
 												<router-link
 													class="btn btn-warning btn-sm"
@@ -99,18 +102,18 @@
 			<input v-model="unit" type="text" class="form-control">
 			<label >Category</label>
 			    <select v-model="category" class="form-control" id="exampleFormControlSelect2">
-				<option value="1">Wet</option>
-				<option value="2">Dry</option>
-				<option value="3">Others</option>
+				<option value="Wet">Wet</option>
+				<option value="Dry">Dry</option>
+				<option value="Others">Others</option>
 
 				</select>
 			<label for="exampleFormControlFile1">Image</label>
-    		<input type="file" class="form-control-file" id="exampleFormControlFile1">
+    		<input @change="onFileChange" type="file" class="form-control-file" id="exampleFormControlFile1">
 		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" @click="addProduct" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -123,29 +126,19 @@
 	export default {
 		data() {
 			return {
-				products: [
-					{
-						id: 1,
-						image_link:
-							"https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-						product_name: "Apple",
-						price: 50,
-						unit: "kilo",
-						category_name: "Fruite",
-						product_status: "Active",
-					},
-				],
+				products: [],
 				product_name:'',
 				price:'',
 				unit:'',
-				category:''
+				category:'',
+				photo: ''
 			};
 		},
-        mounted() {
-            setTimeout(() => {
-                this.myTable();
-            }, 1000);
-        },
+        // mounted() {
+        //     setTimeout(() => {
+        //         this.myTable();
+        //     }, 1000);
+        // },
 		methods: {
 			myTable() {
 				$(document).ready(function () {
@@ -154,6 +147,41 @@
 					});
 				});
 			},
+			addProduct(){
+				var formData = new FormData()
+				formData.append('name', this.product_name)
+                formData.append('price', this.price)
+                formData.append('unit', this.unit)
+                formData.append('category', this.category)
+                formData.append('photo', this.photo)
+				axios.post('/vendor/createProduct',formData).then((res)=>{
+					console.log(res)
+					$('#exampleModal').modal('hide')
+					toastr.success('Done')
+					this.clearFields()
+				})
+			},
+			onFileChange(e) {
+				let file = e.target.files[0];
+				this.photo = file
+			},
+			clearFields(){
+				this.product_name = ''
+				this.price = ''
+				this.unit = ''
+				this.category = ''
+				this.photo = ''
+			},
+			getProducts(){
+				axios.get('/vendor/getProducts').then((res)=>{
+					console.log(res.data)
+					this.products = res.data
+					this.myTable()
+				})
+			},
 		},
+		created(){
+			this.getProducts()
+		}
 	};
 </script>
