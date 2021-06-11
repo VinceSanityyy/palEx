@@ -23,8 +23,8 @@ Vue.use(VueAlertify, {
     },
 });
 
-Vue.component('login', require('./pages/Login.vue').default);
-Vue.component('register', require('./pages/Register.vue').default);
+Vue.component('login', require('./pages/frontside/Login.vue').default);
+Vue.component('register', require('./pages/frontside/Register.vue').default);
 
 
 // Layouts
@@ -33,22 +33,25 @@ import VendorAdminLayout from './layouts/VendorAdminLayout.vue';
 import CustomerLayout from './layouts/CustomerLayout.vue';
 
 // Admin Pages
-import AdminDashboard from './pages/admin/index.vue';
-import AdminUsers from './pages/admin/users.vue';
-import AdminVendors from './pages/admin/vendors.vue';
-import AdminFeeds from './pages/admin/feeds.vue';
+import AdminDashboard from './pages/backside/admin/index.vue';
+import AdminUsers from './pages/backside/admin/users.vue';
+import AdminVendors from './pages/backside/admin/vendors.vue';
+import AdminFeeds from './pages/backside/admin/feeds.vue';
 
 
 // Vendor Pages
-import VendorDashboard from './pages/vendor/index.vue';
-import VendorOrders from './pages/vendor/orders.vue';
-import VendorProducts from './pages/vendor/products.vue';
+import VendorDashboard from './pages/backside/vendor/index.vue';
+import VendorOrders from './pages/backside/vendor/orders.vue';
+import VendorProducts from './pages/backside/vendor/products.vue';
 
 // Customer Pages
-import CustomerProfile from './pages/customer/index.vue';
-import CustomerOrders from './pages/customer/orders.vue';
-import CustomerFeeds from './pages/customer/feeds.vue';
-import ProductsPage from './pages/customer/products.vue';
+import CustomerProfile from './pages/frontside/customer/index.vue';
+import CustomerOrders from './pages/frontside/customer/orders.vue';
+import CustomerFeeds from './pages/frontside/customer/feeds.vue';
+
+// Public Pages
+import ProductsPage from './pages/frontside/Products.vue';
+import HomePage from './pages/frontside/Home.vue';
 // import productscopy from './pages/customer/productscopy.vue';
 
 
@@ -142,6 +145,17 @@ const routes = [
         ],
     },
     {
+        path: '/',
+        component: CustomerLayout,
+        children: [
+            {
+                path: '',
+                name: 'HomePage',
+                component: HomePage
+            },
+        ],
+    },
+    {
         path: '/products',
         component: CustomerLayout,
         children: [
@@ -152,19 +166,6 @@ const routes = [
             },
         ],
     },
-    // {
-    //     path: '/productscopy',
-    //     component: CustomerLayout,
-    //     children: [
-    //         {
-    //             path: '',
-    //             name: 'ProductsCopy',
-    //             component: productscopy
-    //         },
-    //     ],
-    // },
-
-
 ]
 
 const router = new VueRouter({
