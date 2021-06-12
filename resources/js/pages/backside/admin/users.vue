@@ -6,6 +6,7 @@
 
 <script>
 	export default {
+          props:['is_auth'],
 		name: "admin-users",
 	};
 </script>

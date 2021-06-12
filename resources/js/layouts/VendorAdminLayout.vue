@@ -109,8 +109,8 @@
   </aside>
 
 
-  	<router-view />
-	<router-view name="helper" />
+  	<router-view :is_auth="is_auth" />
+	<router-view :is_auth="is_auth" name="helper" />
 
 
 
@@ -127,6 +127,7 @@
 
 <script>
 export default {
+     props:['is_auth'],
   data(){
     return{
       user:[]

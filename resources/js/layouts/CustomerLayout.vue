@@ -89,8 +89,8 @@
   <!-- /.navbar -->
 
   <!-- Content Wrapper. Contains page content -->
-  <router-view />
-  <router-view name="helper" />
+  <router-view :is_auth="is_auth" />
+  <router-view :is_auth="is_auth" name="helper" />
 
   <!-- /.content-wrapper -->
 
@@ -115,6 +115,7 @@
 
 <script>
 export default {
+  props:['is_auth'],
   data(){
     return{
       user:[]

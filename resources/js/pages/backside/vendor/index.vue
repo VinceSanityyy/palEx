@@ -27,5 +27,6 @@
 <script>
 	export default {
 		name: "vendor dashboard",
+        props:['is_auth'],
 	};
 </script>

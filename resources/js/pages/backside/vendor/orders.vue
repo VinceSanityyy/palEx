@@ -82,6 +82,7 @@
 
 <script>
 	export default {
+        props:['is_auth'],
 		data() {
 			return {
 				orders: [
