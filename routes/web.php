@@ -31,16 +31,19 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\FrontsideController::class, 'index']);
-
+Route::get('/404', function () {
+    abort(404, "Page Not Found");
+});
 Route::middleware('isAuth')->group(function(){
 
     Route::middleware('isVendor')->group(function(){
-        Route::get('/vendor/orders', [App\Http\Controllers\BacksideController::class, 'index']);
-        Route::get('/vendor/products', [App\Http\Controllers\BacksideController::class, 'index']);
+        // Route::get('/vendor/orders', [App\Http\Controllers\BacksideController::class, 'index']);
+        // Route::get('/vendor/products', [App\Http\Controllers\BacksideController::class, 'index']);
         Route::get('/vendor', [App\Http\Controllers\BacksideController::class, 'index']);
+        Route::get('/vendor/{page_name}', [App\Http\Controllers\BacksideController::class, 'index']);
 
-        Route::post('/vendor/createProduct',[App\Http\Controllers\ProductController::class, 'addProduct']);
-        Route::get('/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
+        Route::post('/palex_api/vendor/createProduct',[App\Http\Controllers\ProductController::class, 'addProduct']);
+        Route::get('/palex_api/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
     });
 
     Route::middleware('isAdmin')->group(function(){

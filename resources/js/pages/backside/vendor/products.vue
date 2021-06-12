@@ -155,7 +155,7 @@
                 formData.append('unit', this.unit)
                 formData.append('category', this.category)
                 formData.append('photo', this.photo)
-				axios.post('/vendor/createProduct',formData).then((res)=>{
+				axios.post('/palex_api/vendor/createProduct',formData).then((res)=>{
 					console.log(res)
 					$('#exampleModal').modal('hide')
 					toastr.success('Done')
@@ -174,7 +174,7 @@
 				this.photo = ''
 			},
 			getProducts(){
-				axios.get('/vendor/getProducts').then((res)=>{
+				axios.get('/palex_api/vendor/getProducts').then((res)=>{
 					console.log(res.data)
 					this.products = res.data
 					this.myTable()

@@ -52,6 +52,7 @@ import CustomerFeeds from './pages/frontside/customer/feeds.vue';
 // Public Pages
 import ProductsPage from './pages/frontside/Products.vue';
 import HomePage from './pages/frontside/Home.vue';
+import NotFound from './pages/frontside/NotFound.vue';
 // import productscopy from './pages/customer/productscopy.vue';
 
 
@@ -156,6 +157,17 @@ const routes = [
         ],
     },
     {
+        path: '/home',
+        component: CustomerLayout,
+        children: [
+            {
+                path: '',
+                name: 'HomePage',
+                component: HomePage
+            },
+        ],
+    },
+    {
         path: '/products',
         component: CustomerLayout,
         children: [
@@ -166,6 +178,10 @@ const routes = [
             },
         ],
     },
+    {
+        path :'*',
+        component:NotFound
+    }
 ]
 
 const router = new VueRouter({
