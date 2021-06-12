@@ -29,6 +29,7 @@ Auth::routes();
 
 
 Route::get('/', [App\Http\Controllers\FrontsideController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\FrontsideController::class, 'index']);
 
 Route::middleware('isAuth')->group(function(){
@@ -43,10 +44,10 @@ Route::middleware('isAuth')->group(function(){
     });
 
     Route::middleware('isAdmin')->group(function(){
-        Route::get('/admin/users', [App\Http\Controllers\BacksideController::class, 'index']);
-        Route::get('/admin/feeds', [App\Http\Controllers\BacksideController::class, 'index']);
         Route::get('/admin', [App\Http\Controllers\BacksideController::class, 'index']);
-
+        Route::get('/admin/{page_name}', [App\Http\Controllers\BacksideController::class, 'index']);
+        // Route::get('/admin/users', [App\Http\Controllers\BacksideController::class, 'index']);
+        // Route::get('/admin/feeds', [App\Http\Controllers\BacksideController::class, 'index']);
         //API
         Route::get('/getUsers',[App\Http\Controllers\NewsfeedController::class, 'getUsers']);
         Route::post('/approveUser',[App\Http\Controllers\NewsfeedController::class,'approveUser']);
@@ -60,8 +61,9 @@ Route::middleware('isAuth')->group(function(){
 
     Route::middleware('isCustomer')->group(function(){
         Route::get('/customer', [App\Http\Controllers\FrontsideController::class, 'index']);
-        Route::get('/customer/profile', [App\Http\Controllers\FrontsideController::class, 'index']);
-        Route::get('/customer/feeds', [App\Http\Controllers\FrontsideController::class, 'index']);
+        Route::get('/customer/{page_name}', [App\Http\Controllers\FrontsideController::class, 'index']);
+        // Route::get('/customer/profile', [App\Http\Controllers\FrontsideController::class, 'index']);
+        // Route::get('/customer/feeds', [App\Http\Controllers\FrontsideController::class, 'index']);
     });
 });
 
