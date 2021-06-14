@@ -1,37 +1,27 @@
 <template>
-  <el-container>
-    <el-main class="m-3">
-      <el-row>
-        <el-col :span="24">
-          <div class="d-flex">
-            <div class="w-75 p-2">
-              <div class="input-group">
-                <input v-model="search" type="text" class="form-control" placeholder="Search Product" />
-                <div class="input-group-append">
-                  <button @click="searching()" class="btn btn-secondary" type="button">
-                    <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="w-25 p-2">
-              <div>
-                <select class="form-control">
-                  <option disable>Sort By: All</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24">
-          <div class="d-flex flex-wrap">
-            <div class="product" v-for="(item, index) in products" :key="index">
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12">
+        <el-row>
+          <el-col :xs="24" :sm="16" :md="18" :lg="18" :xl="20" class="p-2">
+            <el-input placeholder="Type something" v-model="search">
+              <i slot="prefix" class="el-input__icon el-icon-search"></i>
+            </el-input>
+          </el-col>
+          <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="4" class="p-2">
+            <el-select v-model="value" clearable placeholder="Filter" class="w-100">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <el-row>
+          <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6" class="p-2" v-for="(item, index) in products" :key="index">
+            <div class="product">
               <div class="product-image">
                 <img :src="item.image_link" alt="" />
               </div>
@@ -44,12 +34,54 @@
                 </div>
               </div>
             </div>
-          </div>
-        </el-col>
-      </el-row>
-    </el-main>
-  </el-container>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+  </div>
 </template>
+<style lang="scss" scoped>
+// .product:hover {
+//   // box-shadow: 0 0.5rem 1rem rgb(0 174 119 / 35%) !important;
+//   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+// }
+// .product {
+//   margin: 5px;
+//   padding: 0px;
+//   background: white;
+//   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+//   .product-image {
+//     img {
+//       object-fit: cover;
+//       width: 189px;
+//       height: 189px;
+//     }
+//   }
+//   .product-desc {
+//     width: 189px;
+//     padding: 5px;
+//     .product-name {
+//       position: relative;
+//       font-size: 14px;
+//       height: 36px;
+//       line-height: 18px;
+//       color: #212121;
+//       white-space: pre-wrap;
+//       display: -webkit-box;
+//       -webkit-line-clamp: 2;
+//       -webkit-box-orient: vertical;
+//       text-overflow: ellipsis;
+//       overflow: hidden;
+//     }
+//     .product-price {
+//       position: relative;
+//       font-size: 16px;
+//       font-weight: 1000;
+//       color: #2c9144;
+//     }
+//   }
+// }
+</style>
 <style lang="scss" scoped>
 .product:hover {
   // box-shadow: 0 0.5rem 1rem rgb(0 174 119 / 35%) !important;
@@ -63,12 +95,12 @@
   .product-image {
     img {
       object-fit: cover;
-      width: 189px;
+      width: 100%;
       height: 189px;
     }
   }
   .product-desc {
-    width: 189px;
+    width: 100%;
     padding: 5px;
     .product-name {
       position: relative;
@@ -86,7 +118,7 @@
     .product-price {
       position: relative;
       font-size: 16px;
-      font-weight:1000;
+      font-weight: 1000;
       color: #2c9144;
     }
   }
@@ -97,6 +129,22 @@ export default {
   props: ["is_auth"],
   data() {
     return {
+      search: "",
+      value: null,
+      options: [
+        {
+          value: "Fruites",
+          label: "Fruites",
+        },
+        {
+          value: "Vegetables",
+          label: "Vegetables",
+        },
+        {
+          value: "Meats",
+          label: "Meats",
+        },
+      ],
       products: [
         {
           id: 1,
@@ -208,10 +256,20 @@ export default {
           product_status: "Sold Out",
           description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
         },
-         {
+        {
           id: 3,
           image_link: "https://www.foodsafetynews.com/files/2020/06/raw-sirloin-steak-beef.jpg",
           product_name: "Beef - Fresh from Austrilla",
+          price: 250.0,
+          unit: "kilo",
+          category_name: "Fruite",
+          product_status: "Sold Out",
+          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
+        },
+        {
+          id: 3,
+          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
+          product_name: "Apple",
           price: 250.0,
           unit: "kilo",
           category_name: "Fruite",
