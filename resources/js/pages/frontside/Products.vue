@@ -1,5 +1,5 @@
 <template>
-  <el-container style="background-color: #f5f5f5">
+  <el-container>
     <el-main class="m-3">
       <el-row>
         <el-col :span="24">

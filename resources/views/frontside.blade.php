@@ -13,8 +13,8 @@
 {{-- <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> --}}
 
 {{-- <body class="layout-top-nav layout-navbar-fixed"> --}}
-<body>
-    <div id="app">
+<body style="background-color: #f5f5f5">
+    <div id="app" >
         <router-view :is_auth="{{ Auth::check() ? 1 : 0 }}"></router-view>
     </div>
 
