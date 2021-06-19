@@ -19,9 +19,11 @@ import VendorProducts from './pages/backside/vendor/products.vue';
 import CustomerProfile from './pages/frontside/customer/index.vue';
 import CustomerOrders from './pages/frontside/customer/orders.vue';
 import CustomerFeeds from './pages/frontside/customer/feeds.vue';
+import CustomerChat from './pages/frontside/customer/chat.vue';
 
 // Public Pages
 import ProductsPage from './pages/frontside/Products.vue';
+import ProductsIDPage from './pages/frontside/Products_id.vue';
 import HomePage from './pages/frontside/Home.vue';
 import NotFound from './pages/frontside/NotFound.vue';
 // import productscopy from './pages/customer/productscopy.vue';
@@ -110,6 +112,13 @@ const routes = [
                     helper: CustomerFeeds
                 }
             },
+            {
+                path: 'chat',
+                name: 'CustomerChat',
+                components: {
+                    helper: CustomerChat
+                }
+            },
         ],
     },
     {
@@ -142,6 +151,13 @@ const routes = [
                 path: '',
                 name: 'ProductsPage',
                 component: ProductsPage
+            },
+            {
+                path: ':product_id',
+                name: 'ProductsIDPage',
+                components: {
+                    helper: ProductsIDPage
+                }
             },
         ],
     },

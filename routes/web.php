@@ -31,6 +31,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\FrontsideController::class, 'index']);
+Route::get('/products/{product_id}', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/404', function () {
     abort(404, "Page Not Found");
 });
