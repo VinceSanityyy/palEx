@@ -14,14 +14,15 @@
           <li class="nav-item">
             <RouterLink to="/products" class="nav-link active">Products</RouterLink>
           </li>
-        </ul>
-        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li v-if="is_auth" class="nav-item">
-            <RouterLink to="/customer" class="nav-link active">Profile</RouterLink>
-          </li>
           <li v-if="is_auth" class="nav-item">
             <RouterLink to="/customer/orders" class="nav-link active">My Orders</RouterLink>
           </li>
+          <li v-if="is_auth" class="nav-item">
+            <RouterLink to="/customer" class="nav-link active">Profile</RouterLink>
+          </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           <li v-if="is_auth" class="nav-item">
             <RouterLink class="nav-link" to="/customer/cart">
               <i class="fas fa-shopping-cart font-size-20"></i>
