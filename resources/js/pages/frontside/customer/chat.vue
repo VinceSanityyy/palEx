@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container" :class="WindowInnerWidth > 767 ? 'mt-5' : 'mt-1'">
     <!-- <h3 class="text-center">Messaging</h3> -->
     <div class="messaging">
       <div class="inbox_msg">
@@ -17,7 +17,8 @@
               </div>
             </div> -->
           </div>
-          <div class="inbox_chat" :style="WindowInnerWidth > 540 ? '' : 'text-align:center !important;'">
+          <!-- <div class="inbox_chat" :style="WindowInnerWidth > 540 ? '' : 'text-align:center !important;'"> -->
+          <div class="inbox_chat" :style="cssVars">
             <div v-for="(item, index) in chatList" :key="index" class="chat_list" :class="item.is_active ? 'active_chat' : ''" :style="WindowInnerWidth > 768 ? '' : 'padding:5px !important;'">
               <div class="chat_people">
                 <div class="chat_img" :style="WindowInnerWidth > 540 ? '' : 'float: none  !important; width: 100%  !important;'">
@@ -41,7 +42,7 @@
         </div>
 
         <div class="mesgs" :style="WindowInnerWidth > 540 ? '' : 'width:85%!important;'">
-          <div class="msg_history">
+          <div class="msg_history" :style="cssVars">
             <div class="incoming_msg">
               <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div>
               <div class="received_msg">
@@ -100,6 +101,7 @@ export default {
   data() {
     return {
       WindowInnerWidth: null,
+      WindowInnerHeight: null,
       chatList: [
         {
           is_active: true,
@@ -194,8 +196,18 @@ export default {
       ],
     };
   },
+  computed: {
+    cssVars() {
+      return {
+        '--palex-width': this.WindowInnerWidth + 'px',
+        '--palex-height': (this.WindowInnerHeight - 140) + 'px',
+        '--palex-height-2': (this.WindowInnerHeight - 210) + 'px'
+      }
+    }
+  },
   created() {
     this.WindowInnerWidth = window.innerWidth;
+    this.WindowInnerHeight = window.innerHeight;
     window.addEventListener("resize", this.myEventHandler);
   },
   destroyed() {
@@ -203,14 +215,18 @@ export default {
   },
   methods: {
     myEventHandler(e) {
-      console.log(Window.innerWidth);
+
       this.WindowInnerWidth = window.innerWidth;
+      this.WindowInnerHeight = window.innerHeight;
+    //   console.log(this.WindowInnerWidth);
+    //   console.log(this.WindowInnerHeight);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "resources/sass/mixins.scss";
 .chat_ib p {
   font-size: 14px;
   color: #989898;
@@ -221,7 +237,8 @@ export default {
 }
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "resources/sass/mixins.scss";
 .container {
   max-width: 1170px;
   margin: auto;
@@ -319,6 +336,10 @@ img {
 .inbox_chat {
   height: 550px;
   overflow-y: scroll;
+  @include mobile {
+    text-align: center !important;
+    height: var(--palex-height);
+  }
 }
 
 .active_chat {
@@ -408,5 +429,8 @@ img {
 .msg_history {
   height: 516px;
   overflow-y: auto;
+  @include mobile {
+    height: var(--palex-height-2);
+  }
 }
 </style>
