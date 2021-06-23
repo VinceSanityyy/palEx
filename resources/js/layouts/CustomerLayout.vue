@@ -1,6 +1,11 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background: #44c662; color: white !important">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
+      <div class="w-100 text-center">
+        <a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
+      </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-web" style="background: #44c662; color: white !important">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,7 +17,7 @@
             <RouterLink to="/home" class="nav-link active">Home</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/products" class="nav-link active">Products</RouterLink>
+            <RouterLink to="/products" class="nav-link active">Store</RouterLink>
           </li>
           <li v-if="is_auth" class="nav-item">
             <RouterLink to="/customer/orders" class="nav-link active">My Orders</RouterLink>
@@ -20,7 +25,6 @@
           <li v-if="is_auth" class="nav-item">
             <RouterLink to="/customer" class="nav-link active">Profile</RouterLink>
           </li>
-
         </ul>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           <li v-if="is_auth" class="nav-item">
@@ -47,8 +51,68 @@
       <router-view :is_auth="is_auth" />
       <router-view :is_auth="is_auth" name="helper" />
     </section>
+    <nav class="navbar fixed-bottom navbar-expand-sm navbar-light palex-footer-nav" style="border-top: solid 2px #44c662">
+      <RouterLink class="cp-nav-item" to="/products">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-store"></i>
+          <span>Store</span>
+        </div>
+      </RouterLink>
+      <RouterLink class="cp-nav-item" to="/customer/feeds">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-rss"></i>
+          <span>News</span>
+        </div>
+      </RouterLink>
+      <RouterLink class="cp-nav-item" to="/customer/chat">
+        <div class="d-flex flex-column text-center">
+          <i class="far fa-comments"></i>
+          <span>Chat</span>
+        </div>
+      </RouterLink>
+      <RouterLink class="cp-nav-item" to="#">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-map-marked-alt"></i>
+          <span>Map</span>
+        </div>
+      </RouterLink>
+      <RouterLink class="cp-nav-item" to="/customer">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </div>
+      </RouterLink>
+    </nav>
   </div>
 </template>
+<style lang="scss">
+@import "resources/sass/mixins.scss";
+.palex-nav-cp {
+  display: none;
+  @include mobile {
+    display: flex;
+  }
+}
+.palex-nav-web {
+  display: flex;
+  @include mobile {
+    display: none;
+  }
+}
+.palex-footer-nav {
+  display: none;
+  @include mobile {
+    display: flex;
+  }
+}
+.cp-nav-item {
+  color: grey;
+}
+
+// .cp-nav-item.router-link-active {
+//   color: #44c662 !important;
+// }
+</style>
 <script>
 export default {
   props: ["is_auth"],
