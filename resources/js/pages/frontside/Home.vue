@@ -50,6 +50,7 @@
       font-size: 16px;
       font-weight: 1000;
       color: #2c9144;
+      margin-top:10px;
     }
   }
 }
@@ -84,8 +85,11 @@
                   <div class="product-name">
                     <span class="title">{{ item.product_name }}</span>
                   </div>
-                  <div class="product-price">
-                    <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
+                  <div class="product-price w-100">
+                    <div class="d-flex justify-content-between px-1">
+                      <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
+                      <button class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
+                    </div>
                   </div>
                 </div>
               </div>

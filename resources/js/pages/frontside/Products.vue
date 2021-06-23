@@ -29,8 +29,11 @@
                 <div class="product-name">
                   <span class="title">{{ item.product_name }}</span>
                 </div>
-                <div class="product-price">
-                  <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
+                <div class="product-price w-100">
+                  <div class="d-flex justify-content-between px-1">
+                    <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
+                    <button class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -41,48 +44,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-// .product:hover {
-//   // box-shadow: 0 0.5rem 1rem rgb(0 174 119 / 35%) !important;
-//   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
-// }
-// .product {
-//   margin: 5px;
-//   padding: 0px;
-//   background: white;
-//   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
-//   .product-image {
-//     img {
-//       object-fit: cover;
-//       width: 189px;
-//       height: 189px;
-//     }
-//   }
-//   .product-desc {
-//     width: 189px;
-//     padding: 5px;
-//     .product-name {
-//       position: relative;
-//       font-size: 14px;
-//       height: 36px;
-//       line-height: 18px;
-//       color: #212121;
-//       white-space: pre-wrap;
-//       display: -webkit-box;
-//       -webkit-line-clamp: 2;
-//       -webkit-box-orient: vertical;
-//       text-overflow: ellipsis;
-//       overflow: hidden;
-//     }
-//     .product-price {
-//       position: relative;
-//       font-size: 16px;
-//       font-weight: 1000;
-//       color: #2c9144;
-//     }
-//   }
-// }
-</style>
-<style lang="scss" scoped>
+@import "resources/sass/mixins.scss";
 .product:hover {
   // box-shadow: 0 0.5rem 1rem rgb(0 174 119 / 35%) !important;
   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
@@ -120,6 +82,7 @@
       font-size: 16px;
       font-weight: 1000;
       color: #2c9144;
+      margin-top:10px;
     }
   }
 }
