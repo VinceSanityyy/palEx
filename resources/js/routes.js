@@ -95,26 +95,26 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'CustomerProfile',
+                name: 'cus',
                 component: CustomerProfile
             },
             {
                 path: 'orders',
-                name: 'CustomerOrders',
+                name: 'cus-orders',
                 components: {
                     helper: CustomerOrders
                 }
             },
             {
                 path: 'feeds',
-                name: 'customerFeeds',
+                name: 'cus-feeds',
                 components: {
                     helper: CustomerFeeds
                 }
             },
             {
                 path: 'chat',
-                name: 'CustomerChat',
+                name: 'cus-chat',
                 components: {
                     helper: CustomerChat
                 }
@@ -127,7 +127,7 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'HomePage',
+                name: 'home',
                 component: HomePage
             },
         ],
@@ -138,7 +138,7 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'HomePage',
+                name: 'home',
                 component: HomePage
             },
         ],
@@ -149,12 +149,12 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'ProductsPage',
+                name: 'prod',
                 component: ProductsPage
             },
             {
                 path: ':product_id',
-                name: 'ProductsIDPage',
+                name: 'prod-id',
                 components: {
                     helper: ProductsIDPage
                 }
