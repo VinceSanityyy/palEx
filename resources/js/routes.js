@@ -128,7 +128,7 @@ const routes = [
             {
                 path: '',
                 name: 'home',
-                component: HomePage
+                component: ProductsPage
             },
         ],
     },
@@ -139,7 +139,7 @@ const routes = [
             {
                 path: '',
                 name: 'home',
-                component: HomePage
+                component: ProductsPage
             },
         ],
     },
