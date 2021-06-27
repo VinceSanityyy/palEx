@@ -1,7 +1,7 @@
 <template>
   <div class="register-box">
   <div class="register-logo">
-    <a href="/"><b>PalEx</b></a>
+    <a href="/"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
   </div>
 
   <div class="card">
@@ -67,7 +67,7 @@
         </div>
         <div class="row">
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-md-4">
             <button type="submit" class="btn btn-primary btn-block">Register</button>
           </div>
           <!-- /.col -->

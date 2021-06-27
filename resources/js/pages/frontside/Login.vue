@@ -2,7 +2,7 @@
   <div class="login-box">
   <!-- /.login-logo -->
   <div class="login-logo">
-      PalEx
+    <a href="/"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
   </div>
   <div class="card">
     <div class="card-body login-card-body">
