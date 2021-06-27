@@ -2,8 +2,9 @@
 <div>
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="https://i.pinimg.com/originals/ad/ca/08/adca082427894069f92dd11fda3d96cb.gif" alt="AdminLTELogo" height="60" width="60">
+  <div class="preloader flex-column justify-content-center align-items-center" style="background: #44c662;">
+    <!-- <img class="animation__wobble" src="https://i.pinimg.com/originals/ad/ca/08/adca082427894069f92dd11fda3d96cb.gif" alt="AdminLTELogo" height="60" width="60"> -->
+    <img class="animation__wobble" src="/img/logo/palex3.png" alt="AdminLTELogo" height="auto" width="100">
   </div>
 
   <!-- Navbar -->

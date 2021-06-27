@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-5">
       <div class="col-12">
         <el-row>
           <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6" class="p-2" v-for="(item, index) in products" :key="index">

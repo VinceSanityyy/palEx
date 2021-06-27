@@ -3,6 +3,12 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
       <div class="w-100 text-center">
         <a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
+        <div v-if="is_auth" style="position: absolute; top: 15px; right: 5px;">
+          <RouterLink to="/customer/cart">
+            <i class="fas fa-shopping-cart font-size-20"></i>
+            <span class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
+          </RouterLink>
+        </div>
       </div>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-web" style="background: #44c662; color: white !important">
@@ -13,9 +19,9 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
+          <!-- <li class="nav-item active">
             <RouterLink to="/home" class="nav-link active">Home</RouterLink>
-          </li>
+          </li> -->
           <li class="nav-item">
             <RouterLink to="/products" class="nav-link active">Store</RouterLink>
           </li>
@@ -51,37 +57,55 @@
       <router-view :is_auth="is_auth" />
       <router-view :is_auth="is_auth" name="helper" />
     </section>
-    <nav class="navbar fixed-bottom navbar-expand-sm navbar-light palex-footer-nav" style="border-top: solid 2px #44c662">
+    <nav :style="!is_auth ? 'justify-content:center !important;' : ''" class="navbar fixed-bottom navbar-expand-sm navbar-light palex-footer-nav" style="border-top: solid 2px #44c662">
       <RouterLink class="cp-nav-item" to="/products">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-store"></i>
           <span>Store</span>
         </div>
       </RouterLink>
-      <RouterLink class="cp-nav-item" to="/customer/feeds">
+      <RouterLink v-if="is_auth" class="cp-nav-item" to="/customer/feeds">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-rss"></i>
           <span>News</span>
         </div>
       </RouterLink>
-      <RouterLink class="cp-nav-item" to="/customer/chat">
+      <RouterLink v-if="is_auth" class="cp-nav-item" to="/customer/chat">
         <div class="d-flex flex-column text-center">
           <i class="far fa-comments"></i>
           <span>Chat</span>
         </div>
       </RouterLink>
-      <RouterLink class="cp-nav-item" to="#">
+      <RouterLink v-if="is_auth" class="cp-nav-item" to="#">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-map-marked-alt"></i>
           <span>Map</span>
         </div>
       </RouterLink>
-      <RouterLink class="cp-nav-item" to="/customer">
+      <RouterLink v-if="is_auth" class="cp-nav-item" to="/customer">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-user"></i>
           <span>Profile</span>
         </div>
       </RouterLink>
+      <a v-if="is_auth" @click="logout()" class="cp-nav-item">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </div>
+      </a>
+      <a v-if="!is_auth" href="/login" class="cp-nav-item ml-3">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Log-in</span>
+        </div>
+      </a>
+      <a v-if="!is_auth" href="/register" class="cp-nav-item ml-3">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-user-plus"></i>
+          <span>Sign-up</span>
+        </div>
+      </a>
     </nav>
   </div>
 </template>
