@@ -23,13 +23,16 @@
             <RouterLink to="/home" class="nav-link active">Home</RouterLink>
           </li> -->
           <li class="nav-item">
-            <RouterLink to="/products" class="nav-link active">Store</RouterLink>
+            <RouterLink to="/products" class="nav-link active"><i class="fas fa-store mr-1"></i>Stores</RouterLink>
           </li>
-          <li v-if="is_auth" class="nav-item">
+          <!-- <li v-if="is_auth" class="nav-item">
             <RouterLink to="/customer/orders" class="nav-link active">My Orders</RouterLink>
-          </li>
+          </li> -->
           <li v-if="is_auth" class="nav-item">
-            <RouterLink to="/customer" class="nav-link active">Profile</RouterLink>
+            <RouterLink to="/customer" class="nav-link active"><i class="fas fa-user mr-1"></i>Profile</RouterLink>
+          </li>
+            <li v-if="is_auth" class="nav-item">
+            <RouterLink to="/customer/chat" class="nav-link active">  <i class="far fa-comments mr-1"></i>Chat</RouterLink>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -61,7 +64,7 @@
       <RouterLink class="cp-nav-item" to="/products">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-store"></i>
-          <span>Store</span>
+          <span>Stores</span>
         </div>
       </RouterLink>
       <RouterLink v-if="is_auth" class="cp-nav-item" to="/customer/feeds">
