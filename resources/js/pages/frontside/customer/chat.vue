@@ -102,124 +102,52 @@ export default {
     return {
       WindowInnerWidth: null,
       WindowInnerHeight: null,
-      chatList: [
-        {
-          is_active: true,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-        {
-          is_active: false,
-          user_name: "Ronald Vincent Bustillo",
-          msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          date: "Jun 20",
-        },
-      ],
+      //   chatList: [
+      //     {
+      //       is_active: true,
+      //       user_name: "Ronald Vincent Bustillo",
+      //       msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      //       date: "Jun 20",
+      //     },
+      //   ],
+      chatList: [],
     };
   },
   computed: {
     cssVars() {
       return {
-        '--palex-width': this.WindowInnerWidth + 'px',
-        '--palex-height': (this.WindowInnerHeight - 140) + 'px',
-        '--palex-height-2': (this.WindowInnerHeight - 210) + 'px'
-      }
-    }
+        "--palex-width": this.WindowInnerWidth + "px",
+        "--palex-height": this.WindowInnerHeight - 140 + "px",
+        "--palex-height-2": this.WindowInnerHeight - 210 + "px",
+      };
+    },
   },
   created() {
     this.WindowInnerWidth = window.innerWidth;
     this.WindowInnerHeight = window.innerHeight;
     window.addEventListener("resize", this.myEventHandler);
+    this.getUserChatList();
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
   },
   methods: {
     myEventHandler(e) {
-
       this.WindowInnerWidth = window.innerWidth;
       this.WindowInnerHeight = window.innerHeight;
-    //   console.log(this.WindowInnerWidth);
-    //   console.log(this.WindowInnerHeight);
+      //   console.log(this.WindowInnerWidth);
+      //   console.log(this.WindowInnerHeight);
+    },
+    getUserChatList() {
+      axios
+        .get(`/getUserChatList`)
+        .then((res) => {
+          console.log(res);
+          this.chatList = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
 };
