@@ -26,6 +26,7 @@ import ProductsPage from './pages/frontside/Products.vue';
 import ProductsIDPage from './pages/frontside/Products_id.vue';
 import HomePage from './pages/frontside/Home.vue';
 import NotFound from './pages/frontside/NotFound.vue';
+import StoreProfile from './pages/frontside/store/vendor_id.vue';
 // import productscopy from './pages/customer/productscopy.vue';
 
 const routes = [
@@ -156,8 +157,19 @@ const routes = [
                 path: ':product_id',
                 name: 'prod-id',
                 components: {
-                    helper: ProductsIDPage
+                    helper: ProductsPage
                 }
+            },
+        ],
+    },
+    {
+        path: '/store',
+        component: CustomerLayout,
+        children: [
+            {
+                path: ':vendor_id',
+                name: 'vendor-id',
+                component: StoreProfile
             },
         ],
     },

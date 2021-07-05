@@ -27,15 +27,25 @@ Auth::routes();
 // Route::get('{path}',[App\Http\Controllers\HomeController::class, 'index'])->where( 'path', '([A-z]+)?' );
 // Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any', '.*');
 
-
+// Public Pages
 Route::get('/', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products/{product_id}', [App\Http\Controllers\FrontsideController::class, 'index']);
+Route::get('/store/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'vendorProfile']);
+
+// Public API (Json response)
+Route::get('/getVendorProfile/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'getVendorProfile']);
+
+
 Route::get('/404', function () {
     abort(404, "Page Not Found");
 });
 Route::middleware('isAuth')->group(function(){
+
+    //AUTH API
+    Route::get('/getUserChatList', [App\Http\Controllers\ChatController::class, 'getUserChatList']);
+    Route::post('/sendMessage', [App\Http\Controllers\ChatController::class, 'sendMessage']);
 
     Route::middleware('isVendor')->group(function(){
         // Route::get('/vendor/orders', [App\Http\Controllers\BacksideController::class, 'index']);
