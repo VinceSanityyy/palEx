@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
                 'status' => 1
             ],
             [
-                'name' => 'Abing Pj',
+                'name' => 'Abing Pj Store',
                 'email' => 'abing.pj@gmail.com',
                 'password' => \Hash::make('password'),
                 'role' => 1,
