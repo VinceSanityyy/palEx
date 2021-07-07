@@ -22,7 +22,7 @@
 						<div class="card card-primary card-outline">
 							<div class="card-header">
 								<h3 class="card-title" >Products List</h3>
-								<button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary" style="float:right">Add New Product</button>
+								<button @click="addModal" class="btn btn-primary" style="float:right">Add New Product</button>
 							</div>
 							<div class="card-body table-responsive">
 								<table
@@ -67,11 +67,7 @@
 												<span class="badge bg-danger" v-else>Out of Stock</span>
 											</td>
 											<td>
-												<router-link
-													class="btn btn-warning btn-sm"
-													:to="'/admin/products/edit/' + item.id"
-													>Edit</router-link
-												>
+												<button @click="editModal(item)" class="btn btn-warning">Edit</button>
 											</td>
 										</tr>
 									</tbody>
@@ -92,6 +88,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+	   <form @submit.prevent ="editMode ? updateProduct() : addProduct()">
       <div class="modal-body">
 		<div class="form-group">
 			<label >Product Name</label>
@@ -113,8 +110,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" @click="addProduct" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+	</form>
     </div>
   </div>
 </div>
@@ -132,7 +130,9 @@
 				price:'',
 				unit:'',
 				category:'',
-				photo: ''
+				photo: '',
+				editMode: false,
+				product_id:''
 			};
 		},
         // mounted() {
@@ -160,6 +160,7 @@
 					$('#exampleModal').modal('hide')
 					toastr.success('Done')
 					this.clearFields()
+					this.getProducts()
 				})
 			},
 			onFileChange(e) {
@@ -180,6 +181,42 @@
 					this.myTable()
 				})
 			},
+			updateProduct(){
+				var formData = new FormData()
+				formData.append('name', this.product_name)
+                formData.append('price', this.price)
+                formData.append('unit', this.unit)
+                formData.append('category', this.category)
+                formData.append('photo', this.photo)
+				axios.post(`/vendor/updateProruct/${this.product_id}`,formData).then((res)=>{
+					console.log(res.data)
+					$('#exampleModal').modal('hide')
+					toastr.success('Done')
+				}).catch((err)=>{
+                     var errors = err.response.data.errors
+
+                       for (var key of Object.keys(errors)) {
+                            toastr.error(errors[key])
+                        }
+				})
+			},
+			addModal(){
+				this.editMode = false
+                this.clearFields()
+                $('#exampleModal').modal('show')
+			},
+			editModal(product){
+				console.log(product)
+                this.editMode = true
+                this.product_id = product.id
+                this.product_name = product.name
+                this.category = product.category
+                this.price = product.price
+                this.photo = product.photo
+				this.unit = product.unit
+                // this.supplier = product.supplier_id
+                $('#exampleModal').modal('show')
+            },
 		},
 		created(){
 			this.getProducts()
