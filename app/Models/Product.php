@@ -30,4 +30,9 @@ class Product extends Model
 
         return $image;
     }
+
+    public function vendor()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
 }
