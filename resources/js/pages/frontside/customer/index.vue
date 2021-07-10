@@ -4,7 +4,7 @@
       <div class="row justify-content-md-center">
         <div class="col-md-10 col-lg-8">
           <!-- Profile Image -->
-          <div class="card card-primary card-outline">
+          <div class="card card-primary card-outline palex-card">
             <div class="card-body box-profile">
               <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle" src="/dist/img/user4-128x128.jpg" alt="User profile picture" />
@@ -28,7 +28,7 @@
         </div>
         <!-- /.col -->
         <div class="col-md-10 col-lg-8">
-          <div class="card">
+          <div class="card palex-card">
             <div class="card-body">
               <div class="tab-content">
                 <div class="active tab-pane" id="settings">
@@ -68,7 +68,7 @@
         </div>
 
         <div class="col-md-10 col-lg-8">
-          <div class="card">
+          <div class="card palex-card">
             <div class="card-header w-100 text-center">
               <h3 class="card-title">Password Setting</h3>
             </div>
@@ -79,13 +79,13 @@
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Current Password</label>
                       <div class="col-sm-10">
-                        <input type="password"  class="form-control" />
+                        <input type="password" class="form-control" />
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
                       <div class="col-sm-10">
-                        <input type="password"  class="form-control" />
+                        <input type="password" class="form-control" />
                       </div>
                     </div>
                     <div class="form-group row">
@@ -137,3 +137,12 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+@import "resources/sass/mixins.scss";
+.palex-card {
+  background: white !important;
+  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+//   margin: 0.5rem;
+//   padding: 1rem;
+}
+</style>
