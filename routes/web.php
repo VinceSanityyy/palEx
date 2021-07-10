@@ -85,6 +85,7 @@ Route::middleware('isAuth')->group(function(){
         //API
         Route::get('/getCartCounter', [App\Http\Controllers\FrontSide\CartController::class, 'getCartCounter']);
         Route::post('/addToCart', [App\Http\Controllers\FrontSide\CartController::class, 'addToCart']);
+        Route::get('/getCart', [App\Http\Controllers\FrontSide\CartController::class, 'getCart']);
     });
 });
 
