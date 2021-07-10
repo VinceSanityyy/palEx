@@ -128,7 +128,7 @@
         </div>
       </a>
     </nav>
-    <!-- <AddToCartModal></AddToCartModal> -->
+    <AddToCartModal></AddToCartModal>
 
   </div>
 

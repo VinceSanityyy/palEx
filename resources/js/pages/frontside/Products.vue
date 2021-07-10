@@ -35,7 +35,7 @@
                 <div class="product-price w-100">
                   <div class="d-flex justify-content-between px-1">
                     <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
-                    <button class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
+                    <button class="btn btn-sm btn-primary" type="button" @click="ShowAddToCartModal(item)"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
                   </div>
                 </div>
                 <div class="vendor">
@@ -137,7 +137,9 @@ export default {
     };
   },
   methods: {
-    showCartModal() {},
+    ShowAddToCartModal(item) {
+      this.$events.fire("ShowAddToCartModal", item);
+    },
     getProducts() {
       axios
         .get(`/getProducts`)

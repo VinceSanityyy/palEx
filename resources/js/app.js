@@ -30,7 +30,7 @@ Vue.use(VueAlertify, {
 
 Vue.component('login', require('./pages/frontside/Login.vue').default);
 Vue.component('register', require('./pages/frontside/Register.vue').default);
-// Vue.component('AddToCartModal', require('./modals/AddToCartModal.vue').default);
+Vue.component('AddToCartModal', require('./modals/AddToCartModal.vue').default);
 
 window.swal = swal;
 window.toastr = require('toastr')
