@@ -22,6 +22,16 @@ class CreateConversationRepliesTable extends Migration
             $table->string('type')->default('text')->nullable();
             $table->timestamps();
             $table->bigInteger('status')->default(1);
+
+
+             // Foreign Keys
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+
+            $table->foreign('conversation_id')
+                ->references('id')
+                ->on('conversations');
         });
     }
 

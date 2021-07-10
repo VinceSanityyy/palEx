@@ -19,6 +19,16 @@ class CreateConversationsTable extends Migration
             $table->bigInteger('user_two_id')->unsigned();
             $table->timestamps();
             $table->bigInteger('status')->default(1);
+
+
+             // Foreign Keys
+            $table->foreign('user_one_id')
+                ->references('id')
+                ->on('users');
+
+            $table->foreign('user_two_id')
+                ->references('id')
+                ->on('users');
         });
     }
 

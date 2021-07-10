@@ -24,4 +24,8 @@ class Conversation extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_two_id');
     }
+    public function con_replies()
+    {
+        return $this->hasMany('App\Models\ConversationReply', 'conversation_id');
+    }
 }
