@@ -20,20 +20,30 @@
     <div class="row mb-5">
       <div class="col-12">
         <el-row>
-          <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6" class="p-2" v-for="(item, index) in products" :key="index">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="p-2" v-for="(item, index) in products" :key="index">
             <div class="product">
               <div class="product-image">
                 <img :src="item.image_link" alt="" />
               </div>
               <div class="product-desc">
                 <div class="product-name">
-                  <span class="title">{{ item.product_name }}</span>
+                  <span>{{ item.name }}</span>
+                </div>
+                <div class="category">
+                  <span>{{ item.category }}</span>
                 </div>
                 <div class="product-price w-100">
                   <div class="d-flex justify-content-between px-1">
                     <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
                     <button class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
                   </div>
+                </div>
+                <div class="vendor">
+                  <router-link :to="`/store/${item.vendor.id}`">
+                    <span
+                      ><u>{{ item.vendor.name }}</u></span
+                    >
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -66,7 +76,8 @@
     padding: 5px;
     .product-name {
       position: relative;
-      font-size: 14px;
+      font-size: 18px;
+      font-weight: 800;
       height: 36px;
       line-height: 18px;
       color: #212121;
@@ -77,12 +88,21 @@
       text-overflow: ellipsis;
       overflow: hidden;
     }
+    .category {
+      color: #c644a8;
+      font-size: 18px;
+    }
     .product-price {
       position: relative;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 1000;
       color: #2c9144;
-      margin-top:10px;
+      margin-top: 10px;
+    }
+    .vendor {
+      text-align: center;
+      color: #a8c644;
+      font-size: 14px;
     }
   }
 }
@@ -110,138 +130,28 @@ export default {
       ],
       products: [
         {
-          id: 1,
-          image_link: "https://palengkesentral.com/wp-content/uploads/2020/04/Fresh-Red-FUJI-Apple-Specification-Yantai-FUJI-Apple-Honey-FUJI-Apple.jpg",
-          product_name: "Fuji Apple - typically round and range from large to very large, averaging 75 mm in diameter.",
-          price: 50.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Active",
-          description: "Lorem ipsum easd, Lorem ipsum easd Lorem ipsum easd, Lorem ipsum easd",
-        },
-        {
-          id: 2,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple the super duper delicuis from canada.",
-          price: 150.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Active",
-          description: "Lorem ipsum easd, Lorem ipsum easd Lorem ipsum easd, Lorem ipsum easd",
-        },
-        {
-          id: 101,
-          image_link: "https://palengkesentral.com/wp-content/uploads/2020/04/Fresh-Red-FUJI-Apple-Specification-Yantai-FUJI-Apple-Honey-FUJI-Apple.jpg",
-          product_name: "Fuji Apple - typically round and range from large to very large, averaging 75 mm in diameter.",
-          price: 50.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Active",
-          description: "Lorem ipsum easd, Lorem ipsum easd Lorem ipsum easd, Lorem ipsum easd",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Active",
-          description: "Lorem ipsum easd,  Lorem ipsum easd",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 103,
-          image_link: "https://palengkesentral.com/wp-content/uploads/2020/04/Fresh-Red-FUJI-Apple-Specification-Yantai-FUJI-Apple-Honey-FUJI-Apple.jpg",
-          product_name: "Fuji Apple - typically round and range from large to very large, averaging 75 mm in diameter.",
-          price: 50.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Active",
-          description: "Lorem ipsum easd, Lorem ipsum easd Lorem ipsum easd, Lorem ipsum easd",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 3,
-          image_link: "https://www.foodsafetynews.com/files/2020/06/raw-sirloin-steak-beef.jpg",
-          product_name: "Beef - Fresh from Austrilla",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 3,
-          image_link: "https://www.foodsafetynews.com/files/2020/06/raw-sirloin-steak-beef.jpg",
-          product_name: "Beef - Fresh from Austrilla",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
-        },
-        {
-          id: 3,
-          image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
-          product_name: "Apple",
-          price: 250.0,
-          unit: "kilo",
-          category_name: "Fruite",
-          product_status: "Sold Out",
-          description: "Lorem ipsum easd,  Lorem ipsum easd  ipsum easd,    ipsum easd,  ",
+          vendor: {},
         },
       ],
       image_link: "https://www.osfhealthcare.org/blog/wp-content/uploads/2019/08/apples-OG-765x310.jpg",
     };
+  },
+  methods: {
+    showCartModal() {},
+    getProducts() {
+      axios
+        .get(`/getProducts`)
+        .then((res) => {
+          console.log(res);
+          this.products = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+  mounted() {
+    this.getProducts();
   },
 };
 </script>

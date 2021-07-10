@@ -157,7 +157,7 @@ const routes = [
                 path: ':product_id',
                 name: 'prod-id',
                 components: {
-                    helper: ProductsPage
+                    helper: ProductsIDPage
                 }
             },
         ],
