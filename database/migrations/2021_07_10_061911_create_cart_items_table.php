@@ -19,8 +19,8 @@ class CreateCartItemsTable extends Migration
             $table->bigInteger('vendor_id')->unsigned();
             $table->bigInteger('product_id')->unsigned();
             $table->bigInteger('quantity')->unsigned();
+            $table->boolean('selected')->default(false);
             $table->timestamps();
-
 
             // Foreign Keys
             $table->foreign('cart_id')
