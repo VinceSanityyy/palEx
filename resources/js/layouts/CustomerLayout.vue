@@ -4,10 +4,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
       <div class="w-100 text-center">
         <a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
-        <div v-if="is_auth" style="position: absolute; top: 15px; right: 5px">
+        <div v-if="is_auth" style="position: absolute; top: 15px; right: 8px">
           <RouterLink to="/customer/cart">
             <i class="fas fa-shopping-cart font-size-20"></i>
-            <span class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
+            <span v-if="cartNumber" class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
           </RouterLink>
         </div>
       </div>
@@ -46,7 +46,7 @@
           <li v-if="is_auth" class="nav-item">
             <RouterLink class="nav-link" to="/customer/cart">
               <i class="fas fa-shopping-cart font-size-20"></i>
-              <span class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
+              <span v-if="cartNumber" class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
             </RouterLink>
           </li>
           <li v-if="!is_auth" class="nav-item">
@@ -128,10 +128,8 @@
         </div>
       </a>
     </nav>
-    <AddToCartModal></AddToCartModal>
-
+    <AddToCartModal :is_auth="is_auth"></AddToCartModal>
   </div>
-
 </template>
 
 <script>
@@ -140,7 +138,7 @@ export default {
   data() {
     return {
       user: [],
-      cartNumber: 123,
+      cartNumber: 0,
     };
   },
   methods: {
@@ -162,9 +160,28 @@ export default {
     methodNotYet() {
       toastr.error("wala pa function");
     },
+    getCartCounter() {
+      if (this.is_auth) {
+        axios
+          .get(`/getCartCounter`)
+          .then((res) => {
+            console.log(res);
+            this.cartNumber = res.data;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },
   },
   mounted() {
+    this.getCartCounter();
     this.getCurrentAuth();
+  },
+  events: {
+    updateCartCounter() {
+      this.getCartCounter();
+    },
   },
 };
 </script>
@@ -202,4 +219,10 @@ export default {
 // .cp-nav-item.router-link-active {
 //   color: #44c662 !important;
 // }
+</style>
+
+<style>
+.palex-msg-min-width {
+  min-width: 250px !important;
+}
 </style>
