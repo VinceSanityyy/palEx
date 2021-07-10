@@ -1,9 +1,10 @@
 <template>
   <div>
+    <!-- MOBILE TOP NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
       <div class="w-100 text-center">
         <a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
-        <div v-if="is_auth" style="position: absolute; top: 15px; right: 5px;">
+        <div v-if="is_auth" style="position: absolute; top: 15px; right: 5px">
           <RouterLink to="/customer/cart">
             <i class="fas fa-shopping-cart font-size-20"></i>
             <span class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
@@ -11,6 +12,8 @@
         </div>
       </div>
     </nav>
+
+    <!-- WEB TOP NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-web" style="background: #44c662; color: white !important">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,14 +28,18 @@
           <li class="nav-item">
             <RouterLink to="/products" class="nav-link active"><i class="fas fa-store mr-1"></i>Stores</RouterLink>
           </li>
-          <!-- <li v-if="is_auth" class="nav-item">
-            <RouterLink to="/customer/orders" class="nav-link active">My Orders</RouterLink>
-          </li> -->
+
+          <li v-if="is_auth" class="nav-item">
+            <RouterLink to="/customer/feeds" class="nav-link active"><i class="fas fa-rss mr-1"></i>News</RouterLink>
+          </li>
+          <li v-if="is_auth" class="nav-item">
+            <RouterLink to="/customer/orders" class="nav-link active"><i class="fas fa-file-invoice mr-1"></i>My Orders</RouterLink>
+          </li>
           <li v-if="is_auth" class="nav-item">
             <RouterLink to="/customer" class="nav-link active"><i class="fas fa-user mr-1"></i>Profile</RouterLink>
           </li>
-            <li v-if="is_auth" class="nav-item">
-            <RouterLink to="/customer/chat" class="nav-link active">  <i class="far fa-comments mr-1"></i>Chat</RouterLink>
+          <li v-if="is_auth" class="nav-item">
+            <RouterLink to="/customer/chat" class="nav-link active"> <i class="far fa-comments mr-1"></i>Chat</RouterLink>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -56,11 +63,16 @@
         </ul>
       </div>
     </nav>
+
     <section>
       <router-view :is_auth="is_auth" />
       <router-view :is_auth="is_auth" name="helper" />
     </section>
-    <nav :style="!is_auth ? 'justify-content:center !important;' : ''" class="navbar fixed-bottom navbar-expand-sm navbar-light palex-footer-nav" style="border-top: solid 2px #44c662">
+    <nav
+      :style="!is_auth ? 'justify-content:center !important;' : 'justify-content: space-between !important;'"
+      class="navbar fixed-bottom navbar-expand-sm navbar-light palex-footer-nav"
+      style="border-top: solid 2px #44c662"
+    >
       <RouterLink class="cp-nav-item" to="/products">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-store"></i>
@@ -79,10 +91,16 @@
           <span>Chat</span>
         </div>
       </RouterLink>
-      <RouterLink v-if="is_auth" class="cp-nav-item" to="#">
+      <!-- <RouterLink v-if="is_auth" class="cp-nav-item" to="#">
         <div class="d-flex flex-column text-center">
           <i class="fas fa-map-marked-alt"></i>
           <span>Map</span>
+        </div>
+      </RouterLink> -->
+      <RouterLink v-if="is_auth" class="cp-nav-item" to="/customer/orders">
+        <div class="d-flex flex-column text-center">
+          <i class="fas fa-file-invoice"></i>
+          <span>Orders</span>
         </div>
       </RouterLink>
       <RouterLink v-if="is_auth" class="cp-nav-item" to="/customer">
@@ -110,36 +128,12 @@
         </div>
       </a>
     </nav>
-  </div>
-</template>
-<style lang="scss">
-@import "resources/sass/mixins.scss";
-.palex-nav-cp {
-  display: none;
-  @include mobile {
-    display: flex;
-  }
-}
-.palex-nav-web {
-  display: flex;
-  @include mobile {
-    display: none;
-  }
-}
-.palex-footer-nav {
-  display: none;
-  @include mobile {
-    display: flex;
-  }
-}
-.cp-nav-item {
-  color: grey;
-}
+    <!-- <AddToCartModal></AddToCartModal> -->
 
-// .cp-nav-item.router-link-active {
-//   color: #44c662 !important;
-// }
-</style>
+  </div>
+
+</template>
+
 <script>
 export default {
   props: ["is_auth"],
@@ -174,3 +168,38 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "resources/sass/mixins.scss";
+.palex-nav-cp {
+  display: none;
+  @media (min-width: 280px) and (max-width: 768px) {
+    display: flex;
+  }
+}
+.palex-nav-web {
+  display: flex;
+  //   @include mobile {
+  //     display: none;
+  //   }
+  @media (min-width: 280px) and (max-width: 768px) {
+    display: none;
+  }
+}
+.palex-footer-nav {
+  display: none;
+  //   @include mobile {
+  //     display: flex;
+  //   }
+  @media (min-width: 280px) and (max-width: 768px) {
+    display: flex;
+  }
+}
+.cp-nav-item {
+  color: grey;
+}
+
+// .cp-nav-item.router-link-active {
+//   color: #44c662 !important;
+// }
+</style>
