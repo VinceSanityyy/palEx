@@ -1,6 +1,6 @@
 <template>
   <div class="modal" id="AddToCartModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h6 class="modal-title">Add To Cart</h6>
@@ -51,19 +51,60 @@
   </div>
 </template>
 <script>
+import MyErrorClass from "../ErrorClass";
 export default {
+  props: ["is_auth"],
   data() {
     return {
       qty: 1,
-      item: {},
+      item: {
+        vendor: {},
+      },
+      MyErrorClass: new MyErrorClass(),
     };
   },
   methods: {
-    addToCart() {},
+    addToCart() {
+      if (this.is_auth) {
+        let params = {
+          vendor_id: this.item.vendor.id,
+          product_id: this.item.id,
+          quantity: this.qty,
+        };
+        axios
+          .post(`/addToCart`, params)
+          .then((res) => {
+            this.$message({
+              message: "Success Add to Cart",
+              type: "success",
+              customClass: "palex-msg-min-width",
+            });
+            this.$events.fire("updateCartCounter");
+            $("#AddToCartModal").modal("hide");
+          })
+          .catch((err) => {
+            if (err.response.status == 422) {
+              this.MyErrorClass.record(err.response.data.errors);
+              var msg = this.MyErrorClass.getAllMessages();
+              this.$message({
+                showClose: true,
+                type: "error",
+                dangerouslyUseHTMLString: true,
+                message: `<strong>${msg}</strong>`,
+                customClass: "palex-msg-min-width",
+              });
+            }
+          });
+      } else {
+        window.location.href = "/login";
+        // this.$router.push("/login");
+      }
+    },
   },
   events: {
     ShowAddToCartModal(item) {
       this.item = item;
+      this.qty = 1;
       $("#AddToCartModal").modal("show");
     },
   },

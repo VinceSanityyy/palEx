@@ -20,6 +20,7 @@ import CustomerProfile from './pages/frontside/customer/index.vue';
 import CustomerOrders from './pages/frontside/customer/orders.vue';
 import CustomerFeeds from './pages/frontside/customer/feeds.vue';
 import CustomerChat from './pages/frontside/customer/chat.vue';
+import CustomerCart from './pages/frontside/customer/cart.vue';
 
 // Public Pages
 import ProductsPage from './pages/frontside/Products.vue';
@@ -120,6 +121,15 @@ const routes = [
                     helper: CustomerChat
                 }
             },
+            {
+                path: 'cart',
+                name: 'cus-cart',
+                components: {
+                    helper: CustomerCart
+                }
+            },
+
+
         ],
     },
     {
@@ -174,8 +184,8 @@ const routes = [
         ],
     },
     {
-        path :'*',
-        component:NotFound
+        path: '*',
+        component: NotFound
     }
 ]
 
