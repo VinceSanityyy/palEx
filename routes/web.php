@@ -36,7 +36,7 @@ Route::get('/store/{vendor_id}', [App\Http\Controllers\FrontsideController::clas
 
 // Public API (Json response)
 Route::get('/getVendorProfile/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'getVendorProfile']);
-Route::get('/getProducts', [App\Http\Controllers\ProductsController::class, 'getProducts']);
+Route::get('/getProducts', [App\Http\Controllers\FrontSide\ProductsController::class, 'getProducts']);
 
 
 Route::get('/404', function () {
@@ -78,8 +78,13 @@ Route::middleware('isAuth')->group(function(){
     Route::middleware('isCustomer')->group(function(){
         Route::get('/customer', [App\Http\Controllers\FrontsideController::class, 'index']);
         Route::get('/customer/{page_name}', [App\Http\Controllers\FrontsideController::class, 'index']);
+
         // Route::get('/customer/profile', [App\Http\Controllers\FrontsideController::class, 'index']);
         // Route::get('/customer/feeds', [App\Http\Controllers\FrontsideController::class, 'index']);
+
+        //API
+        Route::get('/getCartCounter', [App\Http\Controllers\FrontSide\CartController::class, 'getCartCounter']);
+        Route::post('/addToCart', [App\Http\Controllers\FrontSide\CartController::class, 'addToCart']);
     });
 });
 
