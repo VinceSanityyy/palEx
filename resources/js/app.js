@@ -12,6 +12,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import routes from './routes'
 // import store from './store'
 
+import VueEvents from 'vue-events';
+Vue.use(VueEvents)
+
 Vue.use(ElementUI);
 Vue.use(toastr)
 Vue.use(Loading)
@@ -27,6 +30,7 @@ Vue.use(VueAlertify, {
 
 Vue.component('login', require('./pages/frontside/Login.vue').default);
 Vue.component('register', require('./pages/frontside/Register.vue').default);
+// Vue.component('AddToCartModal', require('./modals/AddToCartModal.vue').default);
 
 window.swal = swal;
 window.toastr = require('toastr')
