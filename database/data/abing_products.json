@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Apple",
+        "price": 150,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/apple.jpg",
+        "unit": "Box"
+    },
+    {
+        "name": "Corn",
+        "price": 10,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/corn.jpg",
+        "unit": "Piece"
+    },
+    {
+        "name": "Banana (Binangay)",
+        "price": 45,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/banana.jpg",
+        "unit": "Kilo"
+    },
+    {
+        "name": "Durian (Packed)",
+        "price": 100,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/durian.jpg",
+        "unit": "Pack"
+    },
+    {
+        "name": "Pomelo (In Box)",
+        "price": 120,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/pomelo.jpg",
+        "unit": "Box"
+    },
+    {
+        "name": "Mango",
+        "price": 100,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/mango.jpg",
+        "unit": "Box"
+    },
+    {
+        "name": "Oranges (100 pieces)",
+        "price": 500,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/oranges.jpg",
+        "unit": "Box"
+    },
+    {
+        "name": "Watermelon",
+        "price": 100,
+        "category": "Fruits",
+        "photo": "public/images/products/seeds/watermelon.jpg",
+        "unit": "Pieace"
+    }
+]

@@ -29,24 +29,10 @@ class UserSeeder extends Seeder
                 'status' => 1
             ],
             [
-                'name' => 'Vendor Test',
-                'email' => 'v@gmail.com',
-                'password' => \Hash::make('123123123'),
-                'role' => 1,
-                'status' => 1
-            ],
-            [
                 'name' => 'Admin Pj',
                 'email' => 'admin.pj@gmail.com',
                 'password' => \Hash::make('password'),
                 'role' => 0,
-                'status' => 1
-            ],
-            [
-                'name' => 'Abing Pj Store',
-                'email' => 'abing.pj@gmail.com',
-                'password' => \Hash::make('password'),
-                'role' => 1,
                 'status' => 1
             ],
             [

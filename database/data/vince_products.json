@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Carrots",
+        "price": 100,
+        "category": "Vegetables",
+        "photo": "public/images/products/seeds/carrots.jpg",
+        "unit": "Kilo"
+    },
+    {
+        "name": "Eggs",
+        "price": 240,
+        "category": "Dry",
+        "photo": "public/images/products/seeds/eggs.jpg",
+        "unit": "Tray"
+    },
+    {
+        "name": "Honey (Fresh)",
+        "price": 350,
+        "category": "Wet",
+        "photo": "public/images/products/seeds/honey.jpg",
+        "unit": "Gallon"
+    },
+    {
+        "name": "Radish",
+        "price": 100,
+        "category": "Vegetables",
+        "photo": "public/images/products/seeds/radish.jpg",
+        "unit": "Box"
+    },
+    {
+        "name": "Sili",
+        "price": 2150,
+        "category": "Vegetables",
+        "photo": "public/images/products/seeds/sili.jpg",
+        "unit": "Kilo"
+    },
+    {
+        "name": "Pork Ribs",
+        "price": 210,
+        "category": "Meats",
+        "photo": "public/images/products/seeds/porkribs.jpg",
+        "unit": "Kilo"
+    },
+    {
+        "name": "Pork Belly",
+        "price": 250,
+        "category": "Meats",
+        "photo": "public/images/products/seeds/porkbelly.jpg",
+        "unit": "Kilo"
+    },
+    {
+        "name": "Chicken (Bounty Fresh)",
+        "price": 110,
+        "category": "Meats",
+        "photo": "public/images/products/seeds/chicken.png",
+        "unit": "Pack"
+    }
+]
