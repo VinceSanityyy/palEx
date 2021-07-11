@@ -5,7 +5,12 @@
         <div class="col-md-12">
           <div class="palex-card">
             <div style="display: flex; justify-content: center; align-items: center; height: 450px">
-              <div class="text-center"><h3>There are no items in this cart</h3></div>
+              <div class="text-center">
+                <h3>There are no items in this cart</h3>
+                <div>
+                  <el-button type="success" plain @click="backToProducts()">Continue Shopping</el-button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -34,7 +39,7 @@
                         <span>{{ el.product.name }}</span>
                       </div>
                       <div class="ml-2 ml-auto">
-                        <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+                        <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="removeCartItem(el)"></el-button>
                       </div>
                     </div>
                     <div class="prod-cat" style="font-size: 10px">
@@ -108,21 +113,37 @@ export default {
     this.getCart();
   },
   methods: {
-    updateQuantity(el){
-        // console.log(el);
-        // console.log(el.quantity);
-        axios.post(`/updateCartItem`,{
-            cart_item_id:el.id,
-            quantity:el.quantity,
+    backToProducts(){
+        this.$router.push('/products');
+    },
+    removeCartItem(el) {
+      axios
+        .post(`/removeCartItem`, {
+          cart_item_id: el.id,
         })
-        .then(res => {
-            console.log(res);
-            this.getCart();
+        .then((res) => {
+          this.getCart();
         })
-        .catch(err => {
-            console.error(err);
-             this.getCart();
+        .catch((err) => {
+          this.getCart();
+        });
+    },
+    updateQuantity(el) {
+      // console.log(el);
+      // console.log(el.quantity);
+      axios
+        .post(`/updateCartItem`, {
+          cart_item_id: el.id,
+          quantity: el.quantity,
         })
+        .then((res) => {
+          console.log(res);
+          this.getCart();
+        })
+        .catch((err) => {
+          console.error(err);
+          this.getCart();
+        });
     },
     getCurrentAuth() {
       axios.get("/me").then((res) => {
