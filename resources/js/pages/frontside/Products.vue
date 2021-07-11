@@ -57,13 +57,15 @@
 @import "resources/sass/mixins.scss";
 .product:hover {
   // box-shadow: 0 0.5rem 1rem rgb(0 174 119 / 35%) !important;
-  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+  box-shadow: 4px 4px 4px 4px rgba(198, 68, 168, 0.5) !important;
 }
 .product {
   margin: 5px;
   padding: 0px;
   background: white;
-  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+//   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+
   .product-image {
     img {
       object-fit: cover;
