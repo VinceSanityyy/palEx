@@ -47,6 +47,9 @@ Route::middleware('isAuth')->group(function(){
     //AUTH API
     Route::get('/getUserChatList', [App\Http\Controllers\ChatController::class, 'getUserChatList']);
     Route::post('/sendMessage', [App\Http\Controllers\ChatController::class, 'sendMessage']);
+    Route::post('/createConversation', [App\Http\Controllers\ChatController::class, 'createConversation']);
+    Route::get('/getConversationReplies/{conversation_id}', [App\Http\Controllers\ChatController::class, 'getConversationReplies']);
+    Route::get('/getStoreChatList', [App\Http\Controllers\ChatController::class, 'getStoreChatList']);
 
     Route::middleware('isVendor')->group(function(){
         // Route::get('/vendor/orders', [App\Http\Controllers\BacksideController::class, 'index']);
@@ -78,6 +81,7 @@ Route::middleware('isAuth')->group(function(){
     Route::middleware('isCustomer')->group(function(){
         Route::get('/customer', [App\Http\Controllers\FrontsideController::class, 'index']);
         Route::get('/customer/{page_name}', [App\Http\Controllers\FrontsideController::class, 'index']);
+        Route::get('/customer/chat/{conversation_id}', [App\Http\Controllers\FrontsideController::class, 'chatPageByConvId']);
 
         // Route::get('/customer/profile', [App\Http\Controllers\FrontsideController::class, 'index']);
         // Route::get('/customer/feeds', [App\Http\Controllers\FrontsideController::class, 'index']);
