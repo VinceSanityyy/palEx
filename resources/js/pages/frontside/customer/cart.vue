@@ -35,25 +35,28 @@
                   </div>
                   <div class="prod-name w-100">
                     <div class="d-flex">
-                      <div>
-                        <span>{{ el.product.name }}</span>
+                      <div style="width: 90%">
+                        <span
+                          ><b>{{ el.product.name }}</b></span
+                        >
                       </div>
-                      <div class="ml-2 ml-auto">
+                      <div style="width: 10%" class="ml-2 text-left">
                         <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="removeCartItem(el)"></el-button>
                       </div>
                     </div>
-                    <div class="prod-cat" style="font-size: 10px">
+                    <div class="prod-cat" style="font-size: 10px; color: #c644a8">
                       <span>{{ el.product.category }}</span>
                     </div>
-                    <div class="prod-price d-flex justify-content-between">
+                    <div class="prod-price d-flex flex-wrap justify-content-between">
                       <span>₱{{ frmtd(el.product.price) }}/{{ el.product.unit }}</span>
                       <span class="mx-1">x</span>
                       <span class="mx-1">{{ el.quantity }}</span>
                       <span class="mx-1">=</span>
                       <span class="mx-1" style="color: #2c9144">₱{{ frmtd(el.subTotal) }}</span>
                     </div>
+                    <!-- <span class="mx-1" style="color: #2c9144">₱{{ frmtd(el.subTotal) }}</span> -->
                     <div class="product-qty mt-3">
-                      <el-input-number @change="updateQuantity(el)" size="mini" v-model="el.quantity"  :min="1" step-strictly></el-input-number>
+                      <el-input-number @change="updateQuantity(el)" size="mini" v-model="el.quantity" :min="1" step-strictly></el-input-number>
                     </div>
                   </div>
                 </div>
