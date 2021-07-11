@@ -1,7 +1,24 @@
 <template>
   <div class="container" :class="WindowInnerWidth > 767 ? 'mt-5' : 'mt-1'">
+    <div v-if="chatList.length <= 0" class="container palex-checkout-page">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="palex-card">
+            <div style="display: flex; justify-content: center; align-items: center; height: 450px">
+              <div class="text-center">
+                <h3>No Chat/Conversation Available</h3>
+                <h6 class="text-warning">To Start Chat, Just Visit Store Profile and Click/Tap Chat Button</h6>
+                <div>
+                  <el-button type="success" plain @click="backToProducts()">Continue Shopping</el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- <h3 class="text-center">Messaging</h3> -->
-    <div class="messaging">
+    <div v-else class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people" :style="WindowInnerWidth > 540 ? '' : 'width:15%!important;'">
           <div v-if="WindowInnerWidth > 540" class="headind_srch">
@@ -19,7 +36,14 @@
           </div>
           <!-- <div class="inbox_chat" :style="WindowInnerWidth > 540 ? '' : 'text-align:center !important;'"> -->
           <div class="inbox_chat" :style="cssVars">
-            <div v-for="(item, index) in chatList" :key="index" class="chat_list" :class="item.is_active ? 'active_chat' : ''" :style="WindowInnerWidth > 768 ? '' : 'padding:5px !important;'">
+            <div
+              v-for="(item, index) in chatList"
+              :key="index"
+              class="chat_list"
+              :class="item.id == conversation.id ? 'active_chat' : ''"
+              :style="WindowInnerWidth > 768 ? '' : 'padding:5px !important;'"
+              @click="showConversation(item)"
+            >
               <div class="chat_people">
                 <div class="chat_img" :style="WindowInnerWidth > 540 ? '' : 'float: none  !important; width: 100%  !important;'">
                   <img
@@ -33,7 +57,8 @@
                     {{ item.user_name }} <span class="chat_date">{{ item.date }}</span>
                   </h5>
                   <p>
-                    {{ item.msg }}
+                    <span v-if="item.last_reply">{{ item.last_reply }}</span>
+                    <span v-else>&nbsp;</span>
                   </p>
                 </div>
               </div>
@@ -43,7 +68,42 @@
 
         <div class="mesgs" :style="WindowInnerWidth > 540 ? '' : 'width:85%!important;'">
           <div class="msg_history" :style="cssVars">
-            <div class="incoming_msg">
+            <div class="m-0 p-1 border-bottom border-secondary">
+              <span
+                ><img
+                  src="https://ptetutorials.com/images/user-profile.png"
+                  alt="sunil"
+                  :style="'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important;'"
+              /></span>
+              <span>
+                <span class="ml-3" style="font-size: 20px !important"
+                  ><b>{{ conversation.header_user_name }}</b></span
+                >
+                <!-- <br>
+                <span>{{conversation.header_user_email}}</span> -->
+              </span>
+            </div>
+            <div v-for="(item, index) in replies" :key="index">
+              <div v-if="item.position == 'left'" class="incoming_msg">
+                <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p>{{ item.reply }}</p>
+                    <!-- <span class="time_date"> 11:01 AM | June 9</span> -->
+                    <span class="time_date">{{ item.created_at }}</span>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="outgoing_msg">
+                <div class="sent_msg">
+                  <p>{{ item.reply }}</p>
+                  <!-- <span class="time_date"> 11:01 AM | June 9</span> -->
+                  <span class="time_date">{{ item.created_at }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="incoming_msg">
               <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div>
               <div class="received_msg">
                 <div class="received_withd_msg">
@@ -81,12 +141,12 @@
                   <span class="time_date"> 11:01 AM | Today</span>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="type_msg">
             <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
-              <button class="msg_send_btn" type="button"><i class="fab fa-telegram-plane"></i></button>
+              <input @keyup.enter="chat()" v-model="msg" type="text" class="write_msg" placeholder="Type a message" />
+              <button @click="chat()" class="msg_send_btn" type="button"><i class="fab fa-telegram-plane"></i></button>
             </div>
           </div>
         </div>
@@ -111,6 +171,14 @@ export default {
       //     },
       //   ],
       chatList: [],
+      conversation: {},
+      replies: [],
+      conversation_id: null,
+      msg: null,
+      //   header_user_id: null,
+      //   header_user_name: null,
+      //   header_user_email: null,
+      //   header_user_image_link: null,
     };
   },
   computed: {
@@ -123,10 +191,15 @@ export default {
     },
   },
   created() {
+    if (this.$route.params.conversation_id) {
+      this.conversation_id = this.$route.params.conversation_id;
+    }
+    this.$events.fire("LoadingOverlayShow");
     this.WindowInnerWidth = window.innerWidth;
     this.WindowInnerHeight = window.innerHeight;
     window.addEventListener("resize", this.myEventHandler);
     this.getUserChatList();
+    // this.getConversationReplies();
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
@@ -138,16 +211,64 @@ export default {
       //   console.log(this.WindowInnerWidth);
       //   console.log(this.WindowInnerHeight);
     },
+    chat() {
+      var params = {
+        msg: this.msg,
+        user_id: this.conversation.header_user_id,
+      };
+      axios
+        .post(`/sendMessage`, params)
+        .then((res) => {
+          console.log(res);
+          this.msg = "";
+          //   this.getConversationReplies(this.conversation.id);
+          this.getUserChatList();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    backToProducts() {
+      this.$router.push("/products");
+    },
     getUserChatList() {
       axios
         .get(`/getUserChatList`)
         .then((res) => {
           console.log(res);
           this.chatList = res.data;
+          if (this.conversation_id) {
+            this.getConversationReplies(this.conversation_id);
+          } else {
+            if (this.chatList.length > 0) {
+              this.getConversationReplies(this.chatList[0].id);
+            } else {
+              this.$events.fire("LoadingOverlayHide");
+            }
+          }
         })
         .catch((err) => {
           console.error(err);
+          this.$events.fire("LoadingOverlayHide");
         });
+    },
+    getConversationReplies(conversation_id) {
+      axios
+        .get(`/getConversationReplies/${conversation_id}`)
+        .then((res) => {
+          console.log(res);
+          this.conversation = res.data.conversation;
+          this.replies = res.data.replies;
+          this.$events.fire("LoadingOverlayHide");
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$events.fire("LoadingOverlayHide");
+        });
+    },
+    showConversation(item) {
+      this.$events.fire("LoadingOverlayShow");
+      window.location.href = `/customer/chat/${item.id}`;
     },
   },
 };
@@ -301,6 +422,9 @@ img {
 }
 .received_withd_msg {
   width: 57%;
+  @include mobile {
+    width: 80%   !important;
+  }
 }
 .mesgs {
   float: left;
@@ -324,6 +448,9 @@ img {
 .sent_msg {
   float: right;
   width: 46%;
+  @include mobile {
+    width: 85%   !important;
+  }
 }
 .input_msg_write input {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -360,5 +487,15 @@ img {
   @include mobile {
     height: var(--palex-height-2);
   }
+}
+</style>
+
+<style lang="scss" scoped>
+// @import "resources/sass/mixins.scss";
+.palex-card {
+  background: white;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
 }
 </style>

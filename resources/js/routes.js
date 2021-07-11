@@ -122,6 +122,13 @@ const routes = [
                 }
             },
             {
+                path: 'chat/:conversation_id',
+                name: 'cus-chat-id',
+                components: {
+                    helper: CustomerChat
+                }
+            },
+            {
                 path: 'cart',
                 name: 'cus-cart',
                 components: {
