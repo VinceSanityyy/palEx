@@ -132,4 +132,37 @@ class CartController extends Controller
             }
         }
     }
+    public function updateCartItem(Request $request)
+    {
+
+        $isValid = $request->validate([
+            'cart_item_id' => ['required'],
+            'quantity' => ['required', 'integer', 'min:1'],
+        ]);
+        if ($isValid) {
+            $cartContent = CartItem::findOrFail($request->cart_item_id);
+            $cartContent->quantity = $request->quantity;
+            $cartContent->save();
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+    }
+
+    public function removeCartItem(Request $request)
+    {
+        $cartItem = CartItem::where('id', $request->cart_item_id)->delete();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function clearCart()
+    {
+        $cart =  Cart::where('user_id',Auth::user()->id)->first();
+        $CartItems = CartItems::where('cart_id', $cart)->delete();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 }
