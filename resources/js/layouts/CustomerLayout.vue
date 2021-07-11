@@ -4,11 +4,15 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
       <div class="w-100 text-center">
         <a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
-        <div v-if="is_auth" style="position: absolute; top: 15px; right: 8px">
-          <RouterLink to="/customer/cart">
-            <i class="fas fa-shopping-cart font-size-20"></i>
+        <div style="position: absolute; top: 15px; right: 8px">
+          <RouterLink v-if="is_auth" to="/customer/cart">
+            <i class="fas fa-shopping-cart font-size-20" style="color: #fff"></i>
             <span v-if="cartNumber" class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
           </RouterLink>
+          <!-- <RouterLink v-if="!is_auth" class="nav-link" to="/login">
+            <i class="fas fa-shopping-cart font-size-20"></i>
+          </RouterLink> -->
+          <a v-if="!is_auth" href="/login"><i class="fas fa-shopping-cart font-size-20" style="color: #fff"></i></a>
         </div>
       </div>
     </nav>
@@ -43,11 +47,15 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li v-if="is_auth" class="nav-item">
-            <RouterLink class="nav-link" to="/customer/cart">
+          <li class="nav-item">
+            <RouterLink v-if="is_auth" class="nav-link active" to="/customer/cart">
               <i class="fas fa-shopping-cart font-size-20"></i>
               <span v-if="cartNumber" class="badge badge-danger font-size-11"> {{ cartNumber }}</span>
             </RouterLink>
+            <!-- <RouterLink v-if="!is_auth" class="nav-link" to="/login">
+              <i class="fas fa-shopping-cart font-size-20"></i>
+            </RouterLink> -->
+            <a v-if="!is_auth" href="/login" class="nav-link active"><i class="fas fa-shopping-cart font-size-20"></i></a>
           </li>
           <li v-if="!is_auth" class="nav-item">
             <a href="/login" class="nav-link active">Login</a>
