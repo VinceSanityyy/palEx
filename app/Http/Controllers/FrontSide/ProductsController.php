@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductsController extends Controller
 {
     public function getProducts(){
-        $products = Product::with('vendor')->get();
+        $products = Product::with('vendor')->orderBy('name')->get();
         return response()->json($products, 200);
     }
 }
