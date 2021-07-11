@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ldbtn.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loading.min.css') }}">
 </head>
 {{-- <body class="sidebar-mini layout-fixed control-sidebar-open text-sm"> --}}
 {{-- <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> --}}
