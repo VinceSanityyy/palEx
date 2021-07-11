@@ -145,14 +145,17 @@ export default {
         .get(`/getProducts`)
         .then((res) => {
           console.log(res);
+          this.$events.fire("LoadingOverlayHide");
           this.products = res.data;
         })
         .catch((err) => {
           console.error(err);
+          this.$events.fire("LoadingOverlayHide");
         });
     },
   },
   mounted() {
+    this.$events.fire("LoadingOverlayShow");
     this.getProducts();
   },
 };

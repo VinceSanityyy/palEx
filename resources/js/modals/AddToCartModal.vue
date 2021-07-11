@@ -39,7 +39,8 @@
                 <span>Quantity:</span>
               </div>
               <div class="d-flex justify-content-between">
-                <el-input-number size="small" v-model="qty"></el-input-number>
+                <el-input-number size="small" v-model="qty" :min="1" step-strictly></el-input-number>
+                <!-- <el-input-number size="small" v-model="qty"></el-input-number> -->
                 <button class="btn btn-sm btn-primary" type="button" @click="addToCart()"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
               </div>
             </div>
@@ -66,6 +67,7 @@ export default {
   methods: {
     addToCart() {
       if (this.is_auth) {
+        this.$events.fire("LoadingOverlayShow");
         let params = {
           vendor_id: this.item.vendor.id,
           product_id: this.item.id,
@@ -74,6 +76,7 @@ export default {
         axios
           .post(`/addToCart`, params)
           .then((res) => {
+            this.$events.fire("LoadingOverlayHide");
             this.$message({
               message: "Success Add to Cart",
               type: "success",
@@ -83,6 +86,7 @@ export default {
             $("#AddToCartModal").modal("hide");
           })
           .catch((err) => {
+            this.$events.fire("LoadingOverlayHide");
             if (err.response.status == 422) {
               this.MyErrorClass.record(err.response.data.errors);
               var msg = this.MyErrorClass.getAllMessages();

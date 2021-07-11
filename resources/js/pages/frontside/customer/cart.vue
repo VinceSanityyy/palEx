@@ -53,7 +53,7 @@
                       <span class="mx-1" style="color: #2c9144">₱{{ frmtd(el.subTotal) }}</span>
                     </div>
                     <div class="product-qty mt-3">
-                      <el-input-number @change="updateQuantity(el)" :min="1" size="mini" v-model="el.quantity" step-strictly></el-input-number>
+                      <el-input-number @change="updateQuantity(el)" size="mini" v-model="el.quantity"  :min="1" step-strictly></el-input-number>
                     </div>
                   </div>
                 </div>
@@ -77,6 +77,9 @@
               <div class="d-flex justify-content-between my-2 total">
                 <span><b>Total:</b></span>
                 <span> ₱ {{ frmtd(overall_total) }}</span>
+              </div>
+              <div class="mt-5 text-center">
+                <el-button class="w-100" type="success" plain>Place Order</el-button>
               </div>
             </div>
           </div>
@@ -113,10 +116,11 @@ export default {
     this.getCart();
   },
   methods: {
-    backToProducts(){
-        this.$router.push('/products');
+    backToProducts() {
+      this.$router.push("/products");
     },
     removeCartItem(el) {
+      this.$events.fire("LoadingOverlayShow");
       axios
         .post(`/removeCartItem`, {
           cart_item_id: el.id,
@@ -129,6 +133,7 @@ export default {
         });
     },
     updateQuantity(el) {
+      this.$events.fire("LoadingOverlayShow");
       // console.log(el);
       // console.log(el.quantity);
       axios
@@ -154,12 +159,14 @@ export default {
       axios
         .get(`/getCart`)
         .then((res) => {
+          this.$events.fire("LoadingOverlayHide");
           this.cartList = res.data.details;
           this.total_order_amount = res.data.total_order_amount;
           this.discount = res.data.discount;
           this.overall_total = res.data.over_all_total;
         })
         .catch((err) => {
+          this.$events.fire("LoadingOverlayHide");
           console.error(err);
         });
     },

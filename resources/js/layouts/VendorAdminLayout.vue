@@ -1,6 +1,6 @@
 <template>
 <div>
-
+      <PalexLoading></PalexLoading>
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center" style="background: #44c662;">
     <!-- <img class="animation__wobble" src="https://i.pinimg.com/originals/ad/ca/08/adca082427894069f92dd11fda3d96cb.gif" alt="AdminLTELogo" height="60" width="60"> -->

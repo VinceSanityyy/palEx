@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PalexLoading></PalexLoading>
     <!-- MOBILE TOP NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
       <div class="w-100 text-center">
