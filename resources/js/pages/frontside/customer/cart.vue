@@ -48,7 +48,7 @@
                       <span class="mx-1" style="color: #2c9144">₱{{ frmtd(el.subTotal) }}</span>
                     </div>
                     <div class="product-qty mt-3">
-                      <el-input-number size="mini" v-model="el.quantity"></el-input-number>
+                      <el-input-number @change="updateQuantity(el)" :min="1" size="mini" v-model="el.quantity" step-strictly></el-input-number>
                     </div>
                   </div>
                 </div>
@@ -108,6 +108,22 @@ export default {
     this.getCart();
   },
   methods: {
+    updateQuantity(el){
+        // console.log(el);
+        // console.log(el.quantity);
+        axios.post(`/updateCartItem`,{
+            cart_item_id:el.id,
+            quantity:el.quantity,
+        })
+        .then(res => {
+            console.log(res);
+            this.getCart();
+        })
+        .catch(err => {
+            console.error(err);
+             this.getCart();
+        })
+    },
     getCurrentAuth() {
       axios.get("/me").then((res) => {
         this.user = res.data;
