@@ -85,7 +85,7 @@
                 <input v-model="unit" type="text" class="form-control" />
                 <label>Category</label>
                 <select v-model="category" class="form-control" id="exampleFormControlSelect2">
-                  <option value="Fruites">Fruites</option>
+                  <option value="Fruits">Fruits</option>
                   <option value="Vegetables">Vegetables</option>
                   <option value="Wet">Wet</option>
                   <option value="Dry">Dry</option>
