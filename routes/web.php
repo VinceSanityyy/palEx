@@ -37,6 +37,7 @@ Route::get('/store/{vendor_id}', [App\Http\Controllers\FrontsideController::clas
 // Public API (Json response)
 Route::get('/getVendorProfile/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'getVendorProfile']);
 Route::get('/getProducts', [App\Http\Controllers\FrontSide\ProductsController::class, 'getProducts']);
+Route::get('/getProducts/{vendor_id}', [App\Http\Controllers\FrontSide\ProductsController::class, 'getProductsByVendorId']);
 
 
 Route::get('/404', function () {

@@ -118,8 +118,8 @@ export default {
       value: null,
       options: [
         {
-          value: "Fruites",
-          label: "Fruites",
+          value: "Fruits",
+          label: "Fruits",
         },
         {
           value: "Vegetables",
