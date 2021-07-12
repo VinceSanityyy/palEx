@@ -131,10 +131,10 @@ class ChatController extends Controller
                 $conversation->header_user_email = $conversation->user_two->email;
                 $conversation->header_user_image_link = $conversation->user_two->image_link;
             } else {
-                $conversation->header_user_id = $conversation->user_two->id;
-                $conversation->header_user_name = $conversation->user_two->name;
-                $conversation->header_user_email =  $conversation->user_two->email;
-                $conversation->header_user_image_link =  $conversation->user_two->image_link;
+                $conversation->header_user_id = $conversation->user_one->id;
+                $conversation->header_user_name = $conversation->user_one->name;
+                $conversation->header_user_email =  $conversation->user_one->email;
+                $conversation->header_user_image_link =  $conversation->user_one->image_link;
             }
 
             $replies  = ConversationReply::where('conversation_id', $conversation->id)->orderBy('created_at', 'asc')->get();
