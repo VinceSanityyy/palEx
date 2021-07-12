@@ -13,8 +13,11 @@ import routes from './routes'
 // import store from './store'
 
 import VueEvents from 'vue-events';
-Vue.use(VueEvents)
+import VueChatScroll from 'vue-chat-scroll';
 
+
+Vue.use(VueChatScroll)
+Vue.use(VueEvents)
 Vue.use(ElementUI);
 Vue.use(toastr)
 Vue.use(Loading)
