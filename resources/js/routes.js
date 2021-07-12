@@ -14,6 +14,7 @@ import AdminFeeds from './pages/backside/admin/feeds.vue';
 import VendorDashboard from './pages/backside/vendor/index.vue';
 import VendorOrders from './pages/backside/vendor/orders.vue';
 import VendorProducts from './pages/backside/vendor/products.vue';
+import VendorChat from './pages/backside/vendor/chat.vue';
 
 // Customer Pages
 import CustomerProfile from './pages/frontside/customer/index.vue';
@@ -87,6 +88,20 @@ const routes = [
                 name: 'vendor-products',
                 components: {
                     helper: VendorProducts
+                }
+            },
+            {
+                path: 'chat',
+                name: 'ven-chat',
+                components: {
+                    helper: VendorChat
+                }
+            },
+            {
+                path: 'chat/:conversation_id',
+                name: 'ven-chat-id',
+                components: {
+                    helper: VendorChat
                 }
             },
         ],

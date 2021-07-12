@@ -56,8 +56,10 @@ Route::middleware('isAuth')->group(function(){
         // Route::get('/vendor/products', [App\Http\Controllers\BacksideController::class, 'index']);
         Route::get('/vendor', [App\Http\Controllers\BacksideController::class, 'index']);
         Route::get('/vendor/{page_name}', [App\Http\Controllers\BacksideController::class, 'index']);
-        Route::post('/vendor/updateProruct/{id}',[App\Http\Controllers\ProductController::class, 'updateProduct']);
+        Route::get('/vendor/chat/{conversation_id}', [App\Http\Controllers\BacksideController::class, 'chatPageByConvId']);
 
+        //API
+        Route::post('/vendor/updateProruct/{id}',[App\Http\Controllers\ProductController::class, 'updateProduct']);
         Route::post('/palex_api/vendor/createProduct',[App\Http\Controllers\ProductController::class, 'addProduct']);
         Route::get('/palex_api/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
     });

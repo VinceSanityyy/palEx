@@ -96,6 +96,12 @@
 		  		<p>Orders</p>
 		  	</router-link>
 		  </li>
+           <li class="nav-item">
+		  	<router-link to="/vendor/chat" class="nav-link" :class="$route.name == 'ven-chat' ||  $route.name == 'ven-chat-id' ? 'active':''">
+		  		<i class="nav-icon fas fa-comments"></i>
+		  		<p>Chat</p>
+		  	</router-link>
+		  </li>
 		  <li class="nav-item">
 		  	<a  @click="logout" class="nav-link" onclick="">
 		  		<i class="nav-icon fas fa-times"></i>
