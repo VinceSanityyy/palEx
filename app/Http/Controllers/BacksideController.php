@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\NewsFeed;
 class BacksideController extends Controller
 {
     /**
@@ -42,5 +43,9 @@ class BacksideController extends Controller
         } else {
             abort(404);
         }
+    }
+    public function getFeeds(){
+        $feeds = Newsfeed::all();
+        return response()->json($feeds,200);
     }
 }

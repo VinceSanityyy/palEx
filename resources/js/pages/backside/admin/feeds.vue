@@ -99,12 +99,12 @@ export default{
             })
         },
         getFeeds(){
-            axios.get('/getFeeds').then((res)=>{
+            axios.get('/getFeedsAdmin').then((res)=>{
                 this.feeds = res.data
             })
         },
         getFeedsInit(){
-            axios.get('/getFeeds').then((res)=>{
+            axios.get('/getFeedsAdmin').then((res)=>{
                 this.feeds = res.data
                 this.myTable()
             })

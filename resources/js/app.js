@@ -22,6 +22,7 @@ Vue.use(ElementUI);
 Vue.use(toastr)
 Vue.use(Loading)
 Vue.use(VueRouter)
+Vue.use(require('vue-moment'));
 Vue.use(VueAlertify, {
     movable: false,
     glossary: {

@@ -78,7 +78,7 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/countAcceptedVendors',[App\Http\Controllers\HomeController::class, 'countAcceptedVendors']);
         //Feeds
         Route::post('/addFeed',[App\Http\Controllers\NewsfeedController::class, 'createFeeds']);
-        Route::get('/getFeeds',[App\Http\Controllers\NewsfeedController::class, 'getFeeds']);
+        Route::get('/getFeedsAdmin',[App\Http\Controllers\BacksideController::class, 'getFeeds']);
     });
 
     Route::middleware('isCustomer')->group(function(){
@@ -95,6 +95,7 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/getCart', [App\Http\Controllers\FrontSide\CartController::class, 'getCart']);
         Route::post('/updateCartItem', [App\Http\Controllers\FrontSide\CartController::class, 'updateCartItem']);
         Route::post('/removeCartItem', [App\Http\Controllers\FrontSide\CartController::class, 'removeCartItem']);
+        Route::get('/getFeeds',[App\Http\Controllers\FrontSide\ProductsController::class, 'getFeeds']);
     });
 });
 

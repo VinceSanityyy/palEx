@@ -29,10 +29,4 @@ class NewsfeedController extends Controller
         $news->save();
         return response()->json('Success',200);
     }
-
-    public function getFeeds(){
-        $feeds = Newsfeed::all();
-        return response()->json($feeds,200);
-    }
-
 }
