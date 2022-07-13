@@ -29,6 +29,7 @@
         "alertify": "^0.3.0",
         "alertifyjs": "^1.13.1",
         "element-ui": "^2.15.2",
+        "moment": "^2.29.4",
         "sweetalert2": "^9.10.9",
         "vue-alertify": "^1.1.0",
         "vue-chat-scroll": "^1.4.0",
