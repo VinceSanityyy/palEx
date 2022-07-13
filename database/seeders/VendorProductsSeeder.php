@@ -4,11 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\VendorAddress;
+use App\Models\ShippingFee;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use App\Enums\ProductStatus;
 
-class ProductsSeeder extends Seeder
+class VendorProductsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,6 +29,25 @@ class ProductsSeeder extends Seeder
             'role' => 1,
             'status' => 1
         ]);
+        
+        VendorAddress::create([
+            'vendor_id' => $vendor1->id,
+            'store_name' => 'Bing`z Fruits Stand',
+            'phone' => '09102626020',
+            'street' => 'Street 15',
+            'barangay' => 'Apokon',
+            'city' => 'Tagum City',
+            'province' => 'Davao del Norte',
+            'selected' => 1
+        ]);
+
+
+        ShippingFee::create([
+            'vendor_id' => $vendor1->id,
+            'shipping_fee_amount' => 80
+        ]);
+
+        
         foreach ($data as $obj) {
             $this->createProduct($obj, $vendor1);
         }
@@ -41,6 +62,23 @@ class ProductsSeeder extends Seeder
             'role' => 1,
             'status' => 1
         ]);
+
+        VendorAddress::create([
+            'vendor_id' => $vendor2->id,
+            'store_name' => 'VinceSanityyy Co.',
+            'phone' => '09102626030',
+            'street' => 'Street 30',
+            'barangay' => 'Liboganon',
+            'city' => 'Tagum City',
+            'province' => 'Davao del Norte',
+            'selected' => 1
+        ]);
+
+        ShippingFee::create([
+            'vendor_id' => $vendor2->id,
+            'shipping_fee_amount' => 110
+        ]);
+
         foreach ($data2 as $obj) {
             $this->createProduct($obj, $vendor2);
         }
