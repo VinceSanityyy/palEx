@@ -61,6 +61,7 @@ class UserSeeder extends Seeder
                 'barangay' => 'Apokon',
                 'city' => 'Tagum City',
                 'province' => 'Davao del Norte',
+                'postal_code' => '8100',
                 'selected' => 1,
             ],
             [
@@ -72,7 +73,8 @@ class UserSeeder extends Seeder
                 'barangay' => 'Apokon',
                 'city' => 'Tagum City',
                 'province' => 'Davao del Norte',
-                'selected' => 1,
+                'postal_code' => '8100',
+                'selected' => 0,
             ],
 
             [
@@ -84,6 +86,7 @@ class UserSeeder extends Seeder
                 'barangay' => 'Visayan Village',
                 'city' => 'Tagum City',
                 'province' => 'Davao del Norte',
+                'postal_code' => '8100',
                 'selected' => 1,
             ],
 

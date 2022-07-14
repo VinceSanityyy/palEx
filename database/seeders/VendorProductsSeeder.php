@@ -38,6 +38,7 @@ class VendorProductsSeeder extends Seeder
             'barangay' => 'Apokon',
             'city' => 'Tagum City',
             'province' => 'Davao del Norte',
+            'postal_code' => '8100',
             'selected' => 1
         ]);
 
@@ -71,6 +72,7 @@ class VendorProductsSeeder extends Seeder
             'barangay' => 'Liboganon',
             'city' => 'Tagum City',
             'province' => 'Davao del Norte',
+            'postal_code' => '8100',
             'selected' => 1
         ]);
 
