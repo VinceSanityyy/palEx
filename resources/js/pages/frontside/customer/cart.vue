@@ -121,16 +121,17 @@
               <span class="mx-1"> ₱{{ frmtd(item.subtotal) }} </span>
             </div>
 
-            <div
-              class="d-flex justify-content-between px-2 delfee-color"
-            >
+            <div class="d-flex justify-content-between px-2 delfee-color">
               <span> Delivery Fee </span>
               <span class="mx-1">
                 ₱{{ frmtd(item.vendor_shipping_fee_amount) }}
               </span>
             </div>
 
-            <div class="d-flex justify-content-between px-2" style="color: #2c9144; font-weight:600;">
+            <div
+              class="d-flex justify-content-between px-2"
+              style="color: #2c9144; font-weight: 600"
+            >
               <span> Total </span>
               <span class="mx-1">
                 ₱{{ frmtd(item.subtotal_with_shipping_fee) }}
@@ -160,7 +161,11 @@
                 <span> ₱ {{ frmtd(overall_total) }}</span>
               </div>
               <div class="mt-5 text-center">
-                <el-button class="w-100" type="success" plain
+                <el-button
+                  class="w-100"
+                  type="success"
+                  plain
+                  @click="PlaceOrder"
                   >Place Order</el-button
                 >
               </div>
@@ -199,6 +204,14 @@ export default {
     this.getCart();
   },
   methods: {
+    async PlaceOrder() {
+      try {
+        const res = await axios.post("/placeOrder");
+        alert("success");
+      } catch (error) {
+        console.error(err);
+      }
+    },
     backToProducts() {
       this.$router.push("/products");
     },
