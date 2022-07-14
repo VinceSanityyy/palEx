@@ -75,6 +75,9 @@ class OrderController extends Controller
                 }
             }
 
+
+            $cart =  Cart::where('customer_id', $CUSTOMER_ID)->first();
+            $CartItem = CartItem::where('cart_id', $cart->id)->delete();
             return response()->json([
                 'status' => 'success'
             ]);
