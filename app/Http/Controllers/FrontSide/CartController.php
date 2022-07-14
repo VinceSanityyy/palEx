@@ -61,8 +61,8 @@ class CartController extends Controller
                     ->get();
 
                 $ShippingFee =   ShippingFee::where('vendor_id', $value->vendor_id)->first();
-               
-                
+
+
                 $subTotalPerVendor = 0;
                 foreach ($cart_items_per_vendor as $key2 => $value2) {
                     $value2->subTotal = $value2->quantity * $value2->product->price;
@@ -85,7 +85,7 @@ class CartController extends Controller
 
             $total_order_amount_with_shipping_fee =  $total_order_amount + $total_shipping_fee;
             $over_all_total = ($total_order_amount + $total_shipping_fee) - $discount;
-            
+
 
             $class = new stdClass;
             $class->total_order_amount =   $total_order_amount;
@@ -179,10 +179,18 @@ class CartController extends Controller
 
     public function clearCart()
     {
-        $cart =  Cart::where('user_id', Auth::user()->id)->first();
-        $CartItems = CartItem::where('cart_id', $cart)->delete();
-        return response()->json([
-            'status' => 'success'
-        ]);
+        try {
+            $cart =  Cart::where('customer_id', Auth::user()->id)->first();
+            // return $cart;
+            $CartItem = CartItem::where('cart_id', $cart->id)->delete();
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'fail',
+                'error' => $th
+            ]);
+        }
     }
 }

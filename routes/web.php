@@ -95,7 +95,7 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/getCart', [App\Http\Controllers\FrontSide\CartController::class, 'getCart']);
         Route::post('/updateCartItem', [App\Http\Controllers\FrontSide\CartController::class, 'updateCartItem']);
         Route::post('/removeCartItem', [App\Http\Controllers\FrontSide\CartController::class, 'removeCartItem']);
-        // Route::get('/clearCart', [App\Http\Controllers\FrontSide\CartController::class, 'clearCart']);
+        Route::get('/clearCart', [App\Http\Controllers\FrontSide\CartController::class, 'clearCart']);
         Route::get('/getFeeds',[App\Http\Controllers\FrontSide\ProductsController::class, 'getFeeds']);
         Route::post('/placeOrder',[App\Http\Controllers\FrontSide\OrderController::class, 'placeOrder']);
     
