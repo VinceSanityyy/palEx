@@ -20,8 +20,9 @@ class CreateCustomerAddressesTable extends Migration
             $table->string('phone');
             $table->string('street')->nullable();
             $table->string('barangay')->nullable();
-            $table->string('city')->nullable();;
+            $table->string('city')->nullable();
             $table->string('province')->nullable();
+            $table->string('postal_code')->nullable();
             $table->boolean('selected')->default(false);
             $table->bigInteger('status')->default(1);
             $table->timestamps();
