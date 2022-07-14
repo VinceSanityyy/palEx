@@ -21,7 +21,9 @@ class CreateOrdersTable extends Migration
             // $table->bigInteger('status')->default(1); // 1 Pending, 2 To Ship, 3 Complete,  
             $table->string('status'); // 'pending', 'to ship', 'complete', 'cancelled';
             $table->bigInteger('payment_method')->default(1); // 1 Cash On Delivery, 2 Online Payment, 3 Pickup
-            $table->string('customer_complete_address');
+            $table->string('customer_receiver_fullname');
+            $table->string('customer_receiver_phone');
+            $table->string('customer_receiver_address');
             $table->double('shipping_fee', 24, 2)->nullable();
             $table->timestamps();
 
@@ -32,7 +34,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('vendor_id')
                 ->references('id')
                 ->on('users');
-            
+
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('users');
