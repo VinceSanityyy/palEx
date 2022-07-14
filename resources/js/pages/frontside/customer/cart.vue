@@ -207,7 +207,14 @@ export default {
     async PlaceOrder() {
       try {
         const res = await axios.post("/placeOrder");
-        alert("success");
+        this.$message({
+          message: "Success Place Order",
+          type: "success",
+          customClass: "palex-msg-min-width",
+        });
+        // this.getCart();
+         this.$router.push("/customer/orders");
+        // /customer/orders
       } catch (error) {
         console.error(err);
       }
