@@ -24,7 +24,8 @@ class CreateOrdersTable extends Migration
             $table->string('customer_receiver_fullname');
             $table->string('customer_receiver_phone');
             $table->string('customer_receiver_address');
-            $table->double('shipping_fee', 24, 2)->nullable();
+            $table->double('shipping_fee', 24, 2)->default(0);
+            $table->double('discount', 24, 2)->default(0);
             $table->timestamps();
 
             // $table->foreign('transaction_id')

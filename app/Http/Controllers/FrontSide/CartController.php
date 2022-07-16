@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ShippingFee;
+use App\Models\CustomerAddress;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
@@ -60,7 +63,9 @@ class CartController extends Controller
                     ->where('vendor_id', $value->vendor_id)
                     ->get();
 
-                $ShippingFee =   ShippingFee::where('vendor_id', $value->vendor_id)->first();
+                // $ShippingFee =   ShippingFee::where('vendor_id', $value->vendor_id)->first();
+                // $ShippingFee_Amount =    $ShippingFee->shipping_fee_amount;
+                $ShippingFee_Amount =    0;
 
 
                 $subTotalPerVendor = 0;
@@ -72,8 +77,8 @@ class CartController extends Controller
                 }
 
                 $value->subtotal =  $subTotalPerVendor;
-                $value->vendor_shipping_fee_amount =  $ShippingFee->shipping_fee_amount;
-                $value->subtotal_with_shipping_fee =  $subTotalPerVendor + $ShippingFee->shipping_fee_amount;
+                $value->vendor_shipping_fee_amount = $ShippingFee_Amount;
+                $value->subtotal_with_shipping_fee =  $subTotalPerVendor + $ShippingFee_Amount;
                 $value->items =  $cart_items_per_vendor;
 
                 // $total_order_amount =  $total_order_amount + $subTotalPerVendor;

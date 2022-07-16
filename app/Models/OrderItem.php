@@ -17,4 +17,10 @@ class OrderItem extends Model
     {
         return $this->price * $this->quantity;
     }
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product', 'product_id');
+    }
+
+    
 }

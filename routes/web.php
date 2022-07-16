@@ -64,7 +64,7 @@ Route::middleware('isAuth')->group(function(){
         Route::post('/palex_api/vendor/createProduct',[App\Http\Controllers\ProductController::class, 'addProduct']);
         Route::get('/palex_api/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
         Route::post('/palex_api/vendor/updateOrderStatus',[App\Http\Controllers\Frontside\OrderController::class, 'updateOrderStatus']);
-        Route::get('/palex_api/vendor/getOrders',[App\Http\Controllers\Frontside\OrderController::class, 'getOrders']);
+        Route::get('/palex_api/vendor/getOrders',[App\Http\Controllers\Frontside\OrderController::class, 'getOrdersVendor']);
     });
 
     Route::middleware('isAdmin')->group(function(){
@@ -100,8 +100,7 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/clearCart', [App\Http\Controllers\FrontSide\CartController::class, 'clearCart']);
         Route::get('/getFeeds',[App\Http\Controllers\FrontSide\ProductsController::class, 'getFeeds']);
         Route::post('/placeOrder',[App\Http\Controllers\FrontSide\OrderController::class, 'placeOrder']);
-    
-    
+        Route::get('/getCustomerOrders',[App\Http\Controllers\FrontSide\OrderController::class, 'getCustomerOrders']);
     });
 });
 

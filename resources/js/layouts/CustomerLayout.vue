@@ -230,8 +230,3 @@ export default {
 // }
 </style>
 
-<style>
-.palex-msg-min-width {
-  min-width: 250px !important;
-}
-</style>
