@@ -176,7 +176,7 @@
                   class="w-100"
                   type="success"
                   plain
-                  @click="PlaceOrder"
+                  @click="PlaceOrderAPI()"
                   >Place Order</el-button
                 >
               </div>
@@ -215,7 +215,7 @@ export default {
     this.getCart();
   },
   methods: {
-    async PlaceOrder() {
+    async PlaceOrderAPI() {
       try {
         const res = await axios.post("/placeOrder");
         this.$message({
