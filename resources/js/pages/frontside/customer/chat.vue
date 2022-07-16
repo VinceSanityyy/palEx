@@ -1,5 +1,18 @@
 <template>
   <div class="container" :class="WindowInnerWidth > 767 ? 'mt-1' : 'mt-1'">
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="palex-card">
+            <div  class="px-2" style="font-weight: bold; font-size: 24px">
+              <i class="far fa-comments mr-2"></i>Chat Box
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div v-if="chatList.length <= 0" class="container palex-checkout-page">
       <div class="row">
         <div class="col-md-12">
