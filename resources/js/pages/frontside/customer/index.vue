@@ -139,10 +139,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "resources/sass/mixins.scss";
-.palex-card {
-  background: white !important;
-  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
-//   margin: 0.5rem;
-//   padding: 1rem;
-}
+// .palex-card {
+//   background: white !important;
+//   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+// //   margin: 0.5rem;
+// //   padding: 1rem;
+// }
 </style>

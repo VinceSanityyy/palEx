@@ -292,12 +292,12 @@ export default {
 .delfee-color {
   color: lightsalmon !important;
 }
-.palex-card {
-  background: white;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
-}
+// .palex-card {
+//   background: white;
+//   margin: 0.5rem;
+//   padding: 0.5rem;
+//   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+// }
 .palex-cart-list {
 }
 .palex-order-summary {
