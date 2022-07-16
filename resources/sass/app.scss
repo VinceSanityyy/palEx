@@ -26,3 +26,11 @@
     padding: 0.5rem;
     box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
 }
+
+.el-message-box {
+    // width: 420px !important;
+    @media (max-width: 424px) {
+        width: 300px !important;
+    }
+
+}
