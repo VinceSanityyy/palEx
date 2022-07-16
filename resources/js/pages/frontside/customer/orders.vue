@@ -93,7 +93,7 @@
 					<div class="palex-card">
 						<div class="palex-order-summary py-2">
 							<h3 class="my-3 text-center"></h3>
-							
+
 							<button type="button" class="btn btn-light w-100 mb-1">
 								<span class="d-flex justify-content-between">
 									<span> All </span>
@@ -239,7 +239,6 @@ export default {
 				this.$message({
 					message: "Success Place Order",
 					type: "success",
-					customClass: "palex-msg-min-width",
 				});
 				// this.getCart();
 				this.$router.push("/customer/orders");

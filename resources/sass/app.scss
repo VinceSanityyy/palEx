@@ -28,9 +28,13 @@
 }
 
 .el-message-box {
-    // width: 420px !important;
     @media (max-width: 424px) {
         width: 300px !important;
     }
 
+}
+.el-message {
+    @media (max-width: 380px) {
+        min-width: 300px !important;
+    }
 }

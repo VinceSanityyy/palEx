@@ -164,7 +164,6 @@ export default {
 				this.$message({
 					message: "Success Place Order",
 					type: "success",
-					customClass: "palex-msg-min-width",
 				});
 				// this.getCart();
 				this.$events.fire("updateCartCounter");
