@@ -85,4 +85,21 @@ class OrderController extends Controller
             return response()->json("nothing in cart", 200);
         }
     }
+
+    public function updateOrderStatus(Request $request){
+        // dd($request->all());
+
+        $order = Order::find($request->id);
+        $order->status = $request->status;
+        $order->save();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function getOrders(){
+        $orders = Order::query()->where('vendor_id', Auth::user()->id)->with('orderItems')
+            ->get();
+        return response()->json($orders);
+    }
 }

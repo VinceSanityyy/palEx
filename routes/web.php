@@ -63,6 +63,8 @@ Route::middleware('isAuth')->group(function(){
         Route::post('/vendor/updateProruct/{id}',[App\Http\Controllers\ProductController::class, 'updateProduct']);
         Route::post('/palex_api/vendor/createProduct',[App\Http\Controllers\ProductController::class, 'addProduct']);
         Route::get('/palex_api/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
+        Route::post('/palex_api/vendor/updateOrderStatus',[App\Http\Controllers\Frontside\OrderController::class, 'updateOrderStatus']);
+        Route::get('/palex_api/vendor/getOrders',[App\Http\Controllers\Frontside\OrderController::class, 'getOrders']);
     });
 
     Route::middleware('isAdmin')->group(function(){
