@@ -20,7 +20,7 @@ class CartController extends Controller
         $this->middleware('auth');
     }
 
-    public function placeOrder()
+    public function place_order()
     {
         $CUSTOMER_ID = Auth::user()->id;
         $cartIsExist = Cart::where('customer_id', $CUSTOMER_ID)->exists();

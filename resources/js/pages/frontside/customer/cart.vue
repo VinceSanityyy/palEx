@@ -217,7 +217,7 @@ export default {
   methods: {
     async PlaceOrderAPI() {
       try {
-        const res = await axios.post("/placeOrder");
+        const res = await axios.post("/place_order");
         this.$message({
           message: "Success Place Order",
           type: "success",
