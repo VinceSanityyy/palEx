@@ -1,5 +1,16 @@
 <template>
-  <section class="content mt-5" style="margin-bottom: 5rem">
+  <section class="content mt-2" style="margin-bottom: 5rem">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="palex-card">
+            <div  class="px-2" style="font-weight: bold; font-size: 24px">
+              <i class="fas fa-shopping-cart mr-2"></i>Cart
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div v-if="cartList.length <= 0" class="container palex-checkout-page">
       <div class="row">
         <div class="col-md-12">
@@ -213,7 +224,9 @@ export default {
           customClass: "palex-msg-min-width",
         });
         // this.getCart();
-         this.$router.push("/customer/orders");
+        this.$events.fire("updateCartCounter");
+        this.$router.push("/customer/orders");
+
         // /customer/orders
       } catch (error) {
         console.error(err);
@@ -230,6 +243,7 @@ export default {
         })
         .then((res) => {
           this.getCart();
+          this.$events.fire("updateCartCounter");
         })
         .catch((err) => {
           this.getCart();
@@ -247,6 +261,7 @@ export default {
         .then((res) => {
           console.log(res);
           this.getCart();
+          this.$events.fire("updateCartCounter");
         })
         .catch((err) => {
           console.error(err);
@@ -291,12 +306,12 @@ export default {
 .delfee-color {
   color: lightsalmon !important;
 }
-.palex-card {
-  background: white;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
-}
+// .palex-card {
+//   background: white;
+//   margin: 0.5rem;
+//   padding: 0.5rem;
+//   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+// }
 .palex-cart-list {
 }
 .palex-order-summary {

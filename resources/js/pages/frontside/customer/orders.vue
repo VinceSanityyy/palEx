@@ -1,5 +1,16 @@
 <template>
-  <section class="content mt-5" style="margin-bottom: 5rem">
+  <section class="content mt-2" style="margin-bottom: 5rem">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="palex-card">
+            <div class="px-2" style="font-weight: bold; font-size: 24px">
+              <i class="fas fa-file-invoice mr-2"></i>My Orders
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="d-none container palex-checkout-page">
       <div class="row">
         <div class="col-md-12">
@@ -108,7 +119,6 @@
 
               <div class="prod-img px-1 my-auto" style="min-width: 90px">
                 <el-button type="primary" plain>More Details... </el-button>
-
               </div>
             </div>
 
@@ -292,12 +302,12 @@ export default {
 .delfee-color {
   color: lightsalmon !important;
 }
-.palex-card {
-  background: white;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
-}
+// .palex-card {
+//   background: white;
+//   margin: 0.5rem;
+//   padding: 0.5rem;
+//   box-shadow: 4px 4px 4px 4px rgba(0, 174, 119, 0.5) !important;
+// }
 .palex-cart-list {
 }
 .palex-order-summary {
