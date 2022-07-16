@@ -97,8 +97,8 @@ Route::middleware('isAuth')->group(function(){
         Route::post('/removeCartItem', [App\Http\Controllers\FrontSide\CartController::class, 'removeCartItem']);
         Route::get('/clearCart', [App\Http\Controllers\FrontSide\CartController::class, 'clearCart']);
         Route::get('/getFeeds',[App\Http\Controllers\FrontSide\ProductsController::class, 'getFeeds']);
-        // Route::post('/placeOrder',[App\Http\Controllers\FrontSide\OrderController::class, 'place_order']);
-        Route::post('/place_order',[App\Http\Controllers\FrontSide\CartController::class, 'place_order']);
+        Route::post('/placeOrder',[App\Http\Controllers\FrontSide\OrderController::class, 'placeOrder']);
+        // Route::post('/place_order',[App\Http\Controllers\FrontSide\CartController::class, 'place_order']);
     
     
     });
