@@ -37,7 +37,9 @@ class OrderController extends Controller
             foreach ($CartPerVendors as $key => $value) {
 
                 $VENDOR_ID = $value->vendor_id;
-                $ShippingFee =   ShippingFee::where('vendor_id', $VENDOR_ID)->first();
+                // $ShippingFee =   ShippingFee::where('vendor_id', $VENDOR_ID)->first();
+                // $ShippingFee_Amount = $ShippingFee->shipping_fee_amount;
+                $ShippingFee_Amount = 0;
                 $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)
                     ->where('selected', 1)
                     ->first();
@@ -56,7 +58,8 @@ class OrderController extends Controller
                 $Order->customer_receiver_fullname = $CustomerAddress->full_name;
                 $Order->customer_receiver_phone = $CustomerAddress->phone;
                 $Order->customer_receiver_address = $FullAddress;
-                $Order->shipping_fee = $ShippingFee->shipping_fee_amount;
+                $Order->shipping_fee = $ShippingFee_Amount;
+                $Order->discount = 0;
                 $Order->save();
 
                 $cart_items_per_vendor = CartItem::with('product:id,name,price,category,unit,photo')
@@ -84,5 +87,25 @@ class OrderController extends Controller
         } else {
             return response()->json("nothing in cart", 200);
         }
+    }
+
+    public function getCustomerOrders()
+    {
+
+        $CUSTOMER_ID = Auth::user()->id;
+        $Orders = Order::with('vendor:id,name,email')
+            ->where('customer_id', $CUSTOMER_ID)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $class = new stdClass;
+        $class->orders = $Orders;
+        $class->orders_total =    Order::countCustomerOrder('all', $CUSTOMER_ID);
+        $class->orders_pending =    Order::countCustomerOrder('pending', $CUSTOMER_ID);
+        $class->orders_to_deliver =  Order::countCustomerOrder('to ship', $CUSTOMER_ID);
+        $class->orders_completed = Order::countCustomerOrder('completed', $CUSTOMER_ID);
+        $class->orders_cancelled =   Order::countCustomerOrder('cancelled', $CUSTOMER_ID);
+
+        return response()->json($class, 200);
     }
 }

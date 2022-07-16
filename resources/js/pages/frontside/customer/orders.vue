@@ -98,7 +98,9 @@
 								<span class="d-flex justify-content-between">
 									<span> All </span>
 									<span>
-										<span class="badge badge-light">5</span>
+										<span class="badge badge-light">
+											{{ orders_data.orders_total }}
+										</span>
 									</span>
 								</span>
 							</button>
@@ -107,7 +109,9 @@
 								<span class="d-flex justify-content-between">
 									<span> Pending </span>
 									<span>
-										<span class="badge badge-warning">5</span>
+										<span class="badge badge-warning">
+											{{ orders_data.orders_pending }}
+										</span>
 									</span>
 								</span>
 							</button>
@@ -116,7 +120,9 @@
 								<span class="d-flex justify-content-between">
 									<span> To Deliver </span>
 									<span>
-										<span class="badge badge-info">5</span>
+										<span class="badge badge-info">
+											{{ orders_data.orders_to_deliver }}
+										</span>
 									</span>
 								</span>
 							</button>
@@ -125,7 +131,9 @@
 								<span class="d-flex justify-content-between">
 									<span> Complated </span>
 									<span>
-										<span class="badge badge-success">5</span>
+										<span class="badge badge-success">
+											{{ orders_data.orders_completed }}
+										</span>
 									</span>
 								</span>
 							</button>
@@ -134,7 +142,9 @@
 								<span class="d-flex justify-content-between">
 									<span> Cancelled </span>
 									<span>
-										<span class="badge badge-danger">5</span>
+										<span class="badge badge-danger">
+											{{ orders_data.orders_cancelled }}
+										</span>
 									</span>
 								</span>
 							</button>
@@ -143,17 +153,19 @@
 				</div>
 
 				<div class="col-md-9 px-0">
-					<div v-for="idx in 3" :key="idx" class="palex-card mb-2">
+					<div v-for="(item, index) in orders_data.orders" :key="index" class="palex-card mb-2">
 						<div class="row">
 							<div class="col-md-8">
 								<div class="d-flex px-2 mb-2 align-items-center">
 									<i class="fas fa-store mr-1"></i>
-									<span style="font-weight: bold"> Store Name In here</span>
+									<span style="font-weight: bold"> {{ item.vendor.name }} </span>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="status-info">
-									<span class="px-2 badge badge-warning" style="font-size: 18px">PENDING</span>
+									<span class="px-2 badge" :class="badgeStatus(item.status)" style="font-size: 18px; text-transform: uppercase">
+										{{ item.status }}
+									</span>
 								</div>
 							</div>
 						</div>
@@ -163,8 +175,8 @@
 						<div class="row">
 							<div class="col-lg-9">
 								<div class="prods d-flex flex-wrap align-items-center">
-									<div v-for="index in 5" :key="index" class="p-1 prod-img">
-										<img src="/storage/images/products/seeds/apple.jpg" />
+									<div v-for="(picture, index2) in item.order_first_five_pictures" :key="index2" class="p-1 prod-img">
+										<img :src="picture" />
 									</div>
 								</div>
 							</div>
@@ -182,22 +194,22 @@
 
 						<div class="d-flex justify-content-between px-2">
 							<span> Orders Total </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+							<span class="mx-1"> ₱{{ frmtd(item.order_total_amount) }} </span>
 						</div>
 
-						<div class="d-flex justify-content-between px-2 delfee-color">
+						<!-- <div class="d-flex justify-content-between px-2 delfee-color">
 							<span> Delivery Fee </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
-						</div>
+							<span class="mx-1"> ₱{{ frmtd(item.shipping_fee) }} </span>
+						</div> -->
 
 						<div class="d-flex justify-content-between px-2">
 							<span> Discount </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+							<span class="mx-1"> ₱{{ frmtd(0) }} </span>
 						</div>
 						<hr />
 						<div class="d-flex justify-content-between px-2" style="color: #2c9144; font-weight: 600">
 							<span> Total </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+							<span class="mx-1"> ₱{{ frmtd(item.order_overall_total_amount) }} </span>
 						</div>
 					</div>
 				</div>
@@ -210,98 +222,36 @@ export default {
 	props: ["is_auth"],
 	data() {
 		return {
-			cartList: [],
-			//   cartList: [
-			//     {
-			//       items: [
-			//         {
-			//           product: {},
-			//         },
-			//       ],
-			//       vendor: {},
-			//     },
-			//   ],
-			user: {},
-			total_order_amount: 0,
-			discount: 0,
-			overall_total: 0,
-			qty: 1,
+			orders_data: {
+				orders: [],
+				orders_total: 0,
+				orders_pending: 0,
+				orders_to_deliver: 0,
+				orders_completed: 0,
+				orders_cancelled: 0,
+			},
 		};
 	},
 	mounted() {
-		this.getCurrentAuth();
-		this.getCart();
+		this.getOrders();
 	},
 	methods: {
-		async PlaceOrder() {
+		badgeStatus(status) {
+			if (status == "pending") return "badge-warning";
+			if (status == "to ship") return "badge-info";
+			if (status == "completed") return "badge-success";
+			if (status == "cancelled") return "badge-danger";
+			return "badge-warning"
+		},
+		async getOrders() {
 			try {
-				const res = await axios.post("/placeOrder");
-				this.$message({
-					message: "Success Place Order",
-					type: "success",
-				});
-				// this.getCart();
-				this.$router.push("/customer/orders");
-				// /customer/orders
+				const res = await axios.get("/getCustomerOrders");
+				this.orders_data = res.data;
 			} catch (error) {
 				console.error(err);
 			}
 		},
-		backToProducts() {
-			this.$router.push("/products");
-		},
-		removeCartItem(el) {
-			this.$events.fire("LoadingOverlayShow");
-			axios
-				.post(`/removeCartItem`, {
-					cart_item_id: el.id,
-				})
-				.then((res) => {
-					this.getCart();
-				})
-				.catch((err) => {
-					this.getCart();
-				});
-		},
-		updateQuantity(el) {
-			this.$events.fire("LoadingOverlayShow");
-			// console.log(el);
-			// console.log(el.quantity);
-			axios
-				.post(`/updateCartItem`, {
-					cart_item_id: el.id,
-					quantity: el.quantity,
-				})
-				.then((res) => {
-					console.log(res);
-					this.getCart();
-				})
-				.catch((err) => {
-					console.error(err);
-					this.getCart();
-				});
-		},
-		getCurrentAuth() {
-			axios.get("/me").then((res) => {
-				this.user = res.data;
-			});
-		},
-		getCart() {
-			axios
-				.get(`/getCart`)
-				.then((res) => {
-					this.$events.fire("LoadingOverlayHide");
-					this.cartList = res.data.details;
-					this.total_order_amount = res.data.total_order_amount;
-					this.total_delivery_fee = res.data.total_shipping_fee;
-					this.discount = res.data.discount;
-					this.overall_total = res.data.over_all_total;
-				})
-				.catch((err) => {
-					this.$events.fire("LoadingOverlayHide");
-					console.error(err);
-				});
-		},
+
 		frmtd(value) {
 			var n = parseFloat(value).toFixed(2);
 			var withCommas = Number(n).toLocaleString("en", {

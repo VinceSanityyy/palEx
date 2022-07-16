@@ -77,10 +77,10 @@
 							<span class="mx-1"> ₱{{ frmtd(item.subtotal) }} </span>
 						</div>
 
-						<div class="d-flex justify-content-between px-2 delfee-color">
+						<!-- <div class="d-flex justify-content-between px-2 delfee-color">
 							<span> Delivery Fee </span>
 							<span class="mx-1"> ₱{{ frmtd(item.vendor_shipping_fee_amount) }} </span>
-						</div>
+						</div> -->
 
 						<div class="d-flex justify-content-between px-2" style="color: #2c9144; font-weight: 600">
 							<span> Total </span>
@@ -96,10 +96,10 @@
 								<span>Total Order Amount: </span>
 								<span> ₱ {{ frmtd(total_order_amount) }}</span>
 							</div>
-							<div class="d-flex justify-content-between my-2 delfee-color">
+							<!-- <div class="d-flex justify-content-between my-2 delfee-color">
 								<span>Total Delivery Fee: </span>
 								<span> ₱ {{ frmtd(total_delivery_fee) }}</span>
-							</div>
+							</div> -->
 							<div class="d-flex justify-content-between my-2">
 								<span>Discount:</span>
 								<span> ₱ {{ frmtd(discount) }}</span>
