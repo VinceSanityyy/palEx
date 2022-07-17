@@ -1,6 +1,6 @@
 <template>
 	<div class="container" :class="WindowInnerWidth > 767 ? 'mt-1' : 'mt-1'">
-		<div class="container">
+		<!-- <div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="palex-card">
@@ -8,7 +8,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<div v-if="chatList.length <= 0" class="container palex-checkout-page">
 			<div class="row">
