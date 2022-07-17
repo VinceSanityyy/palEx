@@ -133,6 +133,7 @@
 export default {
 	data() {
 		return {
+			user_info: {},
 			WindowInnerWidth: null,
 			WindowInnerHeight: null,
 			//   chatList: [
@@ -171,25 +172,53 @@ export default {
 		this.WindowInnerWidth = window.innerWidth;
 		this.WindowInnerHeight = window.innerHeight;
 		window.addEventListener("resize", this.myEventHandler);
+		this.chatGetUserInfo();
 		this.getUserChatList();
 		// this.getConversationReplies();
 	},
 	mounted() {
 		// Enable pusher logging - don't include this in production
+		var self = this;
 		Pusher.logToConsole = false;
 		var pusher = new Pusher("8bfb7f6648a195296a7f", {
 			cluster: "ap1",
 		});
 		var channel = pusher.subscribe("palex-channel");
 		channel.bind("palex-pusher-event", function (data) {
-			console.log(JSON.stringify(data));
+			self.receive_PalexPusherEvent(data);
 		});
-        
 	},
 	destroyed() {
 		window.removeEventListener("resize", this.myEventHandler);
 	},
 	methods: {
+		receive_PalexPusherEvent(data) {
+			var message = data.message;
+			// console.log(message);
+
+			if (message.conversation_id == this.conversation_id && message.user_id_to == this.user_info.id) {
+				// console.log("UPDATE CONVERSATION REPLY");
+				this.getConversationReplies(this.conversation_id);
+			}
+
+			if (message.user_id_to == this.user_info.id) {
+				// console.log("UPDATE CHAT LIST");
+				this.justUpdateUserChatList();
+			}
+			// alert(message.reply);
+		},
+		chatGetUserInfo() {
+			axios
+				.get(`/chatGetUserInfo`)
+				.then((res) => {
+					// console.log(res);
+					this.user_info = res.data;
+				})
+				.catch((err) => {
+					console.error(err);
+					this.$events.fire("LoadingOverlayHide");
+				});
+		},
 		myEventHandler(e) {
 			this.WindowInnerWidth = window.innerWidth;
 			this.WindowInnerHeight = window.innerHeight;
@@ -204,7 +233,7 @@ export default {
 			axios
 				.post(`/sendMessage`, params)
 				.then((res) => {
-					console.log(res);
+					// console.log(res);
 					this.msg = "";
 					//   this.getConversationReplies(this.conversation.id);
 					this.getUserChatList();
@@ -220,7 +249,7 @@ export default {
 			axios
 				.get(`/getUserChatList`)
 				.then((res) => {
-					console.log(res);
+					// console.log(res);
 					this.chatList = res.data;
 					if (this.conversation_id) {
 						this.getConversationReplies(this.conversation_id);
@@ -237,11 +266,23 @@ export default {
 					this.$events.fire("LoadingOverlayHide");
 				});
 		},
+		justUpdateUserChatList() {
+			axios
+				.get(`/getUserChatList`)
+				.then((res) => {
+					this.chatList = res.data;
+				})
+				.catch((err) => {
+					console.error(err);
+					this.$events.fire("LoadingOverlayHide");
+				});
+		},
+
 		getConversationReplies(conversation_id) {
 			axios
 				.get(`/getConversationReplies/${conversation_id}`)
 				.then((res) => {
-					console.log(res);
+					// console.log(res);
 					this.conversation = res.data.conversation;
 					this.replies = res.data.replies;
 					this.$events.fire("LoadingOverlayHide");

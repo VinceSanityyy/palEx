@@ -52,6 +52,7 @@ Route::middleware('isAuth')->group(function(){
     Route::get('/getConversationReplies/{conversation_id}', [App\Http\Controllers\ChatController::class, 'getConversationReplies']);
     Route::get('/getStoreChatList', [App\Http\Controllers\ChatController::class, 'getStoreChatList']);
     Route::get('/test_pusher', [App\Http\Controllers\ChatController::class, 'test_pusher']);
+    Route::get('/chatGetUserInfo', [App\Http\Controllers\ChatController::class, 'chatGetUserInfo']);
 
     Route::middleware('isVendor')->group(function(){
         // Route::get('/vendor/orders', [App\Http\Controllers\BacksideController::class, 'index']);

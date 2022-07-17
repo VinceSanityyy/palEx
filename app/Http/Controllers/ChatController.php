@@ -16,11 +16,17 @@ class ChatController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function test_pusher(Request $request)
     {
         event(new PalexPusherEvent('hello world'));
         return response()->json("SUCCESS", 200);
+    }
+
+    public function chatGetUserInfo()
+    {
+        $user = Auth::user();
+        return response()->json($user, 200);
     }
 
 
@@ -62,12 +68,21 @@ class ChatController extends Controller
                 ->where('user_two_id', $user1->id);
         })->first();
 
+        $class = new stdClass;
+        $class->user_id_from = $user1->id;
+        $class->user_id_to = $user2->id;
+        $class->conversation_id = $conversation->id;
+        $class->reply = $reply;
+
+
+
         if (!empty($conversation)) {
             $conReply = new ConversationReply;
             $conReply->reply =  $reply;
             $conReply->user_id = $user1->id;
             $conReply->conversation_id = $conversation->id;
             $conReply->save();
+            event(new PalexPusherEvent($class));
             return response()->json("Done");
         } else {
             $newConversation = new Conversation;
@@ -80,6 +95,7 @@ class ChatController extends Controller
             $conReply->user_id = $user1->id;
             $conReply->conversation_id = $newConversation->id;
             $conReply->save();
+            event(new PalexPusherEvent($class));
             return response()->json("Done");
         }
     }
