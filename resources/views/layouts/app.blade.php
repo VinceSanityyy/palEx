@@ -16,6 +16,7 @@
     @yield('content')
 </div>
 
+<script src="https://js.pusher.com/7.1/pusher.min.js"></script>
 <script src="{{asset('js/app.js')}}"></script>
 
 </body>

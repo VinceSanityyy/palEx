@@ -19,7 +19,7 @@
     <div id="app" class="wrapper">
         <router-view :is_auth="{{ Auth::check() ? 1 : 0 }}"></router-view>
     </div>
-
+    <script src="https://js.pusher.com/7.1/pusher.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
