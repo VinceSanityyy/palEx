@@ -174,6 +174,18 @@ export default {
 		this.getUserChatList();
 		// this.getConversationReplies();
 	},
+	mounted() {
+		// Enable pusher logging - don't include this in production
+		Pusher.logToConsole = false;
+		var pusher = new Pusher("8bfb7f6648a195296a7f", {
+			cluster: "ap1",
+		});
+		var channel = pusher.subscribe("palex-channel");
+		channel.bind("palex-pusher-event", function (data) {
+			console.log(JSON.stringify(data));
+		});
+        
+	},
 	destroyed() {
 		window.removeEventListener("resize", this.myEventHandler);
 	},

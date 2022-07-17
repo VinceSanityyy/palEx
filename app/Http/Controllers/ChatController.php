@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PalexPusherEvent;
 use App\Models\Conversation;
 use App\Models\ConversationReply;
 use App\Models\User;
 use Illuminate\Http\Request;
 use stdClass;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -14,9 +16,17 @@ class ChatController extends Controller
     {
         $this->middleware('auth');
     }
+    
+    public function test_pusher(Request $request)
+    {
+        event(new PalexPusherEvent('hello world'));
+        return response()->json("SUCCESS", 200);
+    }
+
+
     public function createConversation(Request $request)
     {
-        $user1 = \Auth::user();
+        $user1 = Auth::user();
         $user2 = User::findOrFail($request->user_id);
 
         $conversation = Conversation::where(function ($query) use ($user1, $user2) {
@@ -41,7 +51,7 @@ class ChatController extends Controller
     public function sendMessage(Request $request)
     {
         $reply = $request->msg;
-        $user1 = \Auth::user();
+        $user1 = Auth::user();
         $user2 = User::findOrFail($request->user_id);
 
         $conversation = Conversation::where(function ($query) use ($user1, $user2) {
@@ -76,7 +86,7 @@ class ChatController extends Controller
 
     public function getUserChatList(Request $request)
     {
-        $user1 = \Auth::user();
+        $user1 = Auth::user();
         // $user1 = User::findOrFail($request->user_id);
 
         // $conversation = Conversation::with('user_one:id,name,email,photo', 'user_two:id,name,email,photo')
@@ -114,7 +124,7 @@ class ChatController extends Controller
 
     public function getConversationReplies($conversation_id)
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         // $conversation = Conversation::findOrFail($conversation_id)->load('user_one:id,name,email,photo', 'user_two:id,name,email,photo');
         $conversation = Conversation::with('user_one:id,name,email,photo', 'user_two:id,name,email,photo')
             ->where('id', $conversation_id)
@@ -165,7 +175,7 @@ class ChatController extends Controller
     //Store
     public function getStoreChatList(Request $request)
     {
-        $user1 = \Auth::user();
+        $user1 = Auth::user();
         // $user1 = User::findOrFail($request->user_id);
 
         $conversation = Conversation::conversationJoinReplies()
