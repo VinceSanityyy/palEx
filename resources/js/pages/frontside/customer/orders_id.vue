@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-#customer-order-page {
+#customer-order-detail-page {
 	.status-info {
 		margin-left: auto;
 		width: fit-content;
@@ -58,7 +58,7 @@
 }
 </style>
 <template>
-	<section id="customer-order-page" class="content mt-2" style="margin-bottom: 5rem">
+	<section id="customer-order-detail-page" class="content mt-2" style="margin-bottom: 5rem">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 px-0">
@@ -66,6 +66,83 @@
 						<div class="px-2" style="font-weight: bold; font-size: 24px">
 							<i class="fas fa-file-invoice mr-2"></i>
 							Order details page (Underconstruction)
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 px-0">
+					<div class="palex-card">
+						<div class="w-100">
+							<div class="store-name ml-3 mb-2 p-2 border-bottom border-secondary">
+								<span> <i class="fas fa-store mr-2"></i> {{ "VENDOR NAME HERE" }} </span>
+								<!-- <el-divider><i class="el-icon-star-on"></i></el-divider> -->
+							</div>
+
+							<div class="d-flex justify-content-between px-2">
+								<span> Status: </span>
+								<span class="px-2 badge" :class="badgeStatus('pending')" style="font-size: 18px; text-transform: uppercase">
+									{{ "pending" }}
+								</span>
+							</div>
+
+							<div class="d-flex justify-content-between px-2">
+								<span> Payment Method </span>
+								<span class="mx-1">Cash On Delivery</span>
+							</div>
+
+							<div v-for="index2 in 5" :key="index2" class="item border-bottom border-success p-2">
+								<div class="d-flex">
+									<div class="prod-img" style="min-width: 90px">
+										<img style="width: 80px; height: 80px; object-fit: cover" :src="`/storage/images/products/seeds/apple.jpg`" alt="" />
+									</div>
+									<div class="prod-name w-100">
+										<div class="d-flex">
+											<div style="width: 90%">
+												<span
+													><b>{{ "Product Name APple" }}</b></span
+												>
+											</div>
+										</div>
+										<div class="prod-cat" style="font-size: 10px; color: #c644a8">
+											<span>{{ "Product Category ex. Fruit" }}</span>
+										</div>
+										<div class="prod-price d-flex flex-wrap justify-content-between">
+											<span>₱{{ frmtd(123) }}/{{ "unit kilo" }}</span>
+											<span class="mx-1">x</span>
+											<span class="mx-1">{{ 123 }}</span>
+											<span class="mx-1">=</span>
+											<span class="mx-1" style="color: #2c9144">₱{{ frmtd(123) }}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-between px-2">
+							<span> Sub-total </span>
+							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+						</div>
+
+						<div class="d-flex justify-content-between px-2">
+							<span> Discount </span>
+							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+						</div>
+
+						<hr />
+
+						<div class="d-flex justify-content-between px-2" style="font-size: 20px; color: #2c9144; font-weight: bold">
+							<span> Total </span>
+							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+						</div>
+
+						<hr />
+
+						<div class="d-flex justify-content-between px-2">
+							<span>  </span>
+							<span class="mx-1"> <el-button type="danger" plain>Cancel</el-button> </span>
 						</div>
 					</div>
 				</div>
@@ -86,10 +163,12 @@ export default {
 				orders_completed: 0,
 				orders_cancelled: 0,
 			},
+			order_id: this.$route.params.order_id,
 		};
 	},
 	mounted() {
-		// this.getOrders();
+		console.log(this.order_id);
+		this.getOrder();
 	},
 	methods: {
 		badgeStatus(status) {
@@ -97,9 +176,9 @@ export default {
 			if (status == "to ship") return "badge-info";
 			if (status == "completed") return "badge-success";
 			if (status == "cancelled") return "badge-danger";
-			return "badge-warning"
+			return "badge-warning";
 		},
-		async getOrders() {
+		async getOrder() {
 			try {
 				const res = await axios.get("/getCustomerOrders");
 				this.orders_data = res.data;
