@@ -10,6 +10,14 @@ class Order extends Model
     use HasFactory;
 
 
+    protected $casts = [
+        'created_at' => 'datetime:M-d-Y',
+    ];
+
+    public function orderItems(){
+        return $this->hasMany(OrderItem::class);
+    }
+    
     protected $guarded  = [];
     protected $appends = [
         'order_total_amount',

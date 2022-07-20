@@ -26,11 +26,14 @@
 							<div class="card-body table-responsive">
 								<table
 									id="mytableOrders"
-									class="table table-bordered table-striped dt-responsive display nowrap"
+									class="table table-bordered table-striped dt-responsive"
 								>
 									<thead>
 										<tr>
 											<th>Order Id</th>
+											<th>Customer Name</th>
+											<th>Contact #</th>
+											<th>Address</th>
 											<th>Amount</th>
 											<th>Status</th>
 											<th>Date</th>
@@ -40,33 +43,53 @@
 									<tbody>
 										<tr v-for="(item, index) in orders" :key="index">
 											<td>{{ item.id }}</td>
+											<td>{{ item.customer_receiver_fullname }}</td>
+											<td>{{ item.customer_receiver_phone }}</td>
+											<td>{{ item.customer_receiver_address }}</td>
 											<td>
 												<b
 													>₱
 													{{
 														addCommaAndTwoDecimalPlaces(
-															item.total_price
+															item.order_items[0].total_price
 														)
 													}}</b
 												>
 											</td>
 											<td>
-												<span
-													v-if="item.status === 1"
-													class="badge badge-success"
-													>{{ item.status_label }}</span
-												>
-												<span v-else class="badge badge-warning">{{
-													item.status_label
+												<span v-if="item.status === 'completed'"
+													class="badge badge-success">{{ item.status }}
+												</span>
+												<span v-else-if="item.status === 'pending'"
+													class="badge badge-secondary">{{ item.status }}
+												</span>
+												<span v-else-if="item.status === 'cod'"
+													class="badge badge-info">{{ item.status }}
+												</span>
+												<span v-else-if="item.status === 'reserved'"
+													class="badge badge-info">{{ item.status }}
+												</span>
+												<span v-else class="badge badge-danger">{{
+													item.status
 												}}</span>
 											</td>
-											<td>{{ item.date }}</td>
+											<td>{{ item.created_at }}</td>
 											<td>
-												<router-link
-													class="btn btn-info btn-sm"
-													:to="'vendor/orders/' + item.id"
-													>Details</router-link
-												>
+								 				 <div class="btn-group" role="group">
+													<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													Select Options
+													</button>
+													<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+														<a class="dropdown-item" @click="changeOrderStatus(item.id,'completed')" href="#">Completed</a>
+														<!-- <a class="dropdown-item" @click="changeOrderStatus(item.id,'cod')" href="#">Cash on Delivery</a> -->
+														<a class="dropdown-item" @click="changeOrderStatus(item.id,'reserved')" href="#">Reserved</a>
+														<a class="dropdown-item" @click="changeOrderStatus(item.id,'pending')" href="#">Pending</a>
+														<a class="dropdown-item" @click="changeOrderStatus(item.id,'cancelled')" href="#">Cancelled</a>
+													</div>
+												</div>
+													<button  type="button" class="btn btn-info">
+														Show Order Details
+													</button>
 											</td>
 										</tr>
 									</tbody>
@@ -85,15 +108,8 @@
         props:['is_auth'],
 		data() {
 			return {
-				orders: [
-					{
-						id: 1,
-						total_price: 1500,
-						status: 1,
-						status_label: "Success",
-						date: "May 5, 2021",
-					},
-				],
+				orders: [],
+				showModal: false,
 			};
 		},
 		mounted() {
@@ -117,6 +133,23 @@
 				});
 				return withCommas;
 			},
+			changeOrderStatus(id,status){
+				axios.post(`/palex_api/vendor/updateOrderStatus`, {
+					id: id,
+					status: status,
+				}).then((response) => {
+					this.getOrders()
+				});
+			},
+			getOrders(){
+				axios.get(`/palex_api/vendor/getOrders`).then((response) => {
+					this.orders = response.data;
+					console.log(response.data)
+				});
+			}
 		},
+		created(){
+			this.getOrders();
+		}
 	};
 </script>

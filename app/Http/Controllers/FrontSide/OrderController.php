@@ -89,6 +89,23 @@ class OrderController extends Controller
         }
     }
 
+    public function updateOrderStatus(Request $request){
+        // dd($request->all());
+
+        $order = Order::find($request->id);
+        $order->status = $request->status;
+        $order->save();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function getOrdersVendor(){
+        $orders = Order::query()->where('vendor_id', Auth::user()->id)->with('orderItems')
+            ->get();
+        return response()->json($orders);
+    }
+
     public function getCustomerOrders()
     {
 

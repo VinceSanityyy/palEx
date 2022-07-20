@@ -9,6 +9,14 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'total_price',
+    ];
+    
+    public function getTotalPriceAttribute()
+    {
+        return $this->price * $this->quantity;
+    }
     public function product()
     {
         return $this->belongsTo('App\Models\Product', 'product_id');
