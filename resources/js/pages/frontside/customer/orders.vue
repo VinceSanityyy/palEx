@@ -129,7 +129,7 @@
 
 							<button type="button" class="btn btn-light w-100 mb-1">
 								<span class="d-flex justify-content-between">
-									<span> Complated </span>
+									<span> Completed </span>
 									<span>
 										<span class="badge badge-success">
 											{{ orders_data.orders_completed }}
