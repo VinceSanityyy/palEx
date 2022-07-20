@@ -89,6 +89,7 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/customer', [App\Http\Controllers\FrontsideController::class, 'index']);
         Route::get('/customer/{page_name}', [App\Http\Controllers\FrontsideController::class, 'index']);
         Route::get('/customer/chat/{conversation_id}', [App\Http\Controllers\FrontsideController::class, 'chatPageByConvId']);
+        Route::get('/customer/orders/{order_id}', [App\Http\Controllers\FrontsideController::class, 'orderDetailsPAge']);
 
         // Route::get('/customer/profile', [App\Http\Controllers\FrontsideController::class, 'index']);
         // Route::get('/customer/feeds', [App\Http\Controllers\FrontsideController::class, 'index']);

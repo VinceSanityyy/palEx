@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversation;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -14,7 +15,8 @@ class FrontsideController extends Controller
      * @return void
      */
     public function __construct()
-    { }
+    {
+    }
 
     /**
      * Show the application dashboard.
@@ -53,6 +55,22 @@ class FrontsideController extends Controller
             abort(404);
         }
     }
+
+
+    public function orderDetailsPAge($order_id)
+    {
+
+        $user = \Auth::user();
+        $order = Order::findOrFail($order_id);
+        // dd($order);
+        if ($order->customer_id == $user->id) {
+            return view('frontside');
+        } else {
+            abort(404);
+        }
+    }
+
+
 
     public function getVendorProfile($vendor_id)
     {

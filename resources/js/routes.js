@@ -19,6 +19,7 @@ import VendorChat from './pages/backside/vendor/chat.vue';
 // Customer Pages
 import CustomerProfile from './pages/frontside/customer/index.vue';
 import CustomerOrders from './pages/frontside/customer/orders.vue';
+import CustomerOrdersDetails from './pages/frontside/customer/orders_id.vue';
 import CustomerFeeds from './pages/frontside/customer/feeds.vue';
 import CustomerChat from './pages/frontside/customer/chat.vue';
 import CustomerCart from './pages/frontside/customer/cart.vue';
@@ -122,6 +123,16 @@ const routes = [
                     helper: CustomerOrders
                 }
             },
+
+            {
+                path: 'orders/:order_id',
+                name: 'cus-orders-order_id',
+                components: {
+                    helper: CustomerOrdersDetails
+                }
+            },
+
+            
             {
                 path: 'feeds',
                 name: 'cus-feeds',
