@@ -172,19 +172,21 @@ export default {
 		this.WindowInnerWidth = window.innerWidth;
 		this.WindowInnerHeight = window.innerHeight;
 		window.addEventListener("resize", this.myEventHandler);
-		this.chatGetUserInfo();
+
 		this.getUserChatList();
 		// this.getConversationReplies();
 	},
 	mounted() {
 		// Enable pusher logging - don't include this in production
+		this.chatGetUserInfo();
 		var self = this;
-		Pusher.logToConsole = false;
+		Pusher.logToConsole = true;
 		var pusher = new Pusher("8bfb7f6648a195296a7f", {
 			cluster: "ap1",
 		});
 		var channel = pusher.subscribe("palex-channel");
 		channel.bind("palex-pusher-event", function (data) {
+			// console.warn(data);
 			self.receive_PalexPusherEvent(data);
 		});
 	},
@@ -194,7 +196,12 @@ export default {
 	methods: {
 		receive_PalexPusherEvent(data) {
 			var message = data.message;
-			// console.log(message);
+			console.warn(message);
+			console.log(this.user_info);
+			console.error(message.conversation_id);
+			console.error(this.conversation_id);
+			console.error(message.user_id_to);
+			console.error(this.user_info.id);
 
 			if (message.conversation_id == this.conversation_id && message.user_id_to == this.user_info.id) {
 				// console.log("UPDATE CONVERSATION REPLY");
@@ -279,6 +286,7 @@ export default {
 		},
 
 		getConversationReplies(conversation_id) {
+			this.conversation_id = conversation_id;
 			axios
 				.get(`/getConversationReplies/${conversation_id}`)
 				.then((res) => {
