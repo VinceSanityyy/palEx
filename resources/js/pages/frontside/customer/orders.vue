@@ -157,6 +157,7 @@
 						<div class="row">
 							<div class="col-md-8">
 								<div class="d-flex px-2 mb-2 align-items-center">
+									<span class="mr-2">#{{ item.id }}</span>
 									<i class="fas fa-store mr-1"></i>
 									<span style="font-weight: bold"> {{ item.vendor.name }} </span>
 								</div>
@@ -182,7 +183,7 @@
 							</div>
 							<div class="col-lg-3">
 								<div class="w-100 d-flex justify-content-center align-items-center py-2" style="height: 100%">
-									<el-button type="primary" size="medium" plain>More Details</el-button>
+									<el-button @click="moreDetailsBtn(item.id)" type="primary" size="medium" plain>More Details</el-button>
 								</div>
 							</div>
 						</div>
@@ -236,12 +237,15 @@ export default {
 		this.getOrders();
 	},
 	methods: {
+		moreDetailsBtn(order_id) {
+			this.$router.push(`/customer/orders/${order_id}`);
+		},
 		badgeStatus(status) {
 			if (status == "pending") return "badge-warning";
 			if (status == "to ship") return "badge-info";
 			if (status == "completed") return "badge-success";
 			if (status == "cancelled") return "badge-danger";
-			return "badge-warning"
+			return "badge-warning";
 		},
 		async getOrders() {
 			try {
