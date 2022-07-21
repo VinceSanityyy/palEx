@@ -1,7 +1,8 @@
 <template>
   <div class="register-box">
   <div class="register-logo">
-    <a href="/"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
+    <!-- <a href="/"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a> -->
+    Palengke Express
   </div>
 
   <div class="card">

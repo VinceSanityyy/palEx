@@ -13,11 +13,11 @@
             ></small>
           </blockquote>
           <p>
-            {{ vendor.email }}<br />
-            {{ "www.companytest.com" }} <br />
-            {{ "0912-123-1234" }}
+            Email :{{ vendor.email }}<br />
+            Website: {{ "www.companytest.com" }} <br />
+            Contact Number: {{ "0912-123-1234" }}
           </p>
-          <el-button icon="el-icon-chat-dot-round" type="warning" plain @click="createConversation()">Inquere Now!</el-button>
+          <el-button icon="el-icon-chat-dot-round" type="warning" plain @click="createConversation()">Inquire Now!</el-button>
         </div>
       </div>
       <div class="row">

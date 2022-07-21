@@ -1,8 +1,8 @@
 <template>
   <div>
-    <PalexLoading></PalexLoading>
+    <!-- <PalexLoading></PalexLoading> -->
     <!-- MOBILE TOP NAV -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp" style="background: #44c662; color: white !important">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp">
       <div class="w-100 text-center">
         <a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
         <div style="position: absolute; top: 15px; right: 8px">
@@ -19,7 +19,7 @@
     </nav>
 
     <!-- WEB TOP NAV -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-web" style="background: #44c662; color: white !important">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-web" >
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

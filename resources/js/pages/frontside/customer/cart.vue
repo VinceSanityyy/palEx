@@ -31,7 +31,7 @@
 					<div v-for="(item, index) in cartList" :key="index" class="palex-card mb-2">
 						<div class="w-100">
 							<div class="store-name ml-3 mb-2 p-2 border-bottom border-secondary">
-								<span> <i class="fas fa-store mr-2"></i> {{ item.vendor.name }} </span>
+								<span> <i class="fas fa-store mr-2"></i>Store/Vendor:  {{ item.vendor.name }} </span>
 								<!-- <el-divider><i class="el-icon-star-on"></i></el-divider> -->
 							</div>
 							<div v-for="(el, index2) in item.items" :key="index2" class="item border-bottom border-success p-2">

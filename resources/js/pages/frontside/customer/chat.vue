@@ -33,7 +33,7 @@
 				<div class="inbox_people" :style="WindowInnerWidth > 540 ? '' : 'width:15%!important;'">
 					<div v-if="WindowInnerWidth > 540" class="headind_srch">
 						<div class="recent_heading">
-							<h4>Recent</h4>
+							<h4>Messages</h4>
 						</div>
 						<!-- <div class="srch_bar">
               <div class="stylish-input-group">
