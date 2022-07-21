@@ -65,7 +65,7 @@
 					<div class="palex-card">
 						<div class="px-2" style="font-weight: bold; font-size: 24px">
 							<i class="fas fa-file-invoice mr-2"></i>
-							Order details page (Underconstruction)
+							Order # {{ order_data.id }}
 						</div>
 					</div>
 				</div>
@@ -77,15 +77,20 @@
 					<div class="palex-card">
 						<div class="w-100">
 							<div class="store-name ml-3 mb-2 p-2 border-bottom border-secondary">
-								<span> <i class="fas fa-store mr-2"></i> {{ "VENDOR NAME HERE" }} </span>
+								<span> <i class="fas fa-store mr-2"></i> {{ order_data.vendor.name }} </span>
 								<!-- <el-divider><i class="el-icon-star-on"></i></el-divider> -->
 							</div>
 
 							<div class="d-flex justify-content-between px-2">
 								<span> Status: </span>
-								<span class="px-2 badge" :class="badgeStatus('pending')" style="font-size: 18px; text-transform: uppercase">
-									{{ "pending" }}
+								<span class="px-2 badge" :class="badgeStatus(order_data.status)" style="font-size: 18px; text-transform: uppercase">
+									{{ order_data.status }}
 								</span>
+							</div>
+
+							<div class="d-flex justify-content-between px-2">
+								<span> Order Date: </span>
+								<span class="mx-1">{{order_data.created_at}}</span>
 							</div>
 
 							<div class="d-flex justify-content-between px-2">
@@ -93,28 +98,28 @@
 								<span class="mx-1">Cash On Delivery</span>
 							</div>
 
-							<div v-for="index2 in 5" :key="index2" class="item border-bottom border-success p-2">
+							<div v-for="(item, index) in order_data.order_products" :key="index" class="item border-bottom border-success p-2">
 								<div class="d-flex">
 									<div class="prod-img" style="min-width: 90px">
-										<img style="width: 80px; height: 80px; object-fit: cover" :src="`/storage/images/products/seeds/apple.jpg`" alt="" />
+										<img style="width: 80px; height: 80px; object-fit: cover" :src="item.product.image_link" alt="" />
 									</div>
 									<div class="prod-name w-100">
 										<div class="d-flex">
 											<div style="width: 90%">
 												<span
-													><b>{{ "Product Name APple" }}</b></span
+													><b>{{ item.product.name }}</b></span
 												>
 											</div>
 										</div>
 										<div class="prod-cat" style="font-size: 10px; color: #c644a8">
-											<span>{{ "Product Category ex. Fruit" }}</span>
+											<span>{{ item.product.category }}</span>
 										</div>
 										<div class="prod-price d-flex flex-wrap justify-content-between">
-											<span>₱{{ frmtd(123) }}/{{ "unit kilo" }}</span>
+											<span>₱{{ frmtd(item.price) }}/{{ item.product.unit }}</span>
 											<span class="mx-1">x</span>
-											<span class="mx-1">{{ 123 }}</span>
+											<span class="mx-1">{{ item.quantity }}</span>
 											<span class="mx-1">=</span>
-											<span class="mx-1" style="color: #2c9144">₱{{ frmtd(123) }}</span>
+											<span class="mx-1" style="color: #2c9144">₱{{ frmtd(item.total_price) }}</span>
 										</div>
 									</div>
 								</div>
@@ -123,27 +128,51 @@
 
 						<div class="d-flex justify-content-between px-2">
 							<span> Sub-total </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+							<span class="mx-1"> ₱{{ frmtd(order_data.order_total_amount) }} </span>
 						</div>
 
 						<div class="d-flex justify-content-between px-2">
 							<span> Discount </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+							<span class="mx-1"> ₱{{ frmtd(order_data.discount) }} </span>
 						</div>
 
 						<hr />
 
 						<div class="d-flex justify-content-between px-2" style="font-size: 20px; color: #2c9144; font-weight: bold">
 							<span> Total </span>
-							<span class="mx-1"> ₱{{ frmtd(123) }} </span>
+							<span class="mx-1"> ₱{{ frmtd(order_data.order_overall_total_amount) }} </span>
 						</div>
 
 						<hr />
 
 						<div class="d-flex justify-content-between px-2">
-							<span>  </span>
-							<span class="mx-1"> <el-button type="danger" plain>Cancel</el-button> </span>
+							<span>option:</span>
+							<span class="mx-1"> <el-button type="danger" @click="cancelBtn()" plain>Cancel</el-button> </span>
 						</div>
+
+						<hr />
+
+						<div class="d-flex justify-content-between px-2">
+							<span style="font-size: 20px; font-weight: 600"> Customer Receiver Info </span>
+							<span class="mx-1"></span>
+						</div>
+
+						<div class="d-flex justify-content-between px-2">
+							<span> Fullname</span>
+							<span style="font-weight: bold"> {{ order_data.customer_receiver_fullname }} </span>
+						</div>
+
+						<div class="d-flex justify-content-between px-2">
+							<span> Address</span>
+							<span style="font-weight: bold"> {{ order_data.customer_receiver_address }} </span>
+						</div>
+
+						<div class="d-flex justify-content-between px-2">
+							<span> Phone</span>
+							<span style="font-weight: bold"> (+63) {{ order_data.customer_receiver_phone }} </span>
+						</div>
+
+						<hr />
 					</div>
 				</div>
 			</div>
@@ -155,13 +184,9 @@ export default {
 	props: ["is_auth"],
 	data() {
 		return {
-			orders_data: {
-				orders: [],
-				orders_total: 0,
-				orders_pending: 0,
-				orders_to_deliver: 0,
-				orders_completed: 0,
-				orders_cancelled: 0,
+			order_data: {
+				order_products: [],
+				vendor: {},
 			},
 			order_id: this.$route.params.order_id,
 		};
@@ -171,6 +196,13 @@ export default {
 		this.getOrder();
 	},
 	methods: {
+		cancelBtn() {
+			this.$message({
+				message: "Under Construction",
+				type: "error",
+				// duration: 0,
+			});
+		},
 		badgeStatus(status) {
 			if (status == "pending") return "badge-warning";
 			if (status == "to ship") return "badge-info";
@@ -180,8 +212,8 @@ export default {
 		},
 		async getOrder() {
 			try {
-				const res = await axios.get("/getCustomerOrders");
-				this.orders_data = res.data;
+				const res = await axios.get(`/getCustomerOrdersDetails/${this.order_id}`);
+				this.order_data = res.data;
 			} catch (error) {
 				console.error(err);
 			}
