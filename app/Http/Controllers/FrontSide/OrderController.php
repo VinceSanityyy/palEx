@@ -89,7 +89,8 @@ class OrderController extends Controller
         }
     }
 
-    public function updateOrderStatus(Request $request){
+    public function updateOrderStatus(Request $request)
+    {
         // dd($request->all());
 
         $order = Order::find($request->id);
@@ -100,7 +101,8 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getOrdersVendor(){
+    public function getOrdersVendor()
+    {
         $orders = Order::query()->where('vendor_id', Auth::user()->id)->with('orderItems')
             ->get();
         return response()->json($orders);
@@ -124,5 +126,16 @@ class OrderController extends Controller
         $class->orders_cancelled =   Order::countCustomerOrder('cancelled', $CUSTOMER_ID);
 
         return response()->json($class, 200);
+    }
+
+
+    public function getCustomerOrdersDetails($order_id)
+    {
+        $CUSTOMER_ID = Auth::user()->id;
+        $Order = Order::with('vendor:id,name,email')
+            ->where('id', $order_id)
+            ->where('customer_id', $CUSTOMER_ID)
+            ->first();
+        return response()->json($Order, 200);
     }
 }
