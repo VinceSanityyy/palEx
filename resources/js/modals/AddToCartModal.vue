@@ -80,7 +80,7 @@ export default {
 						this.$message({
 							message: "Success Add to Cart",
 							type: "success",
-							duration: 0,
+							// duration: 0,
 						});
 						this.$events.fire("updateCartCounter");
 						$("#AddToCartModal").modal("hide");
