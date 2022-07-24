@@ -62,7 +62,8 @@ class User extends Authenticatable
             $photo = url('storage/' . $implode_path);
         } else {
             // $photo = $this->is_bundle == 1 ? "/img/bundle.png" : "/img/no-product-image.png";
-            $photo = "";
+            $photo =  url('/img/user.png');
+            
         }
 
         return $photo;
