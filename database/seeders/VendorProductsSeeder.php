@@ -27,9 +27,10 @@ class VendorProductsSeeder extends Seeder
             'email' => 'abing.pj@gmail.com',
             'password' => \Hash::make('password'),
             'role' => 1,
-            'status' => 1
+            'status' => 1,
+            'photo' => "public/images/user_seeds/test-vendor-1.png"
         ]);
-        
+
         VendorAddress::create([
             'vendor_id' => $vendor1->id,
             'store_name' => 'Bing`z Fruits Stand',
@@ -48,7 +49,7 @@ class VendorProductsSeeder extends Seeder
             'shipping_fee_amount' => 80
         ]);
 
-        
+
         foreach ($data as $obj) {
             $this->createProduct($obj, $vendor1);
         }
@@ -56,7 +57,7 @@ class VendorProductsSeeder extends Seeder
 
         $json2 = File::get("database/data/vince_products.json");
         $data2 = json_decode($json2);
-        $vendor2 =  User::create( [
+        $vendor2 =  User::create([
             'name' => 'VinceSanityyy Co.',
             'email' => 'v@gmail.com',
             'password' => \Hash::make('123123123'),
