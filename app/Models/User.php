@@ -91,6 +91,7 @@ class User extends Authenticatable
 
             if ($this->role == '1') {
                 $photo =  url('/img/shop.png');
+                // $photo =  "https://icon-library.com/images/vendor-icon-png/vendor-icon-png-11.jpg";
             } else {
                 $photo =  url('/img/user.png');
             }

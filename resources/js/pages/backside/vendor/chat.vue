@@ -95,12 +95,13 @@
 						<!-- style="text-overflow: ellipsis; overflow: hidden" -->
 						<div class="mesgs" :style="WindowInnerWidth > 540 ? '' : 'width:85%!important;'">
 							<div class="m-0 p-1 border-bottom border-secondary mb-1">
-								<span
-									><img
+								<span>
+									<img
 										:src="conversation.header_user_image_link"
 										alt="sunil"
 										:style="'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important; object-fit: cover; object-fit: cover; border-radius: 50%;'"
-								/></span>
+									/>
+								</span>
 								<span>
 									<span class="ml-3" style="font-size: 20px !important"
 										><b>{{ conversation.header_user_name }}</b></span
