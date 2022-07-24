@@ -50,7 +50,9 @@ class User extends Authenticatable
 
     protected $appends = [
         'image_link',
-        'customer_profile_image_link'
+        'profile_image_link',
+        // 'customer_profile_image_link',
+        // 'vendor_profile_image_link'
     ];
 
     public function getImageLinkAttribute()
@@ -73,34 +75,28 @@ class User extends Authenticatable
         return $photo;
     }
 
-    public function getCustomerProfileImageLinkAttribute()
+    public function getProfileImageLinkAttribute()
     {
+        if (!empty($this->photo)) {
 
-
-        // dump($this->role);
-        if ($this->role == "2") {
-
-
-            if (!empty($this->photo)) {
-
-                // explode by /
-                $explode_path = explode('/', $this->photo);
-                // removed first value in array wich is the public of the path
-                unset($explode_path[0]);
-                // return back to his format
-                $implode_path = implode('/', $explode_path);
-                $photo = url('storage/' . $implode_path);
-            } else {
-                // $photo = $this->is_bundle == 1 ? "/img/bundle.png" : "/img/no-product-image.png";
-                $photo =  url('/img/user.png');
-                // $photo =  "";
-
-
-
-            }
+            // explode by /
+            $explode_path = explode('/', $this->photo);
+            // removed first value in array wich is the public of the path
+            unset($explode_path[0]);
+            // return back to his format
+            $implode_path = implode('/', $explode_path);
+            $photo = url('storage/' . $implode_path);
         } else {
-            $photo =  "";
+            // $photo = $this->is_bundle == 1 ? "/img/bundle.png" : "/img/no-product-image.png";
+
+            if ($this->role == '1') {
+                $photo =  url('/img/shop.png');
+            } else {
+                $photo =  url('/img/user.png');
+            }
+            // $photo =  "";
         }
+
         return $photo;
     }
 }
