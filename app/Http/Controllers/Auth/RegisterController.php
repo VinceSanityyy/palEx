@@ -75,7 +75,7 @@ class RegisterController extends Controller
     {
         dd(json_encode($data));
         $name = $data['identity']->getClientOriginalName();
-        $path = $data['identity']->store('public/images');
+        $path = $data['identity']->store('public/images/identity');
 
         return User::create([
             'name' => $data['name'],
@@ -101,7 +101,7 @@ class RegisterController extends Controller
       
         if($validated){
             $name = $request->file('identity')->getClientOriginalName();
-            $path = $request->file('identity')->store('public/images');
+            $path = $request->file('identity')->store('public/images/identity');
             return User::create([
                 'name' => $request->name,
                 'role' => $request->role,
