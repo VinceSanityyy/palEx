@@ -24,7 +24,7 @@ class CustomerSettingsController extends Controller
         if ($isValid) {
             $name = $request->file('photo')->getClientOriginalName();
             // $path = $request->file('photo')->store('public/images/products');
-            $path = $request->file('photo')->store('public/users/' . $CUSTOMER_ID);
+            $path = $request->file('photo')->store('public/images/users/user_id_' . $CUSTOMER_ID);
             return User::find($CUSTOMER_ID)
                 ->update([
                     'photo' => $path
