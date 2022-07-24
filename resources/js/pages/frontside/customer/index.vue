@@ -186,7 +186,7 @@ export default {
 
 		cancel_image_upload() {
 			this.clear_img_upload();
-			this.profile_image_src = this.user.customer_profile_image_link;
+			this.profile_image_src = this.user.profile_image_link;
 		},
 
 		async save_image_upload() {
@@ -211,7 +211,7 @@ export default {
 		getCurrentAuth() {
 			axios.get("/me").then((res) => {
 				this.user = res.data;
-				this.profile_image_src = this.user.customer_profile_image_link;
+				this.profile_image_src = this.user.profile_image_link;
 			});
 		},
 	},
