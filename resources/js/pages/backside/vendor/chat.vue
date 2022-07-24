@@ -73,6 +73,10 @@
 														: 'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important; '
 												"
 											/>
+
+											<div v-if="WindowInnerWidth < 541" style="font-size: 8px; overflow-x: hidden">
+												{{ getLimitedUserName(item.user_name) }}
+											</div>
 										</div>
 										<div class="chat_ib" v-if="WindowInnerWidth > 540">
 											<h5>
@@ -110,7 +114,8 @@
 									<div v-if="item.position == 'left'" class="incoming_msg">
 										<div class="incoming_msg_img">
 											<!-- <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div> -->
-											<img :src="conversation.header_user_image_link" alt="sunil" style="object-fit: cover; border-radius: 50%;" /></div>
+											<img :src="conversation.header_user_image_link" alt="sunil" style="object-fit: cover; border-radius: 50%" />
+										</div>
 										<div class="received_msg">
 											<div class="received_withd_msg">
 												<p>{{ item.reply }}</p>
@@ -172,6 +177,7 @@ export default {
 			};
 		},
 	},
+
 	created() {
 		if (this.$route.params.conversation_id) {
 			this.conversation_id = this.$route.params.conversation_id;
@@ -201,6 +207,15 @@ export default {
 		window.removeEventListener("resize", this.myEventHandler);
 	},
 	methods: {
+		getLimitedUserName(user_name) {
+			if (user_name) {
+				var substr = user_name.substr(0, 8);
+				// var substr = "WW WW WW";
+				return substr + "..";
+			}
+			return "";
+		},
+
 		receive_PalexPusherEvent(data) {
 			var message = data.message;
 			console.warn(message);
