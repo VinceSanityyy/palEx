@@ -75,6 +75,9 @@ class User extends Authenticatable
 
     public function getCustomerProfileImageLinkAttribute()
     {
+
+
+        // dump($this->role);
         if ($this->role == "2") {
 
 

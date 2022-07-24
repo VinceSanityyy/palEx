@@ -65,7 +65,7 @@
 									<div class="chat_people">
 										<div class="chat_img" :style="WindowInnerWidth > 540 ? '' : 'float: none  !important; width: 100%  !important;'">
 											<img
-												src="https://ptetutorials.com/images/user-profile.png"
+												:src="item.user_image_link"
 												alt="sunil"
 												:style="
 													WindowInnerWidth > 540
@@ -93,9 +93,9 @@
 							<div class="m-0 p-1 border-bottom border-secondary mb-1">
 								<span
 									><img
-										src="https://ptetutorials.com/images/user-profile.png"
+										:src="conversation.header_user_image_link"
 										alt="sunil"
-										:style="'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important;'"
+										:style="'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important; object-fit: cover; object-fit: cover; border-radius: 50%;'"
 								/></span>
 								<span>
 									<span class="ml-3" style="font-size: 20px !important"
@@ -108,7 +108,9 @@
 							<div class="msg_history" :style="cssVars" v-chat-scroll>
 								<div v-for="(item, index) in replies" :key="index">
 									<div v-if="item.position == 'left'" class="incoming_msg">
-										<div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div>
+										<div class="incoming_msg_img">
+											<!-- <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div> -->
+											<img :src="conversation.header_user_image_link" alt="sunil" style="object-fit: cover; border-radius: 50%;" /></div>
 										<div class="received_msg">
 											<div class="received_withd_msg">
 												<p>{{ item.reply }}</p>
@@ -266,7 +268,6 @@ export default {
 						this.getConversationReplies(this.conversation_id);
 					} else {
 						if (this.chatList.length > 0) {
-							
 							this.getConversationReplies(this.chatList[0].id);
 						} else {
 							this.$events.fire("LoadingOverlayHide");
@@ -296,7 +297,6 @@ export default {
 				});
 		},
 		getConversationReplies(conversation_id) {
-
 			this.conversation_id = conversation_id;
 
 			axios
@@ -412,6 +412,11 @@ img {
 .chat_img {
 	float: left;
 	width: 11%;
+	//added
+	img {
+		object-fit: cover;
+		border-radius: 50%;
+	}
 }
 .chat_ib {
 	float: left;
