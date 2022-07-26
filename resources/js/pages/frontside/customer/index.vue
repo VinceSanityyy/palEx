@@ -109,25 +109,25 @@
 										<div class="form-group row">
 											<label for="inputEmail" class="col-sm-2 col-form-label">Current Password</label>
 											<div class="col-sm-10">
-												<input type="password" class="form-control" />
+												<input v-model="current_password" type="password" class="form-control" />
 											</div>
 										</div>
 										<div class="form-group row">
 											<label for="inputEmail" class="col-sm-2 col-form-label">New Password</label>
 											<div class="col-sm-10">
-												<input type="password" class="form-control" />
+												<input v-model="new_password" type="password" class="form-control" />
 											</div>
 										</div>
 										<div class="form-group row">
-											<label for="inputEmail" class="col-sm-2 col-form-label">Confirm Password</label>
+											<label for="inputEmail" class="col-sm-2 col-form-label">Confirm New Password</label>
 											<div class="col-sm-10">
-												<input type="password" class="form-control" />
+												<input v-model="confirm_new_password" type="password" class="form-control" />
 											</div>
 										</div>
 
 										<div class="form-group row">
 											<div class="offset-sm-2 col-sm-10">
-												<button type="button" class="btn btn-danger">Change Password</button>
+												<button type="button" class="btn btn-danger" @click="customer_change_password()">Change Password</button>
 											</div>
 										</div>
 									</form>
@@ -157,6 +157,9 @@ export default {
 			imageFile: null,
 			user_full_name: "",
 			user_phone: "",
+			current_password: null,
+			new_password: null,
+			confirm_new_password: null,
 		};
 	},
 	mounted() {
@@ -187,6 +190,38 @@ export default {
 					var errors = err.response.data.errors;
 					for (var key of Object.keys(errors)) {
 						toastr.error(errors[key]);
+					}
+				});
+		},
+
+		customer_change_password() {
+			axios
+				.post("/customer_change_password", {
+					current_password: this.current_password,
+					new_password: this.new_password,
+					confirm_new_password: this.confirm_new_password,
+				})
+				.then((res) => {
+					console.log(res);
+					this.$message({
+						message: "Password Successfully Changed",
+						type: "success",
+					});
+				})
+				.catch((err) => {
+					if (err.response) {
+						if (err.response.status == "422") {
+							var errors = err.response.data.errors;
+							for (var key of Object.keys(errors)) {
+								toastr.error(errors[key]);
+							}
+						}
+						if (err.response.data.status == "fail") {
+							this.$message({
+								message: err.response.data.message,
+								type: "error",
+							});
+						}
 					}
 				});
 		},

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class CustomerSettingsController extends Controller
 {
@@ -45,6 +47,41 @@ class CustomerSettingsController extends Controller
             $user->phone = $request->phone;
             $user->save();
             return response()->json($user, 200);
+        }
+    }
+
+
+    public function change_password(Request $request)
+    {
+        $user = Auth::user();
+        if (isset($user)) {
+            $isValid = $request->validate([
+                'current_password' => ['required'],
+                'new_password' => ['required', 'string', 'min:8'],
+                'confirm_new_password' => ['required', 'string', 'min:8', 'same:new_password'],
+            ]);
+            $new_password = $request->new_password;
+            if ($isValid) {
+
+                if (!Hash::check($request->current_password, $user->password)) {
+                    return response()->json([
+                        'status' => 'fail',
+                        'message' => 'Invalid current password'
+                    ], 400);
+                }
+
+                $user->password = Hash::make($new_password);
+                $user->save();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Password updated'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'User not found'
+            ], 404);
         }
     }
 }
