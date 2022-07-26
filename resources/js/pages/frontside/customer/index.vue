@@ -72,18 +72,18 @@
 										<div class="form-group row">
 											<label for="inputName2" class="col-sm-2 col-form-label">Full Name</label>
 											<div class="col-sm-10">
-												<input type="text" v-model="user.name" class="form-control" id="inputName2" placeholder="Enter yout Full Name" />
+												<input type="text" v-model="user_full_name" class="form-control" id="inputName2" placeholder="Enter yout Full Name" />
 											</div>
 										</div>
 										<div class="form-group row">
 											<label for="inputSkills" class="col-sm-2 col-form-label">Phone #</label>
 											<div class="col-sm-10">
-												<input type="text" v-model="user.phone" class="form-control" id="inputSkills" placeholder="Enter your phone number" />
+												<input type="text" v-model="user_phone" class="form-control" id="inputSkills" placeholder="Enter your phone number" />
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="offset-sm-2 col-sm-10">
-												<button type="submit" class="btn btn-danger">Update</button>
+												<button type="button" @click="Update_fullname_and_phone()" class="btn btn-danger">Update</button>
 											</div>
 										</div>
 									</form>
@@ -127,7 +127,7 @@
 
 										<div class="form-group row">
 											<div class="offset-sm-2 col-sm-10">
-												<button type="submit" class="btn btn-danger">Change Password</button>
+												<button type="button" class="btn btn-danger">Change Password</button>
 											</div>
 										</div>
 									</form>
@@ -155,6 +155,8 @@ export default {
 			user: {},
 			profile_image_src: "",
 			imageFile: null,
+			user_full_name: "",
+			user_phone: "",
 		};
 	},
 	mounted() {
@@ -166,6 +168,27 @@ export default {
 			this.$refs.ImageFileHiddenInput.value = "";
 			this.$refs.ImageFileHiddenInput.value = null;
 			this.$refs.ImageFileHiddenInput.click();
+		},
+
+		Update_fullname_and_phone() {
+			axios
+				.post("/change_fullname_and_phone", {
+					fullname: this.user_full_name,
+					phone: this.user_phone,
+				})
+				.then((res) => {
+					console.log(res);
+					this.$message({
+						message: "Success Update Basic Info",
+						type: "success",
+					});
+				})
+				.catch((err) => {
+					var errors = err.response.data.errors;
+					for (var key of Object.keys(errors)) {
+						toastr.error(errors[key]);
+					}
+				});
 		},
 
 		onFileChange(e) {
@@ -211,6 +234,8 @@ export default {
 		getCurrentAuth() {
 			axios.get("/me").then((res) => {
 				this.user = res.data;
+				this.user_full_name = this.user.name;
+				this.user_phone = this.user.phone;
 				this.profile_image_src = this.user.profile_image_link;
 			});
 		},

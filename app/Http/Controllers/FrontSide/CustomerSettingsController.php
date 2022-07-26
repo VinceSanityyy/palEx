@@ -31,4 +31,20 @@ class CustomerSettingsController extends Controller
                 ]);
         }
     }
+
+    public function change_fullname_and_phone(Request $request)
+    {
+
+        $isValid = $request->validate([
+            'fullname' => ['required'],
+        ]);
+        if ($isValid) {
+            $CUSTOMER_ID = Auth::user()->id;
+            $user = User::find($CUSTOMER_ID);
+            $user->name = $request->fullname;
+            $user->phone = $request->phone;
+            $user->save();
+            return response()->json($user, 200);
+        }
+    }
 }
