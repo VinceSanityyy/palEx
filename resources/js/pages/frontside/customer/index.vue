@@ -84,6 +84,7 @@
 										<div class="form-group row">
 											<div class="offset-sm-2 col-sm-10">
 												<button type="button" @click="Update_fullname_and_phone()" class="btn btn-danger">Update</button>
+												<!-- <button type="button" @click="test()" class="btn btn-danger">test</button> -->
 											</div>
 										</div>
 									</form>
@@ -140,6 +141,68 @@
 					</div>
 					<!-- /.card -->
 				</div>
+
+				<div class="col-md-10 col-lg-8">
+					<div class="card palex-card">
+						<div class="card-header w-100 text-center">
+							<h3 class="card-title w-100">
+								<div class="d-flex justify-content-between align-items-center">
+									<span>Addresses</span>
+									<span>
+										<el-button type="primary">Add More Address</el-button>
+									</span>
+								</div>
+							</h3>
+						</div>
+						<div class="card-body">
+							<div v-for="(item, index) in customer_addresses" :key="index">
+								<div class="row">
+									<div class="col-md-9">
+										<div class="receiver_name">
+											<b>
+												{{ item.full_name }}
+											</b>
+											<span>|| <span v-if="item.selected == 1" class="badge badge-success">Selected</span></span>
+										</div>
+										<div class="receiver_phone">
+											{{ item.phone }}
+										</div>
+										<div class="street">
+											{{ item.street }}
+										</div>
+										<div class="barangay-city-province-postat-code">{{ item.barangay }}, {{ item.city }}, {{ item.province }}, {{ item.postal_code }},</div>
+									</div>
+									<div class="col-md-3">
+										<div class="d-flex flex-sm-row flex-md-column justify-content-center">
+											<span class="mx-auto">
+												<el-button type="primary" size="mini" plain class="mb-1 mr-1" style="width: 70px">edit</el-button>
+											</span>
+											<span class="mx-auto">
+												<el-button type="danger" size="mini" plain class="mb-1 mr-1" style="width: 70px">delete</el-button>
+											</span>
+											<span class="mx-auto">
+												<el-button
+													:loading="loadingSelectedBtn"
+													type="success"
+													size="mini"
+													plain
+													class="mb-1"
+													style="width: 100px"
+													@click="setSelectedAddress(item)"
+													>Set Selected</el-button
+												>
+											</span>
+										</div>
+									</div>
+								</div>
+
+								<hr />
+							</div>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->
@@ -160,31 +223,42 @@ export default {
 			current_password: null,
 			new_password: null,
 			confirm_new_password: null,
+			customer_addresses: [],
+			loadingSelectedBtn: false,
 		};
 	},
 	mounted() {
 		this.getCurrentAuth();
 		this.clear_img_upload();
+		this.getCustomerAddress();
 	},
 	methods: {
-		UploadBtnClick() {
-			this.$refs.ImageFileHiddenInput.value = "";
-			this.$refs.ImageFileHiddenInput.value = null;
-			this.$refs.ImageFileHiddenInput.click();
-		},
-
-		Update_fullname_and_phone() {
+		setSelectedAddress(item) {
+			console.log(item);
+			this.$events.fire("LoadingOverlayShow");
+			this.loadingSelectedBtn = true;
 			axios
-				.post("/change_fullname_and_phone", {
-					fullname: this.user_full_name,
-					phone: this.user_phone,
-				})
+				.post(`/set_selected_address/${item.id}`)
 				.then((res) => {
-					console.log(res);
-					this.$message({
-						message: "Success Update Basic Info",
-						type: "success",
-					});
+					// console.log(res.data);
+					this.getCustomerAddress();
+					this.$events.fire("LoadingOverlayHide");
+					this.loadingSelectedBtn = false;
+				})
+				.catch((err) => {
+					this.$events.fire("LoadingOverlayHide");
+					this.loadingSelectedBtn = false;
+					var errors = err.response.data.errors;
+					for (var key of Object.keys(errors)) {
+						toastr.error(errors[key]);
+					}
+				});
+		},
+		getCustomerAddress() {
+			axios
+				.get("/get_customer_addresses")
+				.then((res) => {
+					this.customer_addresses = res.data;
 				})
 				.catch((err) => {
 					var errors = err.response.data.errors;
@@ -193,8 +267,41 @@ export default {
 					}
 				});
 		},
+		// test(){
+		// 	this.$router.push(`/vendor/products`);
+		// },
+		UploadBtnClick() {
+			this.$refs.ImageFileHiddenInput.value = "";
+			this.$refs.ImageFileHiddenInput.value = null;
+			this.$refs.ImageFileHiddenInput.click();
+		},
+
+		Update_fullname_and_phone() {
+			this.$events.fire("LoadingOverlayShow");
+			axios
+				.post("/change_fullname_and_phone", {
+					fullname: this.user_full_name,
+					phone: this.user_phone,
+				})
+				.then((res) => {
+					console.log(res);
+					this.$events.fire("LoadingOverlayHide");
+					this.$message({
+						message: "Success Update Basic Info",
+						type: "success",
+					});
+				})
+				.catch((err) => {
+					this.$events.fire("LoadingOverlayHide");
+					var errors = err.response.data.errors;
+					for (var key of Object.keys(errors)) {
+						toastr.error(errors[key]);
+					}
+				});
+		},
 
 		customer_change_password() {
+			this.$events.fire("LoadingOverlayShow");
 			axios
 				.post("/customer_change_password", {
 					current_password: this.current_password,
@@ -202,6 +309,7 @@ export default {
 					confirm_new_password: this.confirm_new_password,
 				})
 				.then((res) => {
+					this.$events.fire("LoadingOverlayHide");
 					console.log(res);
 					this.$message({
 						message: "Password Successfully Changed",
@@ -209,6 +317,7 @@ export default {
 					});
 				})
 				.catch((err) => {
+					this.$events.fire("LoadingOverlayHide");
 					if (err.response) {
 						if (err.response.status == "422") {
 							var errors = err.response.data.errors;
@@ -249,16 +358,18 @@ export default {
 
 		async save_image_upload() {
 			// this.clear_img_upload();
-
+			this.$events.fire("LoadingOverlayShow");
 			var formData = new FormData();
 			formData.append("photo", this.imageFile);
 			axios
 				.post(`/changeCustomerPicture`, formData)
 				.then((res) => {
+					this.$events.fire("LoadingOverlayHide");
 					console.log(res.data);
 					this.clear_img_upload();
 				})
 				.catch((err) => {
+					this.$events.fire("LoadingOverlayHide");
 					var errors = err.response.data.errors;
 					for (var key of Object.keys(errors)) {
 						toastr.error(errors[key]);
