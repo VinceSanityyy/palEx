@@ -108,6 +108,7 @@ Route::middleware('isAuth')->group(function(){
         Route::post('/changeCustomerPicture',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'changeCustomerPicture']);
         Route::post('/change_fullname_and_phone',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'change_fullname_and_phone']);
         Route::post('/customer_change_password',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'change_password']);
+        Route::get('/get_customer_addresses',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'get_customer_addresses']);
     });
 });
 

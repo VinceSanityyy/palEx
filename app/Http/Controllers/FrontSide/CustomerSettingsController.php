@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontSide;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\CustomerAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -49,6 +50,14 @@ class CustomerSettingsController extends Controller
             return response()->json($user, 200);
         }
     }
+
+    public function get_customer_addresses()
+    {
+        $CUSTOMER_ID = Auth::user()->id;
+        $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)->get();
+        return response()->json($CustomerAddress, 200);
+    }
+
 
 
     public function change_password(Request $request)
