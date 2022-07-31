@@ -260,6 +260,7 @@ export default {
 					this.msg = "";
 					//   this.getConversationReplies(this.conversation.id);
 					this.getUserChatList();
+					toastr.success('Message Sent')
 				})
 				.catch((err) => {
 					console.error(err);

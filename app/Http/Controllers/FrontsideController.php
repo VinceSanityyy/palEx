@@ -74,7 +74,7 @@ class FrontsideController extends Controller
 
     public function getVendorProfile($vendor_id)
     {
-        $vendor = User::findOrFail($vendor_id);
+        $vendor = User::where('id',$vendor_id)->with('vendor')->first();
         if ($vendor->role == 1) {
             return response()->json($vendor, 200);
         } else {

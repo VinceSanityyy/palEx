@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\VendorAddress;
+
 class HomeController extends Controller
 {
     /**
@@ -48,6 +50,11 @@ class HomeController extends Controller
     public function getAuthenticateduser(){
         $user = \Auth::user();
         return response()->json($user);
+    }
+
+    public function getAuthenticatedVendor(){
+        $vendorDetails = VendorAddress::where('vendor_id', \Auth::user()->id)->with('user')->first();
+        return response()->json($vendorDetails);
     }
     
 }
