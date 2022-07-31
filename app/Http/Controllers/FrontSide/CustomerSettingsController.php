@@ -51,10 +51,43 @@ class CustomerSettingsController extends Controller
         }
     }
 
+
+    public function set_selected_address($address_id)
+    {
+
+        // $isValid = $request->validate([
+        //     'address_id' => ['required'],
+        // ]);
+        // if ($isValid) {
+        $CUSTOMER_ID = Auth::user()->id;
+        $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)->where('id', $address_id)->first();
+
+        if (isset($CustomerAddress)) {
+
+            CustomerAddress::where('customer_id', $CUSTOMER_ID)->update(['selected' => 0]);
+            // $customer_addresses = CustomerAddress::where('customer_id', $CUSTOMER_ID)->get();
+            // foreach ($customer_addresses as $key => $value) {
+            //     $value->selected = 0;
+            //     $value->save();
+            // }
+            CustomerAddress::where('customer_id', $CUSTOMER_ID)->where('id', $address_id)->update(['selected' => 1]);
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'success'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Address Not found'
+            ], 404);
+        }
+        // }
+    }
+
     public function get_customer_addresses()
     {
         $CUSTOMER_ID = Auth::user()->id;
-        $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)->get();
+        $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)->orderBy('id', 'desc')->get();
         return response()->json($CustomerAddress, 200);
     }
 
