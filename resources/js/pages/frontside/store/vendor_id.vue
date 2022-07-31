@@ -20,7 +20,9 @@
 					</p>
 					<el-button icon="el-icon-chat-dot-round" type="warning" plain @click="createConversation()">Inquire Now!</el-button>
 					<el-button icon="el-icon-chat-dot-round" type="warning" plain >
-						<a :href="'sms: '+ vendor.phone+'?body=Hello!'" style="color: #E6A23C;" >Send Message Thru SMS!</a>
+						<!-- <a :href="'sms: '+ vendor.phone+'?body=Hello!'" style="color: #E6A23C;" >Send Message Thru SMS!</a> -->
+						<a href="sms: +639270277397" style="color: #E6A23C;" >Send Message Thru SMS!</a>
+
 					</el-button>
 				</div>
 			</div>
