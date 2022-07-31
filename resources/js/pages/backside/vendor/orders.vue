@@ -139,6 +139,7 @@
 					status: status,
 				}).then((response) => {
 					this.getOrders()
+					toastr.success('Order Modified!')
 				});
 			},
 			getOrders(){

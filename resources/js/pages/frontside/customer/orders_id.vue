@@ -147,7 +147,7 @@
 
 						<div class="d-flex justify-content-between px-2">
 							<span>option:</span>
-							<span class="mx-1"> <el-button type="danger" @click="cancelBtn()" plain>Cancel</el-button> </span>
+							<span class="mx-1"> <el-button type="danger" :disabled="order_data.status == 'cancelled' || order_data.status == 'completed'" @click="cancelBtn(order_data.id)" plain>Cancel</el-button> </span>
 						</div>
 
 						<hr />
@@ -196,12 +196,21 @@ export default {
 		this.getOrder();
 	},
 	methods: {
-		cancelBtn() {
-			this.$message({
-				message: "Under Construction",
-				type: "error",
-				// duration: 0,
-			});
+		cancelBtn(id) {
+			swal.fire({
+				title: 'Are you sure you want to cancel?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, cancel my order',
+				cancelButtonText: 'No, keep it',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					this.cancelOrder(id);
+				}
+			})
 		},
 		badgeStatus(status) {
 			if (status == "pending") return "badge-warning";
@@ -227,6 +236,14 @@ export default {
 			});
 			return withCommas;
 		},
+		cancelOrder(id){
+			axios.post(`/cancelCustomerOrder/${id}`).then((res) => {
+				this.getOrder();
+				toastr.success('Order Cancelled!')
+			}).catch((err) => {
+				console.error(err);
+			});
+		}
 	},
 };
 </script>

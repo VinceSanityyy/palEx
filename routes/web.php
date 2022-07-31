@@ -18,6 +18,9 @@ Route::get('/login', function () {
 });
 //me
 Route::get('/me',[App\Http\Controllers\HomeController::class, 'getAuthenticateduser']);
+//me for vendor
+Route::get('/me/vendor',[App\Http\Controllers\HomeController::class, 'getAuthenticatedVendor']);
+
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -67,6 +70,8 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/palex_api/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
         Route::post('/palex_api/vendor/updateOrderStatus',[App\Http\Controllers\Frontside\OrderController::class, 'updateOrderStatus']);
         Route::get('/palex_api/vendor/getOrders',[App\Http\Controllers\Frontside\OrderController::class, 'getOrdersVendor']);
+        Route::post('/vendor/update/{id}', [App\Http\Controllers\BacksideController::class, 'updateVendorDetails']);
+
     });
 
     Route::middleware('isAdmin')->group(function(){
@@ -108,6 +113,7 @@ Route::middleware('isAuth')->group(function(){
         Route::post('/changeCustomerPicture',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'changeCustomerPicture']);
         Route::post('/change_fullname_and_phone',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'change_fullname_and_phone']);
         Route::post('/customer_change_password',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'change_password']);
+        Route::post('/cancelCustomerOrder/{order_id}',[App\Http\Controllers\FrontSide\OrderController::class, 'cancelCustomerOrder']);
     });
 });
 

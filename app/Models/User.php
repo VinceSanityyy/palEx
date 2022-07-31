@@ -100,4 +100,14 @@ class User extends Authenticatable
 
         return $photo;
     }
+
+    /**
+     * Get the user associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function vendor()
+    {
+        return $this->hasMany(VendorAddress::class, 'vendor_id');
+    }
 }

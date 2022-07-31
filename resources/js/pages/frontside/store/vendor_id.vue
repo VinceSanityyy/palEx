@@ -15,10 +15,13 @@
 					</blockquote>
 					<p>
 						Email :{{ vendor.email }}<br />
-						Website: {{ "www.companytest.com" }} <br />
-						Contact Number: {{ "0912-123-1234" }}
+						Address: {{vendor.vendor[0].street}}, {{vendor.vendor[0].barangay}}, {{vendor.vendor[0].city}}, {{vendor.vendor[0].province}}, {{vendor.vendor[0].postal_code}}<br />
+						Contact Number: {{vendor.phone}}
 					</p>
 					<el-button icon="el-icon-chat-dot-round" type="warning" plain @click="createConversation()">Inquire Now!</el-button>
+					<el-button icon="el-icon-chat-dot-round" type="warning" plain >
+						<a style="color: #E6A23C;" :href="'sms: '+ vendor.phone">Send Message Thru SMS!</a>
+					</el-button>
 				</div>
 			</div>
 			<div class="row">

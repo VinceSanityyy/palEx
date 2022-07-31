@@ -121,7 +121,7 @@ class OrderController extends Controller
         $class->orders = $Orders;
         $class->orders_total =    Order::countCustomerOrder('all', $CUSTOMER_ID);
         $class->orders_pending =    Order::countCustomerOrder('pending', $CUSTOMER_ID);
-        $class->orders_to_deliver =  Order::countCustomerOrder('to ship', $CUSTOMER_ID);
+        $class->orders_reserved =  Order::countCustomerOrder('reserved', $CUSTOMER_ID);
         $class->orders_completed = Order::countCustomerOrder('completed', $CUSTOMER_ID);
         $class->orders_cancelled =   Order::countCustomerOrder('cancelled', $CUSTOMER_ID);
 
@@ -137,5 +137,14 @@ class OrderController extends Controller
             ->where('customer_id', $CUSTOMER_ID)
             ->first();
         return response()->json($Order, 200);
+    }
+
+    public function cancelCustomerOrder($orderId){
+        $order = Order::find($orderId);
+        $order->status = 'cancelled';
+        $order->save();
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }

@@ -118,10 +118,10 @@
 
 							<button type="button" class="btn btn-light w-100 mb-1">
 								<span class="d-flex justify-content-between">
-									<span> To Deliver </span>
+									<span> Reserved </span>
 									<span>
 										<span class="badge badge-info">
-											{{ orders_data.orders_to_deliver }}
+											{{ orders_data.orders_reserved }}
 										</span>
 									</span>
 								</span>
@@ -227,7 +227,7 @@ export default {
 				orders: [],
 				orders_total: 0,
 				orders_pending: 0,
-				orders_to_deliver: 0,
+				orders_reserved: 0,
 				orders_completed: 0,
 				orders_cancelled: 0,
 			},
@@ -242,7 +242,7 @@ export default {
 		},
 		badgeStatus(status) {
 			if (status == "pending") return "badge-warning";
-			if (status == "to ship") return "badge-info";
+			if (status == "reserved") return "badge-info";
 			if (status == "completed") return "badge-success";
 			if (status == "cancelled") return "badge-danger";
 			return "badge-warning";

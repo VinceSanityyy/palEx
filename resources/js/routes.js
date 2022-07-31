@@ -15,6 +15,7 @@ import VendorDashboard from './pages/backside/vendor/index.vue';
 import VendorOrders from './pages/backside/vendor/orders.vue';
 import VendorProducts from './pages/backside/vendor/products.vue';
 import VendorChat from './pages/backside/vendor/chat.vue';
+import VendorSettings from './pages/backside/vendor/settings.vue';
 
 // Customer Pages
 import CustomerProfile from './pages/frontside/customer/index.vue';
@@ -105,6 +106,13 @@ const routes = [
                     helper: VendorChat
                 }
             },
+            {
+                path: 'settings',
+                name: 'vendor-settings',
+                components: {
+                    helper: VendorSettings
+                }
+            }
         ],
     },
     {

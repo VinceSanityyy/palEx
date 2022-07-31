@@ -65,7 +65,7 @@
             <a href="/register" class="nav-link active">Sign Up</a>
           </li>
           <li v-if="is_auth" class="nav-item">
-            <a class="nav-link active" @click="logout()">
+            <a href="#" class="nav-link active" @click="logout()">
               <i class="fas fa-sign-out-alt"></i>
             </a>
           </li>
