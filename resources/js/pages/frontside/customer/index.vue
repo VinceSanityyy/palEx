@@ -84,7 +84,7 @@
 										<div class="form-group row">
 											<div class="offset-sm-2 col-sm-10">
 												<button type="button" @click="Update_fullname_and_phone()" class="btn btn-danger">Update</button>
-												<button type="button" @click="test()" class="btn btn-danger">test</button>
+												<!-- <button type="button" @click="test()" class="btn btn-danger">test</button> -->
 											</div>
 										</div>
 									</form>
