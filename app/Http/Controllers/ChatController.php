@@ -114,7 +114,7 @@ class ChatController extends Controller
 
 
         $conversation = Conversation::conversationLeftJoinReplies()
-            ->with('user_one:id,name,email,photo', 'user_two:id,name,email,photo')
+            ->with('user_one:id,name,email,photo,role', 'user_two:id,name,email,photo,role')
             ->where(function ($query) use ($user1) {
                 $query->where('user_one_id', $user1->id)
                     ->orWhere('user_two_id', $user1->id);
@@ -126,8 +126,10 @@ class ChatController extends Controller
             $value->is_active = true;
             if ($value->user_one_id == $user1->id) {
                 $value->user_name = $value->user_two->name;
+                $value->user_image_link = $value->user_two->profile_image_link;
             } else {
                 $value->user_name = $value->user_one->name;
+                $value->user_image_link = $value->user_one->profile_image_link;
             }
         }
 
@@ -142,7 +144,7 @@ class ChatController extends Controller
     {
         $user = Auth::user();
         // $conversation = Conversation::findOrFail($conversation_id)->load('user_one:id,name,email,photo', 'user_two:id,name,email,photo');
-        $conversation = Conversation::with('user_one:id,name,email,photo', 'user_two:id,name,email,photo')
+        $conversation = Conversation::with('user_one:id,name,email,photo,role', 'user_two:id,name,email,photo,role')
             ->where('id', $conversation_id)
             ->where(function ($query) use ($user) {
                 $query->where('user_one_id', $user->id)
@@ -155,12 +157,12 @@ class ChatController extends Controller
                 $conversation->header_user_id = $conversation->user_two->id;
                 $conversation->header_user_name = $conversation->user_two->name;
                 $conversation->header_user_email = $conversation->user_two->email;
-                $conversation->header_user_image_link = $conversation->user_two->image_link;
+                $conversation->header_user_image_link = $conversation->user_two->profile_image_link;
             } else {
                 $conversation->header_user_id = $conversation->user_one->id;
                 $conversation->header_user_name = $conversation->user_one->name;
                 $conversation->header_user_email =  $conversation->user_one->email;
-                $conversation->header_user_image_link =  $conversation->user_one->image_link;
+                $conversation->header_user_image_link =  $conversation->user_one->profile_image_link;
             }
 
             $replies  = ConversationReply::where('conversation_id', $conversation->id)->orderBy('created_at', 'asc')->get();
@@ -195,7 +197,7 @@ class ChatController extends Controller
         // $user1 = User::findOrFail($request->user_id);
 
         $conversation = Conversation::conversationJoinReplies()
-            ->with('user_one:id,name,email,photo', 'user_two:id,name,email,photo')
+            ->with('user_one:id,name,email,photo,role', 'user_two:id,name,email,photo,role')
             ->where(function ($query) use ($user1) {
                 $query->where('user_one_id', $user1->id)
                     ->orWhere('user_two_id', $user1->id);

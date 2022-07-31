@@ -15,37 +15,41 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                'id' => 1, 
+                'id' => 1,
                 'name' => 'Super Admin',
                 'email' => 'palex_admin@gmail.com',
                 'password' => \Hash::make('123123123'),
                 'role' => 0,
-                'status' => 1
-                
+                'status' => 1,
+                'photo' => null
+
             ],
             [
-                'id' => 2, 
-                'name' => 'Customer Test',
+                'id' => 2,
+                'name' => 'Lexi Loren',
                 'email' => 'c@gmail.com',
                 'password' => \Hash::make('123123123'),
                 'role' => 2,
-                'status' => 1
+                'status' => 1,
+                'photo' => "public/images/user_seeds/test-customer-1.jpg"
             ],
             [
-                'id' => 3, 
+                'id' => 3,
                 'name' => 'Admin Pj',
                 'email' => 'admin.pj@gmail.com',
                 'password' => \Hash::make('password'),
                 'role' => 0,
-                'status' => 1
+                'status' => 1,
+                'photo' => null
             ],
             [
-                'id' => 4, 
-                'name' => 'Pj Abing',
+                'id' => 4,
+                'name' => 'Ivana Ilawi',
                 'email' => 'pj.abing@gmail.com',
                 'password' => \Hash::make('password'),
                 'role' => 2,
-                'status' => 1
+                'status' => 1,
+                'photo' => "public/images/user_seeds/test-customer-2.jpg"
             ]
         ];
         \DB::table('users')->insert($data);
@@ -90,9 +94,8 @@ class UserSeeder extends Seeder
                 'selected' => 1,
             ],
 
-            
+
         ];
         \DB::table('customer_addresses')->insert($data);
-        
     }
 }

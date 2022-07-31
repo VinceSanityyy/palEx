@@ -1,7 +1,8 @@
 <template>
   <div class="register-box">
   <div class="register-logo">
-    <a href="/"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
+    <!-- <a href="/"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a> -->
+    Palengke Express
   </div>
 
   <div class="card">
@@ -37,7 +38,7 @@
            <select v-model="role" name="role" class="form-control" id="role">
                     <option value = "" selected disabled>Role</option>
                     <option value = "1">Vendor</option>
-                    <option value = "2">Custoemr</option>
+                    <option value = "2">Customer</option>
             </select>
           <div class="input-group-append">
             <div class="input-group-text">
@@ -138,6 +139,7 @@ data(){
             }
         },
         onFileChange(e) {
+          console.log(e);
           let file = e.target.files[0];
           this.image = file
         },

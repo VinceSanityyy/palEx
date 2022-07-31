@@ -11,7 +11,7 @@
 
 
 </head>
-<body class="hold-transition login-page" style="background: #44c662;">
+<body class="hold-transition login-page">
 <div id="app">
     @yield('content')
 </div>

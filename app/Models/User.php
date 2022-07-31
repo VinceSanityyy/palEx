@@ -23,8 +23,11 @@ class User extends Authenticatable
         'password',
         'phone',
         'role',
-        'identity'
+        'identity',
+        'photo',
     ];
+
+    // protected $guarded  = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -46,7 +49,10 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'image_link'
+        'image_link',
+        'profile_image_link',
+        // 'customer_profile_image_link',
+        // 'vendor_profile_image_link'
     ];
 
     public function getImageLinkAttribute()
@@ -62,7 +68,34 @@ class User extends Authenticatable
             $photo = url('storage/' . $implode_path);
         } else {
             // $photo = $this->is_bundle == 1 ? "/img/bundle.png" : "/img/no-product-image.png";
-            $photo = "";
+            // $photo =  url('/img/user.png');
+            $photo =  "";
+        }
+
+        return $photo;
+    }
+
+    public function getProfileImageLinkAttribute()
+    {
+        if (!empty($this->photo)) {
+
+            // explode by /
+            $explode_path = explode('/', $this->photo);
+            // removed first value in array wich is the public of the path
+            unset($explode_path[0]);
+            // return back to his format
+            $implode_path = implode('/', $explode_path);
+            $photo = url('storage/' . $implode_path);
+        } else {
+            // $photo = $this->is_bundle == 1 ? "/img/bundle.png" : "/img/no-product-image.png";
+
+            if ($this->role == '1') {
+                $photo =  url('/img/shop.png');
+                // $photo =  "https://icon-library.com/images/vendor-icon-png/vendor-icon-png-11.jpg";
+            } else {
+                $photo =  url('/img/user.png');
+            }
+            // $photo =  "";
         }
 
         return $photo;

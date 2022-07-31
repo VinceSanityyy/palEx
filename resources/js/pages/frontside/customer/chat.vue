@@ -33,7 +33,7 @@
 				<div class="inbox_people" :style="WindowInnerWidth > 540 ? '' : 'width:15%!important;'">
 					<div v-if="WindowInnerWidth > 540" class="headind_srch">
 						<div class="recent_heading">
-							<h4>Recent</h4>
+							<h4>Messages</h4>
 						</div>
 						<!-- <div class="srch_bar">
               <div class="stylish-input-group">
@@ -57,12 +57,15 @@
 							<div class="chat_people">
 								<div class="chat_img" :style="WindowInnerWidth > 540 ? '' : 'float: none  !important; width: 100%  !important;'">
 									<img
-										src="https://ptetutorials.com/images/user-profile.png"
+										:src="item.user_image_link"
 										alt="sunil"
 										:style="
 											WindowInnerWidth > 540 ? '' : 'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important; '
 										"
 									/>
+									<div v-if="WindowInnerWidth < 541" style="font-size: 8px; overflow-x: hidden">
+										{{ getLimitedUserName(item.user_name) }}
+									</div>
 								</div>
 								<div class="chat_ib" v-if="WindowInnerWidth > 540">
 									<h5>
@@ -81,12 +84,13 @@
 				<!-- style="text-overflow: ellipsis; overflow: hidden" -->
 				<div class="mesgs" :style="WindowInnerWidth > 540 ? '' : 'width:85%!important;'">
 					<div class="m-0 p-1 border-bottom border-secondary mb-1">
-						<span
-							><img
-								src="https://ptetutorials.com/images/user-profile.png"
+						<span>
+							<img
+								:src="conversation.header_user_image_link"
 								alt="sunil"
-								:style="'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important;'"
-						/></span>
+								:style="'width:35px !important; max-width:35px !important; height:35px !important; max-height:35px !important; object-fit: cover; object-fit: cover; border-radius: 50%;'"
+							/>
+						</span>
 						<span>
 							<span class="ml-3" style="font-size: 20px !important"
 								><b>{{ conversation.header_user_name }}</b></span
@@ -98,7 +102,10 @@
 					<div class="msg_history" :style="cssVars" v-chat-scroll>
 						<div v-for="(item, index) in replies" :key="index">
 							<div v-if="item.position == 'left'" class="incoming_msg">
-								<div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /></div>
+								<div class="incoming_msg_img">
+									<!-- <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> -->
+									<img :src="conversation.header_user_image_link" alt="sunil"  style="object-fit: cover; border-radius: 50%"  />
+								</div>
 								<div class="received_msg">
 									<div class="received_withd_msg">
 										<p>{{ item.reply }}</p>
@@ -194,6 +201,15 @@ export default {
 		window.removeEventListener("resize", this.myEventHandler);
 	},
 	methods: {
+		getLimitedUserName(user_name) {
+			if (user_name) {
+				var substr = user_name.substr(0, 8);
+				// var substr = "WW WW WW";
+				return substr + "..";
+			}
+			return "";
+		},
+
 		receive_PalexPusherEvent(data) {
 			var message = data.message;
 			console.warn(message);
@@ -400,6 +416,10 @@ img {
 .chat_img {
 	float: left;
 	width: 11%;
+	img {
+		object-fit: cover;
+		border-radius: 50%;
+	}
 }
 .chat_ib {
 	float: left;
