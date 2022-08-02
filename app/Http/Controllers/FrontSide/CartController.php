@@ -92,6 +92,10 @@ class CartController extends Controller
             $over_all_total = ($total_order_amount + $total_shipping_fee) - $discount;
 
 
+            $customer_address =  CustomerAddress::where('customer_id', Auth::user()->id)
+                ->where('selected', 1)
+                ->first();
+
             $class = new stdClass;
             $class->total_order_amount =   $total_order_amount;
             $class->total_order_amount_with_shipping_fee =   $total_order_amount_with_shipping_fee;
@@ -102,6 +106,7 @@ class CartController extends Controller
             $class->total_items_qty = $total_items_qty;
             $class->details = $CartItems;
             $class->user_id = Auth::user()->id;
+            $class->customer_address = $customer_address;
 
             return response()->json($class, 200);
         } else {

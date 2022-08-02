@@ -116,6 +116,9 @@ Route::middleware('isAuth')->group(function(){
         Route::get('/get_customer_addresses',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'get_customer_addresses']);
         Route::post('/set_selected_address/{address_id}',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'set_selected_address']);
         Route::post('/cancelCustomerOrder/{order_id}',[App\Http\Controllers\FrontSide\OrderController::class, 'cancelCustomerOrder']);
+        Route::post('/add_customer_address',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'add_customer_address']);
+        Route::post('/update_customer_address',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'update_customer_address']);
+        Route::post('/delete_customer_address',[App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'delete_customer_address']);
     });
 });
 

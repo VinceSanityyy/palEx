@@ -26,6 +26,14 @@ class OrderController extends Controller
     {
         $CUSTOMER_ID = Auth::user()->id;
         $cartIsExist = Cart::where('customer_id', $CUSTOMER_ID)->exists();
+
+        $CustomerAddress_exists =  CustomerAddress::where('customer_id', $CUSTOMER_ID)
+            ->where('selected', 1)
+            ->exists();
+        if (!$CustomerAddress_exists) {
+            return response()->json("Please Set Delivery Address", 401);
+        }
+
         if ($cartIsExist) {
             $cart =  Cart::where('customer_id', $CUSTOMER_ID)->first();
             $CartPerVendors = CartItem::with('vendor:id,name,email')
@@ -40,9 +48,12 @@ class OrderController extends Controller
                 // $ShippingFee =   ShippingFee::where('vendor_id', $VENDOR_ID)->first();
                 // $ShippingFee_Amount = $ShippingFee->shipping_fee_amount;
                 $ShippingFee_Amount = 0;
+
                 $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)
                     ->where('selected', 1)
                     ->first();
+
+
 
                 $FullAddress =  $CustomerAddress->street . ", "
                     . $CustomerAddress->barangay . ", "
@@ -139,7 +150,8 @@ class OrderController extends Controller
         return response()->json($Order, 200);
     }
 
-    public function cancelCustomerOrder($orderId){
+    public function cancelCustomerOrder($orderId)
+    {
         $order = Order::find($orderId);
         $order->status = 'cancelled';
         $order->save();

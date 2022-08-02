@@ -9,6 +9,12 @@
 	object-fit: cover;
 	border-radius: 50%;
 }
+
+label {
+	color: #2c9144 !important;
+	font-weight: 600;
+	font-size: 16px;
+}
 </style>
 
 
@@ -148,18 +154,25 @@
 							<h3 class="card-title w-100">
 								<div class="d-flex justify-content-between align-items-center">
 									<span>Addresses</span>
-									<span>
-										<el-button type="primary">Add More Address</el-button>
+									<span v-if="customer_addresses.length > 0">
+										<el-button @click="AddMoreAddresses()" type="primary">Add More Address</el-button>
 									</span>
 								</div>
 							</h3>
 						</div>
-						<div class="card-body">
+						<div class="card-body" id="address_card">
+							<div v-if="customer_addresses.length < 1" class="text-center d-flex justify-content-center align-items-center" style="min-height: 400px">
+								<div>
+									<div><b>You don`t have set Address yet for the delivery destination.</b></div>
+									<el-button @click="AddMoreAddresses()" type="primary" plain>Add Address here</el-button>
+								</div>
+							</div>
+
 							<div v-for="(item, index) in customer_addresses" :key="index">
 								<div class="row">
 									<div class="col-md-9">
 										<div class="receiver_name">
-											<b>
+											<b style="color: #2c9144 !important">
 												{{ item.full_name }}
 											</b>
 											<span>|| <span v-if="item.selected == 1" class="badge badge-success">Selected</span></span>
@@ -175,12 +188,14 @@
 									<div class="col-md-3">
 										<div class="d-flex flex-sm-row flex-md-column justify-content-center">
 											<span class="mx-auto">
-												<el-button type="primary" size="mini" plain class="mb-1 mr-1" style="width: 70px">edit</el-button>
+												<el-button @click="EditAddress(item)" type="primary" size="mini" plain class="mb-1 mr-1" style="width: 70px">edit</el-button>
 											</span>
-											<span class="mx-auto">
-												<el-button type="danger" size="mini" plain class="mb-1 mr-1" style="width: 70px">delete</el-button>
+											<span class="mx-auto" v-if="item.selected != 1">
+												<el-button @click="delete_customer_address(item.id)" type="danger" size="mini" plain class="mb-1 mr-1" style="width: 70px">
+													delete
+												</el-button>
 											</span>
-											<span class="mx-auto">
+											<span class="mx-auto" v-if="item.selected != 1">
 												<el-button
 													:loading="loadingSelectedBtn"
 													type="success"
@@ -208,6 +223,8 @@
 			<!-- /.row -->
 		</div>
 		<!-- /.container-fluid -->
+
+		<AddOrUpdateCustomerAddresses></AddOrUpdateCustomerAddresses>
 	</section>
 </template>
 <script>
@@ -233,6 +250,12 @@ export default {
 		this.getCustomerAddress();
 	},
 	methods: {
+		AddMoreAddresses() {
+			this.$events.fire("ShowAddOrUpdateCustomerAddresses", { option: "add" });
+		},
+		EditAddress(item) {
+			this.$events.fire("ShowAddOrUpdateCustomerAddresses", { option: "edit", form: item });
+		},
 		setSelectedAddress(item) {
 			console.log(item);
 			this.$events.fire("LoadingOverlayShow");
@@ -266,6 +289,42 @@ export default {
 						toastr.error(errors[key]);
 					}
 				});
+		},
+
+		delete_customer_address(id) {
+			this.$confirm("Are you sure you want to delete this address?", "Warning", {
+				confirmButtonText: "YES",
+				cancelButtonText: "NO",
+				type: "danger",
+			})
+				.then(() => {
+					this.$events.fire("LoadingOverlayShow");
+
+					axios
+						.post("/delete_customer_address", {
+							address_id: id,
+						})
+						.then((res) => {
+							this.$events.fire("LoadingOverlayHide");
+							this.$message({
+								message: "Address Succussfully Deleted",
+								type: "warning",
+							});
+							this.getCustomerAddress();
+						})
+						.catch((err) => {
+							this.$events.fire("LoadingOverlayHide");
+							if (err.response) {
+								if (err.response.status == "422") {
+									var errors = err.response.data.errors;
+									for (var key of Object.keys(errors)) {
+										toastr.error(errors[key]);
+									}
+								}
+							}
+						});
+				})
+				.catch(() => {});
 		},
 		// test(){
 		// 	this.$router.push(`/vendor/products`);
