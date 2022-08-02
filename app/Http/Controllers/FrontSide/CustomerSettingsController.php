@@ -84,14 +84,87 @@ class CustomerSettingsController extends Controller
         // }
     }
 
+    public function add_customer_address(Request $request)
+    {
+        $isValid = $request->validate([
+            'full_name' => ['required'],
+            'phone' => ['required'],
+            'street' => ['required'],
+            'barangay' => ['required'],
+            'city' => ['required'],
+            'postal_code' => ['required'],
+        ]);
+        if ($isValid) {
+            $CUSTOMER_ID = Auth::user()->id;
+
+            $if_user_have_exist_address = CustomerAddress::where('customer_id', $CUSTOMER_ID)->where('selected', 1)->exists();
+
+            $selected = 1;
+            if ($if_user_have_exist_address) {
+                $selected = 0;
+            }
+
+            $CustomerAddress =  CustomerAddress::create([
+                'customer_id' => $CUSTOMER_ID,
+                'full_name' => $request->full_name,
+                'phone' => $request->phone,
+                'street' =>  $request->street,
+                'barangay' =>  $request->barangay,
+                'city' =>  $request->city,
+                'province' => $request->province,
+                'postal_code' =>  $request->postal_code,
+                'selected' =>  $selected,
+            ]);
+            return response()->json($CustomerAddress, 200);
+        }
+    }
+
+
+    public function update_customer_address(Request $request)
+    {
+        $isValid = $request->validate([
+            'id' => ['required'],
+            'full_name' => ['required'],
+            'phone' => ['required'],
+            'street' => ['required'],
+            'barangay' => ['required'],
+            'city' => ['required'],
+            'postal_code' => ['required'],
+        ]);
+        if ($isValid) {
+            // $CUSTOMER_ID = Auth::user()->id;
+            return CustomerAddress::find($request->id)
+                ->update([
+                    'full_name' => $request->full_name,
+                    'phone' => $request->phone,
+                    'street' =>  $request->street,
+                    'barangay' =>  $request->barangay,
+                    'city' =>  $request->city,
+                    'province' => $request->province,
+                    'postal_code' =>  $request->postal_code,
+                ]);
+            return response()->json(200);
+        }
+    }
+
+    public function delete_customer_address(Request $request)
+    {
+        $CUSTOMER_ID = Auth::user()->id;
+        $CustomerAddress = CustomerAddress::where('id', $request->address_id)
+            ->where('customer_id', $CUSTOMER_ID)
+            ->delete();
+
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
     public function get_customer_addresses()
     {
         $CUSTOMER_ID = Auth::user()->id;
         $CustomerAddress =  CustomerAddress::where('customer_id', $CUSTOMER_ID)->orderBy('id', 'desc')->get();
         return response()->json($CustomerAddress, 200);
     }
-
-
 
     public function change_password(Request $request)
     {
