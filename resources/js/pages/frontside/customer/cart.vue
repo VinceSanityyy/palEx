@@ -31,7 +31,7 @@
 					<div v-for="(item, index) in cartList" :key="index" class="palex-card mb-2">
 						<div class="w-100">
 							<div class="store-name ml-3 mb-2 p-2 border-bottom border-secondary">
-								<span> <i class="fas fa-store mr-2"></i>Store/Vendor:  {{ item.vendor.name }} </span>
+								<span> <i class="fas fa-store mr-2"></i>Store/Vendor: {{ item.vendor.name }} </span>
 								<!-- <el-divider><i class="el-icon-star-on"></i></el-divider> -->
 							</div>
 							<div v-for="(el, index2) in item.items" :key="index2" class="item border-bottom border-success p-2">
@@ -92,6 +92,32 @@
 					<div class="palex-card">
 						<div class="palex-order-summary px-1 py-2">
 							<h3 class="my-3">Order Summary</h3>
+							<hr />
+							<div class="my-2">
+								<h5>Receiver info:</h5>
+								<div class="receiver_name d-flex justify-content-between">
+									<span>
+										<b style="color: #2c9144 !important">
+											{{ customer_address.full_name }}
+										</b>
+									</span>
+									<span>
+										<el-button @click="editAddress()" type="primary" size="mini" plain>Edit</el-button>
+									</span>
+									<!-- <span>|| <span v-if="item.selected == 1" class="badge badge-success">Selected</span></span> -->
+								</div>
+								<div class="receiver_phone">
+									{{ customer_address.phone }}
+								</div>
+								<div class="street">
+									{{ customer_address.street }}
+								</div>
+								<div class="barangay-city-province-postat-code">
+									{{ customer_address.barangay }}, {{ customer_address.city }}, {{ customer_address.province }}, {{ customer_address.postal_code }}
+								</div>
+							</div>
+							<hr />
+
 							<div class="d-flex justify-content-between my-2">
 								<span>Total Order Amount: </span>
 								<span> ₱ {{ frmtd(total_order_amount) }}</span>
@@ -109,6 +135,7 @@
 								<span><b>Total:</b></span>
 								<span> ₱ {{ frmtd(overall_total) }}</span>
 							</div>
+
 							<div class="mt-5 text-center">
 								<el-button class="w-100" type="success" plain @click="place_order()">Place Order</el-button>
 							</div>
@@ -140,6 +167,7 @@ export default {
 			discount: 0,
 			overall_total: 0,
 			qty: 1,
+			customer_address: {},
 		};
 	},
 	mounted() {
@@ -147,6 +175,10 @@ export default {
 		this.getCart();
 	},
 	methods: {
+		editAddress() {
+			this.$router.push("/customer#address_card");
+		},
+
 		place_order() {
 			this.$confirm("Are you sure you want to order this products ?", "Warning", {
 				confirmButtonText: "YES",
@@ -225,6 +257,12 @@ export default {
 					this.total_delivery_fee = res.data.total_shipping_fee;
 					this.discount = res.data.discount;
 					this.overall_total = res.data.over_all_total;
+
+					if (res.data.customer_address) {
+						this.customer_address = res.data.customer_address;
+					} else {
+						this.customer_address = {};
+					}
 				})
 				.catch((err) => {
 					this.$events.fire("LoadingOverlayHide");
