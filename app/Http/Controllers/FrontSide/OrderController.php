@@ -31,7 +31,7 @@ class OrderController extends Controller
             ->where('selected', 1)
             ->exists();
         if (!$CustomerAddress_exists) {
-            return response()->json("Please Set Delivery Address", 401);
+            return response()->json("Please Set Delivery Address", 406);
         }
 
         if ($cartIsExist) {

@@ -94,7 +94,7 @@
 							<h3 class="my-3">Order Summary</h3>
 							<hr />
 							<div class="my-2">
-								<h5>Receiver info:</h5>
+								<h5 :class="no_address ? 'ld ld-jump text-danger' : ''">Receiver info:</h5>
 								<div class="receiver_name d-flex justify-content-between">
 									<span>
 										<b style="color: #2c9144 !important">
@@ -102,7 +102,7 @@
 										</b>
 									</span>
 									<span>
-										<el-button @click="editAddress()" type="primary" size="mini" plain>Edit</el-button>
+										<el-button @click="editAddress()" type="primary" size="mini" plain :class="no_address ? 'ld ld-jump text-danger' : ''">Edit</el-button>
 									</span>
 									<!-- <span>|| <span v-if="item.selected == 1" class="badge badge-success">Selected</span></span> -->
 								</div>
@@ -168,6 +168,7 @@ export default {
 			overall_total: 0,
 			qty: 1,
 			customer_address: {},
+			no_address: false,
 		};
 	},
 	mounted() {
@@ -176,7 +177,8 @@ export default {
 	},
 	methods: {
 		editAddress() {
-			this.$router.push("/customer#address_card");
+			// this.$router.push("/customer#address_card");
+			this.$router.push("/customer?to_edit_address=yes");
 		},
 
 		place_order() {
@@ -203,7 +205,18 @@ export default {
 
 				// /customer/orders
 			} catch (error) {
-				console.error(err);
+				console.error(error);
+				if (error.response) {
+					if (error.response.status == "406") {
+						if (error.response.data == "Please Set Delivery Address") {
+							this.no_address = true;
+							this.$message({
+								message: "Please Set Delivery Address and Receiver info.",
+								type: "error",
+							});
+						}
+					}
+				}
 			}
 		},
 		backToProducts() {
