@@ -9,6 +9,7 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    window.palex_js_global = require('./palex_js_global');
 
     require('bootstrap');
     require('admin-lte');
@@ -17,7 +18,7 @@ try {
     require('admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js');
     require('admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js');
     require('admin-lte/plugins/toastr/toastr.min.js');
-} catch (e) {}
+} catch (e) { }
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

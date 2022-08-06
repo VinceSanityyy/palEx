@@ -136,8 +136,11 @@
 							</div>
 							<div class="type_msg">
 								<div class="input_msg_write">
-									<input @keyup.enter="chat()" v-model="msg" type="text" class="write_msg" placeholder="Type a message" />
-									<button @click="chat()" class="msg_send_btn" type="button"><i class="fab fa-telegram-plane"></i></button>
+									<input @keyup.enter="chat()" v-model="msg" type="text" class="write_msg" placeholder="Type a message" :disabled="this.is_sending" />
+									<button @click="chat()" class="msg_send_btn" type="button">
+										<i v-if="!this.is_sending" class="fab fa-telegram-plane"></i>
+										<i v-if="this.is_sending" class="fas fa-spinner ld ld-cycle"></i>
+									</button>
 								</div>
 							</div>
 						</div>
@@ -167,6 +170,7 @@ export default {
 			//   header_user_name: null,
 			//   header_user_email: null,
 			//   header_user_image_link: null,
+			is_sending: false,
 		};
 	},
 	computed: {
@@ -219,12 +223,12 @@ export default {
 
 		receive_PalexPusherEvent(data) {
 			var message = data.message;
-			console.warn(message);
-			console.log(this.user_info);
-			console.error(message.conversation_id);
-			console.error(this.conversation_id);
-			console.error(message.user_id_to);
-			console.error(this.user_info.id);
+			// console.warn(message);
+			// console.log(this.user_info);
+			// console.error(message.conversation_id);
+			// console.error(this.conversation_id);
+			// console.error(message.user_id_to);
+			// console.error(this.user_info.id);
 
 			if (message.conversation_id == this.conversation_id && message.user_id_to == this.user_info.id) {
 				console.log("UPDATE CONVERSATION REPLY");
@@ -255,6 +259,12 @@ export default {
 			//   console.log(this.WindowInnerHeight);
 		},
 		chat() {
+			if (palex_js_global.isEmptyOrSpaces(this.msg)) return;
+
+			if (this.is_sending) return;
+
+			this.is_sending = true;
+
 			var params = {
 				msg: this.msg,
 				user_id: this.conversation.header_user_id,
@@ -263,12 +273,14 @@ export default {
 				.post(`/sendMessage`, params)
 				.then((res) => {
 					// console.log(res);
+					this.is_sending = false;
 					this.msg = "";
 					//   this.getConversationReplies(this.conversation.id);
 					this.getUserChatList();
 					toastr.success('Message Sent')
 				})
 				.catch((err) => {
+					this.is_sending = false;
 					console.error(err);
 				});
 		},
