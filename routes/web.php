@@ -36,6 +36,7 @@ Route::get('/home', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products/{product_id}', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/store/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'vendorProfile']);
+Route::get('/test', [App\Http\Controllers\FrontsideController::class, 'index']);
 
 // Public API (Json response)
 Route::get('/getVendorProfile/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'getVendorProfile']);

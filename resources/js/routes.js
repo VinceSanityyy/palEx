@@ -31,6 +31,7 @@ import ProductsIDPage from './pages/frontside/Products_id.vue';
 import HomePage from './pages/frontside/Home.vue';
 import NotFound from './pages/frontside/NotFound.vue';
 import StoreProfile from './pages/frontside/store/vendor_id.vue';
+import TestPage from './pages/frontside/test.vue';
 // import productscopy from './pages/customer/productscopy.vue';
 
 const routes = [
@@ -140,7 +141,7 @@ const routes = [
                 }
             },
 
-            
+
             {
                 path: 'feeds',
                 name: 'cus-feeds',
@@ -224,6 +225,18 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/test',
+        component: CustomerLayout,
+        children: [
+            {
+                path: '',
+                name: 'test',
+                component: TestPage
+            },
+        ],
+    },
+
     {
         path: '*',
         component: NotFound
