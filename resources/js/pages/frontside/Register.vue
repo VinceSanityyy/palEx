@@ -47,7 +47,7 @@
           </div>
         </div>
           <div class="input-group mb-3">
-          <label for="exampleInputEmail1">Proof (ID, Permit, etc..)</label>
+          <label for="exampleInputEmail1">Proof (ID, Permit, etc..) For vendors only</label>
           <input @change="onFileChange" type="file" name="" id="">
         </div>
         <div class="input-group mb-3">
@@ -121,7 +121,7 @@ data(){
 
                     axios.post('register',bodyForm).then((res)=>{
                         loader.hide();
-                        // console.log(res)
+                        console.log(res)
                         this.logout()
                     }).catch((err)=>{
                         loader.hide();

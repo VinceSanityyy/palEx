@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'phone' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'identity' => ['required','image'],
+            'identity' => ['required', 'image'],
         ]);
     }
 
@@ -90,29 +90,48 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-            'identity' => ['required','image'],
-        ]);
 
-      
-        if($validated){
-            $name = $request->file('identity')->getClientOriginalName();
-            $path = $request->file('identity')->store('public/images/identity');
-            return User::create([
-                'name' => $request->name,
-                'role' => $request->role,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'status' => 0,
-                'identity' => $path,
-                'password' => Hash::make($request->password),
+        if ($request->role == 2) {
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
             ]);
+
+            if ($validated) {
+                return User::create([
+                    'name' => $request->name,
+                    'role' => $request->role,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'status' => 0,
+                    'password' => Hash::make($request->password),
+                ]);
+            }
+        } else {
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+                'identity' => ['required', 'image'],
+            ]);
+
+
+            if ($validated) {
+                $name = $request->file('identity')->getClientOriginalName();
+                $path = $request->file('identity')->store('public/images/identity');
+                return User::create([
+                    'name' => $request->name,
+                    'role' => $request->role,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'status' => 0,
+                    'identity' => $path,
+                    'password' => Hash::make($request->password),
+                ]);
+            }
         }
-        
-    
     }
 }
