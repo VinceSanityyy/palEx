@@ -12,6 +12,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ShippingFee;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use App\Models\Conversation;
 use stdClass;
 
 
@@ -158,5 +160,29 @@ class OrderController extends Controller
         return response()->json([
             'status' => 'success'
         ]);
+    }
+
+    public function getTotalOrderPervendor()
+    {
+        $total = Order::where('vendor_id', Auth::user()->id)->count();
+        return response()->json($total,200);
+    }
+
+    public function getTotalordersDone()
+    {
+        $total = Order::where('vendor_id', Auth::user()->id)->where('status', 'completed')->count();
+        return response()->json($total);
+    }
+
+    public function getVendorProductsCount()
+    {
+        $total = Product::where('user_id', Auth::user()->id)->where('status',1)->count();
+        return response()->json($total);
+    }
+
+    public function getVendorTotalConversations()
+    {
+        $total = Conversation::where('user_two_id', Auth::user()->id)->count();
+        return response()->json($total);
     }
 }
