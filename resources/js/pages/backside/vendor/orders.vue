@@ -24,14 +24,12 @@
 								<h3 class="card-title">Users List</h3>
 							</div>
 							<div class="card-body table-responsive">
-								<table
-									id="mytableOrders"
-									class="table table-bordered table-striped dt-responsive"
-								>
+								<table id="mytableOrders" class="table table-bordered table-striped dt-responsive">
 									<thead>
 										<tr>
 											<th>Order Id</th>
-											<th>Customer Name</th>
+											<th>Customer</th>
+											<th>Receiver Full Name</th>
 											<th>Contact #</th>
 											<th>Address</th>
 											<th>Amount</th>
@@ -43,53 +41,49 @@
 									<tbody>
 										<tr v-for="(item, index) in orders" :key="index">
 											<td>{{ item.id }}</td>
+											<td>
+												<div class="text-center">
+													<img :src="item.customer.profile_image_link" alt="" style="width: 50px; height: 50px; border-radius: 50px; object-fit: cover" />
+												</div>
+												<div class="text-center">
+													{{ item.customer.name }}
+												</div>
+											</td>
 											<td>{{ item.customer_receiver_fullname }}</td>
 											<td>{{ item.customer_receiver_phone }}</td>
 											<td>{{ item.customer_receiver_address }}</td>
 											<td>
-												<b
-													>₱
-													{{
-														addCommaAndTwoDecimalPlaces(
-															item.order_items[0].total_price
-														)
-													}}</b
-												>
+												<b>₱ {{ addCommaAndTwoDecimalPlaces(item.order_total_amount) }}</b>
 											</td>
 											<td>
-												<span v-if="item.status === 'completed'"
-													class="badge badge-success">{{ item.status }}
-												</span>
-												<span v-else-if="item.status === 'pending'"
-													class="badge badge-secondary">{{ item.status }}
-												</span>
-												<span v-else-if="item.status === 'cod'"
-													class="badge badge-info">{{ item.status }}
-												</span>
-												<span v-else-if="item.status === 'reserved'"
-													class="badge badge-info">{{ item.status }}
-												</span>
-												<span v-else class="badge badge-danger">{{
-													item.status
-												}}</span>
+												<span v-if="item.status === 'completed'" class="badge badge-success">{{ item.status }} </span>
+												<span v-else-if="item.status === 'pending'" class="badge badge-secondary">{{ item.status }} </span>
+												<span v-else-if="item.status === 'cod'" class="badge badge-info">{{ item.status }} </span>
+												<span v-else-if="item.status === 'reserved'" class="badge badge-info">{{ item.status }} </span>
+												<span v-else class="badge badge-danger">{{ item.status }}</span>
 											</td>
 											<td>{{ item.created_at }}</td>
 											<td>
-								 				 <div class="btn-group" role="group">
-													<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Select Options
+												<div class="btn-group" role="group">
+													<button
+														id="btnGroupDrop1"
+														type="button"
+														class="btn btn-secondary dropdown-toggle"
+														data-toggle="dropdown"
+														aria-haspopup="true"
+														aria-expanded="false"
+													>
+														Select Options
 													</button>
 													<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-														<a class="dropdown-item" @click="changeOrderStatus(item.id,'completed')" href="#">Completed</a>
+														<a class="dropdown-item" @click="changeOrderStatus(item.id, 'completed')" href="#">Completed</a>
 														<!-- <a class="dropdown-item" @click="changeOrderStatus(item.id,'cod')" href="#">Cash on Delivery</a> -->
-														<a class="dropdown-item" @click="changeOrderStatus(item.id,'reserved')" href="#">Reserved</a>
-														<a class="dropdown-item" @click="changeOrderStatus(item.id,'pending')" href="#">Pending</a>
-														<a class="dropdown-item" @click="changeOrderStatus(item.id,'cancelled')" href="#">Cancelled</a>
+														<a class="dropdown-item" @click="changeOrderStatus(item.id, 'reserved')" href="#">Reserved</a>
+														<a class="dropdown-item" @click="changeOrderStatus(item.id, 'pending')" href="#">Pending</a>
+														<a class="dropdown-item" @click="changeOrderStatus(item.id, 'cancelled')" href="#">Cancelled</a>
 													</div>
 												</div>
-													<button  type="button" class="btn btn-info">
-														Show Order Details
-													</button>
+												<button type="button" class="btn btn-info">Show Order Details</button>
 											</td>
 										</tr>
 									</tbody>
@@ -104,53 +98,55 @@
 </template>
 
 <script>
-	export default {
-        props:['is_auth'],
-		data() {
-			return {
-				orders: [],
-				showModal: false,
-			};
-		},
-		mounted() {
-			setTimeout(() => {
-				this.myTable();
-			}, 1000);
-		},
-		methods: {
-			myTable() {
-				$(document).ready(function () {
-					$("#mytableOrders").DataTable({
-						responsive: true,
-					});
+export default {
+	props: ["is_auth"],
+	data() {
+		return {
+			orders: [{ customer: {}, order_items: [] }],
+			showModal: false,
+		};
+	},
+	mounted() {
+		setTimeout(() => {
+			this.myTable();
+		}, 1000);
+	},
+	methods: {
+		myTable() {
+			$(document).ready(function () {
+				$("#mytableOrders").DataTable({
+					responsive: true,
 				});
-			},
-			addCommaAndTwoDecimalPlaces(value) {
-				var n = parseFloat(value).toFixed(2);
-				var withCommas = Number(n).toLocaleString("en", {
-					minimumFractionDigits: 2,
-					maximumFractionDigits: 2,
-				});
-				return withCommas;
-			},
-			changeOrderStatus(id,status){
-				axios.post(`/palex_api/vendor/updateOrderStatus`, {
+			});
+		},
+		addCommaAndTwoDecimalPlaces(value) {
+			var n = parseFloat(value).toFixed(2);
+			var withCommas = Number(n).toLocaleString("en", {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2,
+			});
+			return withCommas;
+		},
+		changeOrderStatus(id, status) {
+			axios
+				.post(`/palex_api/vendor/updateOrderStatus`, {
 					id: id,
 					status: status,
-				}).then((response) => {
-					this.getOrders()
-					toastr.success('Order Modified!')
+				})
+				.then((response) => {
+					this.getOrders();
+					toastr.success("Order Modified!");
 				});
-			},
-			getOrders(){
-				axios.get(`/palex_api/vendor/getOrders`).then((response) => {
-					this.orders = response.data;
-					console.log(response.data)
-				});
-			}
 		},
-		created(){
-			this.getOrders();
-		}
-	};
+		getOrders() {
+			axios.get(`/palex_api/vendor/getOrders`).then((response) => {
+				this.orders = response.data;
+				console.log(response.data);
+			});
+		},
+	},
+	created() {
+		this.getOrders();
+	},
+};
 </script>
