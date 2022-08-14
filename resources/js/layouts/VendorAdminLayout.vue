@@ -10,6 +10,9 @@
 .plx-notif-body {
 	cursor: pointer;
 }
+.plx-notif-date-time {
+	cursor: pointer;
+}
 </style>
 
 
@@ -46,12 +49,16 @@
 								<div class="d-flex">
 									<div class="plx-img-icon p-1">
 										<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
+										<hr />
 									</div>
 									<div class="p-1">
 										<div class="plx-notif-title" style="font-weight: bold">
 											{{ item.title }}
 										</div>
 										<div v-html="item.body" class="plx-notif-body"></div>
+										<div class="plx-notif-date-time">
+											<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+										</div>
 									</div>
 								</div>
 							</RouterLink>
@@ -184,6 +191,11 @@ export default {
 		};
 	},
 	methods: {
+		getMoment(datetime) {
+			var a = moment(datetime);
+			return moment(a).fromNow();
+		},
+
 		getCurrentAuth() {
 			axios.get("/me").then((res) => {
 				this.user = res.data;

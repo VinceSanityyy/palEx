@@ -34,7 +34,7 @@ class PalexNotificationService
         $notif_data =   [
             'user_id' => $order_data->vendor_id,
             'title' => 'New Palex Order!',
-            'body' => 'You have received new order from user <b>' . $Order->customer->name . '</b>',
+            'body' => 'You have received new order from user <b>' . $Order->customer->name . '</b>.',
             // 'link' => '/vendor/order/' . $order_data->id,
             'link' => url('/vendor/orders'),
             'link_end_point' => '/vendor/orders',

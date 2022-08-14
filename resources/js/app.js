@@ -39,7 +39,8 @@ Vue.component('AddOrUpdateCustomerAddresses', require('./modals/AddOrUpdateCusto
 Vue.component('PalexLoading', require('./components/PalexLoading.vue').default);
 
 window.swal = swal;
-window.toastr = require('toastr')
+window.toastr = require('toastr');
+window.moment = require('moment');
 
 const router = new VueRouter({
     mode: 'history',
