@@ -16,9 +16,11 @@ class CreatePalexNotificationsTable extends Migration
         Schema::create('palex_notifications', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->string('title')->nullable();
-            $table->string('body')->nullable();
+            $table->text('title')->nullable();
+            $table->text('body')->nullable();
             $table->text('link')->nullable();
+            $table->text('link_end_point')->nullable();
+            $table->text('image_link')->nullable();
             $table->string('type')->nullable();
             $table->text('other_data')->nullable();
             $table->boolean('seen')->default(false);

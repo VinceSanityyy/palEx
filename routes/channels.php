@@ -17,6 +17,24 @@ Broadcast::channel('palex-channel', function () {
     return true;
 });
 
+
+Broadcast::channel('palex-order-channel', function () {
+    return true;
+});
+
+
+Broadcast::channel('palex-order-channel-{vendor_id}', function () {
+    return true;
+});
+
+Broadcast::channel('palex-notification-channel-{user_id}', function () {
+    return true;
+});
+
+
+
+
+
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });

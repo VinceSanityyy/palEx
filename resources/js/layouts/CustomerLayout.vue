@@ -1,9 +1,66 @@
+<style>
+.dropdown-toggle::after {
+	content: none;
+}
+.plx-notif-title {
+	cursor: pointer;
+}
+
+.plx-notif-body {
+	cursor: pointer;
+	font-size: 12px !important;
+}
+.plx-notif-date-time {
+	cursor: pointer;
+	font-size: 12px !important;
+}
+</style>
+
 <template>
 	<div>
 		<!-- <PalexLoading></PalexLoading> -->
 		<!-- MOBILE TOP NAV -->
 		<nav class="navbar navbar-expand-lg navbar-dark sticky-top palex-nav-cp">
+			<!-- Right navbar links -->
 			<div class="w-100 text-center">
+				<div v-if="is_auth" style="position: absolute; top: 15px; left: 8px">
+					<div class="dropdown">
+						<button
+							style="cursor: pointer; background-color: transparent; border: 0px solid #3498db"
+							class="dropdown-toggle"
+							type="button"
+							id="dropdownMenu2"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							<i class="far fa-bell font-size-20" style="color: white !important"></i>
+							<span v-if="number_of_notifications" class="badge badge-warning font-size-11"> {{ number_of_notifications }}</span>
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width: 300px; max-height: 450px; overflow-y: auto">
+							<div v-for="(item, index) in notifications" :key="index">
+								<RouterLink :to="item.link_end_point" class="dropdown-item" style="white-space: normal">
+									<div class="d-flex">
+										<div class="plx-img-icon p-1">
+											<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
+										</div>
+										<div class="p-1">
+											<div class="plx-notif-title" style="font-weight: bold">
+												{{ item.title }}
+											</div>
+											<div v-html="item.body" class="plx-notif-body"></div>
+											<div class="plx-notif-date-time">
+												<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+											</div>
+										</div>
+									</div>
+								</RouterLink>
+								<div class="dropdown-divider"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<a class="navbar-brand"><img src="/img/logo/palex3.png" style="width: 100px; height: auto" alt="" /></a>
 				<div style="position: absolute; top: 15px; right: 8px">
 					<RouterLink v-if="is_auth" to="/customer/cart">
@@ -56,6 +113,42 @@
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+					<li class="nav-item dropdown">
+						<a class="nav-link" data-toggle="dropdown" href="#">
+							<i class="far fa-bell font-size-20"></i>
+							<span class="badge badge-warning navbar-badge">{{ number_of_notifications }}</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+							<span class="dropdown-item dropdown-header">{{ number_of_notifications }} Notifications</span>
+							<div class="dropdown-divider"></div>
+
+							<div style="max-height: 450px; overflow-y: auto">
+								<div v-for="(item, index) in notifications" :key="index">
+									<RouterLink :to="item.link_end_point" class="dropdown-item" style="white-space: normal">
+										<div class="d-flex">
+											<div class="plx-img-icon p-1">
+												<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
+											</div>
+											<div class="p-1">
+												<div class="plx-notif-title" style="font-weight: bold">
+													{{ item.title }}
+												</div>
+												<div v-html="item.body" class="plx-notif-body"></div>
+												<div class="plx-notif-date-time">
+													<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+												</div>
+											</div>
+										</div>
+									</RouterLink>
+									<div class="dropdown-divider"></div>
+								</div>
+							</div>
+
+							<div class="dropdown-divider"></div>
+							<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+						</div>
+					</li>
+
 					<li class="nav-item">
 						<RouterLink v-if="is_auth" class="nav-link active" to="/customer/cart">
 							<i class="fas fa-shopping-cart font-size-20"></i>
@@ -154,8 +247,11 @@ export default {
 	props: ["is_auth"],
 	data() {
 		return {
-			user: [],
+			user: {},
 			cartNumber: 0,
+			notifications: [],
+			number_of_notifications: 0,
+			total_unseen_notifications: 0,
 		};
 	},
 	methods: {
@@ -167,8 +263,55 @@ export default {
 		getCurrentAuth() {
 			axios.get("/me").then((res) => {
 				this.user = res.data;
+				this.getUserNotifications();
+				this.listen_notification_pusher();
 			});
 		},
+
+		listen_notification_pusher() {
+			var pusher = new Pusher("8bfb7f6648a195296a7f", {
+				cluster: "ap1",
+			});
+
+			var self = this;
+
+			var CHANNEL_NAME = `palex-notification-channel-${this.user.id}`;
+
+			var palex_notification_channel = pusher.subscribe(CHANNEL_NAME);
+			palex_notification_channel.bind("palex-notification-event", function (data) {
+				console.warn(data);
+				self.set_new_notification(data);
+			});
+		},
+
+		set_new_notification(data) {
+			this.notifications.unshift(data.notification_data);
+			this.number_of_notifications = data.total_notifications;
+			this.total_unseen_notifications = data.total_unseen_notifications;
+
+			if (data.notification_data.type == "order") {
+				this.$notify({
+					title: data.notification_data.title,
+					dangerouslyUseHTMLString: true,
+					message: `<span style="color: #2c9144;">${data.notification_data.body}</span>`,
+				});
+			}
+		},
+
+		getUserNotifications() {
+			axios.get(`/get_user_notifications`).then((res) => {
+				// console.log(res.data);
+				this.notifications = res.data.notifications;
+				this.number_of_notifications = res.data.total_notifications;
+				this.total_unseen_notifications = res.data.total_unseen_notifications;
+			});
+		},
+
+		getMoment(datetime) {
+			var a = moment(datetime);
+			return moment(a).fromNow();
+		},
+
 		logout() {
 			this.$confirm("Are you sure you want to log out?", "Warning", {
 				confirmButtonText: "YES",
