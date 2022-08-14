@@ -36,6 +36,7 @@ Route::get('/home', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/products/{product_id}', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/store/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'vendorProfile']);
+Route::get('/test', [App\Http\Controllers\FrontsideController::class, 'index']);
 
 // Public API (Json response)
 Route::get('/getVendorProfile/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'getVendorProfile']);
@@ -71,7 +72,10 @@ Route::middleware('isAuth')->group(function(){
         Route::post('/palex_api/vendor/updateOrderStatus',[App\Http\Controllers\Frontside\OrderController::class, 'updateOrderStatus']);
         Route::get('/palex_api/vendor/getOrders',[App\Http\Controllers\Frontside\OrderController::class, 'getOrdersVendor']);
         Route::post('/vendor/update/{id}', [App\Http\Controllers\BacksideController::class, 'updateVendorDetails']);
-
+        Route::get('/vendor/api/totalOrders', [App\Http\Controllers\FrontSide\OrderController::class, 'getTotalOrderPervendor']);
+        Route::get('/vendor/api/totalOrders/done', [App\Http\Controllers\FrontSide\OrderController::class, 'getTotalordersDone']);
+        Route::get('/vendor/api/getActiveProducts', [App\Http\Controllers\FrontSide\OrderController::class, 'getVendorProductsCount']);
+        Route::get('/vendor/api/getConversationCount', [App\Http\Controllers\FrontSide\OrderController::class, 'getVendorTotalConversations']);
     });
 
     Route::middleware('isAdmin')->group(function(){

@@ -245,6 +245,17 @@ export default {
 		};
 	},
 	mounted() {
+		// if(this.$route){
+
+		if (this.$route.query.to_edit_address == "yes") {
+			setTimeout(() => {
+				document.querySelector("#address_card").scrollIntoView({
+					behavior: "smooth",
+				});
+			}, 1000);
+		}
+
+		// }
 		this.getCurrentAuth();
 		this.clear_img_upload();
 		this.getCustomerAddress();
