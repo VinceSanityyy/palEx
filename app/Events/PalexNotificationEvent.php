@@ -17,11 +17,16 @@ class PalexNotificationEvent implements ShouldBroadcast
 
     public $notification_data;
     public $receiver_user_id;
+    public $total_notifications;
+    public $total_unseen_notifications;
 
-    public function __construct($data, $receiver_user_id)
+
+    public function __construct($data, $receiver_user_id, $total_notifications, $total_unseen_notifications)
     {
         $this->notification_data = $data;
         $this->receiver_user_id = $receiver_user_id;
+        $this->total_notifications = $total_notifications;
+        $this->total_unseen_notifications = $total_unseen_notifications;
     }
 
     public function broadcastOn()

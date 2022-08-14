@@ -9,11 +9,6 @@ use stdClass;
 
 class PalexNotificationService
 {
-
-    private $notification_data;
-    private $receiver_user_id;
-    private $order_data;
-
     public function __construct()
     {
     }
@@ -33,7 +28,7 @@ class PalexNotificationService
 
         $notif_data =   [
             'user_id' => $order_data->vendor_id,
-            'title' => 'New Palex Order!',
+            'title' => 'New Palex Order! OID #' . $order_data->id,
             'body' => 'You have received new order from user <b>' . $Order->customer->name . '</b>.',
             // 'link' => '/vendor/order/' . $order_data->id,
             'link' => url('/vendor/orders'),
@@ -43,12 +38,12 @@ class PalexNotificationService
             'other_data' => $json_other_data,
         ];
 
-        $this->create_notification($notif_data, $Order->vendor_id);
+        $this->create_and_send($notif_data, $Order->vendor_id);
     }
 
 
 
-    public function create_notification($data, $user_id)
+    public function create_and_send($data, $receiver_user_id)
     {
         // $PalexNotification = new PalexNotification();
         $notification_data =  PalexNotification::create($data);
@@ -57,13 +52,13 @@ class PalexNotificationService
         } else {
             $notification_data->other_data = null;
         }
-        $this->notification_data = $notification_data;
-        $this->receiver_user_id = $user_id;
-        $this->send();
-    }
-
-    public function send()
-    {
-        event(new PalexNotificationEvent($this->notification_data, $this->receiver_user_id));
+        $total_notifications = PalexNotification::where('user_id', $receiver_user_id)->count();
+        $total_unseen_notifications =  PalexNotification::where('user_id', $receiver_user_id)->where('seen', 0)->count();
+        event(new PalexNotificationEvent(
+            $notification_data,
+            $receiver_user_id,
+            $total_notifications,
+            $total_unseen_notifications,
+        ));
     }
 }

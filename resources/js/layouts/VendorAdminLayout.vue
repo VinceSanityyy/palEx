@@ -183,7 +183,7 @@ export default {
 	props: ["is_auth"],
 	data() {
 		return {
-			user: [],
+			user: {},
 			vendorAddress: [],
 			notifications: [],
 			number_of_notifications: 0,
@@ -199,18 +199,50 @@ export default {
 		getCurrentAuth() {
 			axios.get("/me").then((res) => {
 				this.user = res.data;
+				this.listen_notification_pusher();
 			});
 		},
+
+		listen_notification_pusher() {
+			var pusher = new Pusher("8bfb7f6648a195296a7f", {
+				cluster: "ap1",
+			});
+
+			var self = this;
+
+			var CHANNEL_NAME = `palex-notification-channel-${this.user.id}`;
+
+			var palex_notification_channel = pusher.subscribe(CHANNEL_NAME);
+			palex_notification_channel.bind("palex-notification-event", function (data) {
+				console.warn(data);
+				self.set_new_notification(data);
+			});
+		},
+
+		set_new_notification(data) {
+			this.notifications.unshift(data.notification_data);
+			this.total_notifications = data.total_notifications;
+			this.total_unseen_notifications = data.total_unseen_notifications;
+
+			if (data.notification_data.type == "order") {
+				this.$notify({
+					title: data.notification_data.title,
+					dangerouslyUseHTMLString: true,
+					message: `<span style="color: #2c9144;">${data.notification_data.body}</span>`,
+				});
+			}
+		},
+
 		getCurrentVendorDetails(id) {
 			axios.get(`/me/vendor`).then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				this.vendorAddress = res.data;
 			});
 		},
 
 		getVendorNotifications() {
 			axios.get(`/get_user_notifications`).then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				this.notifications = res.data.notifications;
 				this.number_of_notifications = res.data.total_notifications;
 				this.total_unseen_notifications = res.data.total_unseen_notifications;
