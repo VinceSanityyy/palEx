@@ -12,8 +12,10 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ShippingFee;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Conversation;
+use App\PalexServices\PalexNotificationService;
 use stdClass;
 
 
@@ -26,6 +28,9 @@ class OrderController extends Controller
     }
     public function placeOrder()
     {
+
+        DB::beginTransaction();
+
         $CUSTOMER_ID = Auth::user()->id;
         $cartIsExist = Cart::where('customer_id', $CUSTOMER_ID)->exists();
 
@@ -44,6 +49,8 @@ class OrderController extends Controller
                 ->groupBy('vendor_id')
                 ->get();
 
+
+
             foreach ($CartPerVendors as $key => $value) {
 
                 $VENDOR_ID = $value->vendor_id;
@@ -55,7 +62,7 @@ class OrderController extends Controller
                     ->where('selected', 1)
                     ->first();
 
-
+              
 
                 $FullAddress =  $CustomerAddress->street . ", "
                     . $CustomerAddress->barangay . ", "
@@ -89,15 +96,23 @@ class OrderController extends Controller
                     $OrderItem->price = $value2->product->price;
                     $OrderItem->save();
                 }
+
+                $PalexNotificationService = new PalexNotificationService();
+                $PalexNotificationService->send_order_notification($Order);
+            
             }
 
 
             $cart =  Cart::where('customer_id', $CUSTOMER_ID)->first();
             $CartItem = CartItem::where('cart_id', $cart->id)->delete();
+
+            DB::commit();
+
             return response()->json([
                 'status' => 'success'
             ]);
         } else {
+            DB::rollBack();
             return response()->json("nothing in cart", 200);
         }
     }
@@ -116,8 +131,7 @@ class OrderController extends Controller
 
     public function getOrdersVendor()
     {
-        $orders = Order::query()->where('vendor_id', Auth::user()->id)->with('orderItems')
-            ->get();
+        $orders = Order::query()->where('vendor_id', Auth::user()->id)->with('orderItems', 'customer')->get();
         return response()->json($orders);
     }
 
@@ -165,7 +179,7 @@ class OrderController extends Controller
     public function getTotalOrderPervendor()
     {
         $total = Order::where('vendor_id', Auth::user()->id)->count();
-        return response()->json($total,200);
+        return response()->json($total, 200);
     }
 
     public function getTotalordersDone()
@@ -176,7 +190,7 @@ class OrderController extends Controller
 
     public function getVendorProductsCount()
     {
-        $total = Product::where('user_id', Auth::user()->id)->where('status',1)->count();
+        $total = Product::where('user_id', Auth::user()->id)->where('status', 1)->count();
         return response()->json($total);
     }
 
