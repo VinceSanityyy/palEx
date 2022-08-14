@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PalexPusherEvent;
+use App\Events\PalexOrderPusherEvent;
 use App\Models\Conversation;
 use App\Models\ConversationReply;
 use App\Models\User;
@@ -83,6 +84,7 @@ class ChatController extends Controller
             $conReply->conversation_id = $conversation->id;
             $conReply->save();
             event(new PalexPusherEvent($class));
+            // event(new PalexOrderPusherEvent($class));
             return response()->json("Done");
         } else {
             $newConversation = new Conversation;
@@ -96,6 +98,7 @@ class ChatController extends Controller
             $conReply->conversation_id = $newConversation->id;
             $conReply->save();
             event(new PalexPusherEvent($class));
+            // event(new PalexOrderPusherEvent($class));
             return response()->json("Done");
         }
     }

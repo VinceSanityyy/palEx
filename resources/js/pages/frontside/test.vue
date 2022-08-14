@@ -17,15 +17,22 @@ export default {
 		return {};
 	},
 	mounted() {
-		Pusher.logToConsole = true;
+		// Pusher.logToConsole = true;
 		var pusher = new Pusher("8bfb7f6648a195296a7f", {
 			cluster: "ap1",
 		});
 		var channel = pusher.subscribe("palex-channel");
 		channel.bind("palex-pusher-event", function (data) {
-			// console.warn(data);
-			self.receive_PalexPusherEvent(data);
+			console.warn(data);
+			// self.receive_PalexPusherEvent(data);
 		});
+
+		var channel2 = pusher.subscribe("palex-order-channel-1");
+		channel2.bind("palex-order-event", function (data) {
+			console.log(data);
+			// self.receive_PalexPusherEvent(data);
+		});
+
 		this.test();
 	},
 	methods: {
