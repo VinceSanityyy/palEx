@@ -11,32 +11,26 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 
-class PalexOrderPusherEvent implements ShouldBroadcast
+class PalexNotificationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
-    public $user_id;
+    public $notification_data;
+    public $receiver_user_id;
 
-    public function __construct($message)
+    public function __construct($data, $receiver_user_id)
     {
-        // dump($this->message);
-        // $this->message = $message;
-        // dump($this->message);
-        $this->order_id = 1;
-        $this->vendor_id = 1;
+        $this->notification_data = $data;
+        $this->receiver_user_id = $receiver_user_id;
     }
 
     public function broadcastOn()
     {
-        // dump('broadcasting');
-        $this->vendor_id;
-        return ['palex-order-channel-' . $this->vendor_id];
+        return ['palex-notification-channel-' . $this->receiver_user_id];
     }
 
     public function broadcastAs()
     {
-        // dump('broadcasting as');
-        return 'palex-order-event';
+        return 'palex-notification-event';
     }
 }

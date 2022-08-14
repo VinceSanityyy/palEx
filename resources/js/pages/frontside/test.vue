@@ -33,6 +33,13 @@ export default {
 			// self.receive_PalexPusherEvent(data);
 		});
 
+
+		var channel2 = pusher.subscribe("palex-notification-channel-5");
+		channel2.bind("palex-notification-event", function (data) {
+			console.log(data);
+			// self.receive_PalexPusherEvent(data);
+		});
+
 		this.test();
 	},
 	methods: {

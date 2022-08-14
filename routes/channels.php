@@ -23,9 +23,15 @@ Broadcast::channel('palex-order-channel', function () {
 });
 
 
-Broadcast::channel('palex-order-channel-{user_id}', function () {
+Broadcast::channel('palex-order-channel-{vendor_id}', function () {
     return true;
 });
+
+Broadcast::channel('palex-notification-channel-{user_id}', function () {
+    return true;
+});
+
+
 
 
 
