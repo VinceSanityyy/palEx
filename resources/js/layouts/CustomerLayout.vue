@@ -113,7 +113,7 @@
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-					<li class="nav-item dropdown">
+					<li v-if="is_auth" class="nav-item dropdown">
 						<a class="nav-link" data-toggle="dropdown" href="#">
 							<i class="far fa-bell font-size-20"></i>
 							<span class="badge badge-warning navbar-badge">{{ number_of_notifications }}</span>
