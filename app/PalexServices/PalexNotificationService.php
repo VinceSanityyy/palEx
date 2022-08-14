@@ -52,6 +52,11 @@ class PalexNotificationService
     {
         // $PalexNotification = new PalexNotification();
         $notification_data =  PalexNotification::create($data);
+        if ($notification_data->other_data) {
+            $notification_data->other_data = json_decode($notification_data->other_data);
+        } else {
+            $notification_data->other_data = null;
+        }
         $this->notification_data = $notification_data;
         $this->receiver_user_id = $user_id;
         $this->send();
