@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'name' => 'Ivana Ilawi',
+                'name' => 'Ivana Alawi',
                 'email' => 'pj.abing@gmail.com',
                 'password' => \Hash::make('password'),
                 'role' => 2,
@@ -84,7 +84,7 @@ class UserSeeder extends Seeder
             [
 
                 'customer_id' => 4,
-                'full_name' => 'Pj Leopold Abing',
+                'full_name' => 'Mariam Sayed Sameer Marbella Al-Alawi',
                 'phone' => '09387517988',
                 'street' => 'Street 10',
                 'barangay' => 'Visayan Village',
