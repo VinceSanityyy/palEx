@@ -62,7 +62,7 @@ class OrderController extends Controller
                     ->where('selected', 1)
                     ->first();
 
-              
+
 
                 $FullAddress =  $CustomerAddress->street . ", "
                     . $CustomerAddress->barangay . ", "
@@ -99,7 +99,6 @@ class OrderController extends Controller
 
                 $PalexNotificationService = new PalexNotificationService();
                 $PalexNotificationService->send_order_notification($Order);
-            
             }
 
 
@@ -124,6 +123,13 @@ class OrderController extends Controller
         $order = Order::find($request->id);
         $order->status = $request->status;
         $order->save();
+
+        if ($order->status == 'reserved') {
+            $PalexNotificationService = new PalexNotificationService();
+            $PalexNotificationService->send_order_update_notif_to_customer($order);
+        }
+
+
         return response()->json([
             'status' => 'success'
         ]);

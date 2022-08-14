@@ -42,6 +42,39 @@ class PalexNotificationService
     }
 
 
+    public function send_order_update_notif_to_customer($order_data)
+    {
+
+        $Order = Order::find($order_data->id)->load('vendor');
+
+
+        $other_data = new stdClass;
+        $other_data->order_id =  $order_data->id;
+        $other_data->customer_id =  $order_data->customer_id;
+        $other_data->vendor_id =  $order_data->vendor_id;
+
+        $json_other_data = json_encode($other_data);
+
+        $notif_data =   [
+            'user_id' => $order_data->customer_id,
+            'title' => 'Order Reserved. #' . $order_data->id,
+            'body' => 'Your Order is now reserved by <b>' . $Order->vendor->name . '</b>.',
+            // 'link' => '/vendor/order/' . $order_data->id,
+            'link' => url('/customer/orders/' . $order_data->id,),
+            'link_end_point' => '/customer/orders/' . $order_data->id,
+            'image_link' => $Order->vendor->profile_image_link,
+            'type' => 'order',
+            'other_data' => $json_other_data,
+        ];
+
+        $this->create_and_send($notif_data, $Order->customer_id);
+    }
+
+
+
+
+
+
 
     public function create_and_send($data, $receiver_user_id)
     {

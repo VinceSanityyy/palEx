@@ -9,9 +9,11 @@
 
 .plx-notif-body {
 	cursor: pointer;
+	font-size: 12px !important;
 }
 .plx-notif-date-time {
 	cursor: pointer;
+	font-size: 12px !important;
 }
 </style>
 
@@ -41,47 +43,29 @@
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						<span class="dropdown-item dropdown-header">{{ number_of_notifications }} Notifications</span>
 						<div class="dropdown-divider"></div>
-
-						<!-- Loop Here -->
-
-						<div v-for="(item, index) in notifications" :key="index">
-							<RouterLink :to="item.link_end_point" class="dropdown-item" style="white-space: normal">
-								<div class="d-flex">
-									<div class="plx-img-icon p-1">
-										<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
-										<hr />
-									</div>
-									<div class="p-1">
-										<div class="plx-notif-title" style="font-weight: bold">
-											{{ item.title }}
+						<div style="max-height: 450px; overflow-y: auto">
+							<!-- Loop Here -->
+							<div v-for="(item, index) in notifications" :key="index">
+								<RouterLink :to="item.link_end_point" class="dropdown-item" style="white-space: normal">
+									<div class="d-flex">
+										<div class="plx-img-icon p-1">
+											<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
 										</div>
-										<div v-html="item.body" class="plx-notif-body"></div>
-										<div class="plx-notif-date-time">
-											<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+										<div class="p-1">
+											<div class="plx-notif-title" style="font-weight: bold">
+												{{ item.title }}
+											</div>
+											<div v-html="item.body" class="plx-notif-body"></div>
+											<div class="plx-notif-date-time">
+												<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+											</div>
 										</div>
 									</div>
-								</div>
-							</RouterLink>
-							<div class="dropdown-divider"></div>
+								</RouterLink>
+								<div class="dropdown-divider"></div>
+							</div>
+							<!--  -->
 						</div>
-
-						<!-- <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a> -->
-
-						<!--  -->
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
 					</div>
@@ -221,7 +205,7 @@ export default {
 
 		set_new_notification(data) {
 			this.notifications.unshift(data.notification_data);
-			this.total_notifications = data.total_notifications;
+			this.number_of_notifications = data.total_notifications;
 			this.total_unseen_notifications = data.total_unseen_notifications;
 
 			if (data.notification_data.type == "order") {
@@ -233,19 +217,19 @@ export default {
 			}
 		},
 
-		getCurrentVendorDetails(id) {
-			axios.get(`/me/vendor`).then((res) => {
-				// console.log(res.data);
-				this.vendorAddress = res.data;
-			});
-		},
-
 		getVendorNotifications() {
 			axios.get(`/get_user_notifications`).then((res) => {
 				// console.log(res.data);
 				this.notifications = res.data.notifications;
 				this.number_of_notifications = res.data.total_notifications;
 				this.total_unseen_notifications = res.data.total_unseen_notifications;
+			});
+		},
+
+		getCurrentVendorDetails(id) {
+			axios.get(`/me/vendor`).then((res) => {
+				// console.log(res.data);
+				this.vendorAddress = res.data;
 			});
 		},
 
