@@ -71,8 +71,8 @@ Route::middleware('isAuth')->group(function () {
         Route::post('/vendor/updateProruct/{id}', [App\Http\Controllers\ProductController::class, 'updateProduct']);
         Route::post('/palex_api/vendor/createProduct', [App\Http\Controllers\ProductController::class, 'addProduct']);
         Route::get('/palex_api/vendor/getProducts', [App\Http\Controllers\ProductController::class, 'getProductsPerVendor']);
-        Route::post('/palex_api/vendor/updateOrderStatus', [App\Http\Controllers\Frontside\OrderController::class, 'updateOrderStatus']);
-        Route::get('/palex_api/vendor/getOrders', [App\Http\Controllers\Frontside\OrderController::class, 'getOrdersVendor']);
+        Route::post('/palex_api/vendor/updateOrderStatus', [App\Http\Controllers\FrontSide\OrderController::class, 'updateOrderStatus']);
+        Route::get('/palex_api/vendor/getOrders', [App\Http\Controllers\FrontSide\OrderController::class, 'getOrdersVendor']);
         Route::post('/vendor/update/{id}', [App\Http\Controllers\BacksideController::class, 'updateVendorDetails']);
         Route::get('/vendor/api/totalOrders', [App\Http\Controllers\FrontSide\OrderController::class, 'getTotalOrderPervendor']);
         Route::get('/vendor/api/totalOrders/done', [App\Http\Controllers\FrontSide\OrderController::class, 'getTotalordersDone']);
