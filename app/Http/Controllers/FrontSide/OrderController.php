@@ -124,11 +124,8 @@ class OrderController extends Controller
         $order->status = $request->status;
         $order->save();
 
-        if ($order->status == 'reserved') {
-            $PalexNotificationService = new PalexNotificationService();
-            $PalexNotificationService->send_order_update_notif_to_customer($order);
-        }
-
+        $PalexNotificationService = new PalexNotificationService();
+        $PalexNotificationService->send_order_update_notif_to_customer($order, $request->status);
 
         return response()->json([
             'status' => 'success'

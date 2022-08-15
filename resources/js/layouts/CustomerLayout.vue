@@ -35,7 +35,7 @@
 							aria-expanded="false"
 						>
 							<i class="far fa-bell font-size-20" style="color: white !important"></i>
-							<span v-if="number_of_notifications" class="badge badge-warning font-size-11"> {{ number_of_notifications }}</span>
+							<span v-if="number_of_notifications" class="badge badge-warning font-size-11"> {{ total_unseen_notifications }}</span>
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width: 300px; max-height: 450px; overflow-y: auto">
 							<div v-for="(item, index) in notifications" :key="index">
@@ -45,12 +45,14 @@
 											<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
 										</div>
 										<div class="p-1">
+												<span v-if="item.seen == 0" class="badge badge-danger">New</span>
 											<div class="plx-notif-title" style="font-weight: bold">
 												{{ item.title }}
 											</div>
 											<div v-html="item.body" class="plx-notif-body"></div>
 											<div class="plx-notif-date-time">
-												<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+												<!-- <span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span> -->
+													<span> <i class="far fa-clock mr-1"></i> {{ moment(item.created_at, "YYYY-MM-DD HH:mm:ss").add(8, 'hours').fromNow() }} </span>
 											</div>
 										</div>
 									</div>
@@ -116,10 +118,10 @@
 					<li v-if="is_auth" class="nav-item dropdown">
 						<a class="nav-link" data-toggle="dropdown" href="#">
 							<i class="far fa-bell font-size-20"></i>
-							<span class="badge badge-warning navbar-badge">{{ number_of_notifications }}</span>
+							<span class="badge badge-warning navbar-badge">{{ total_unseen_notifications }}</span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-							<span class="dropdown-item dropdown-header">{{ number_of_notifications }} Notifications</span>
+							<span class="dropdown-item dropdown-header">{{ number_of_notifications }} Total Notifications</span>
 							<div class="dropdown-divider"></div>
 
 							<div style="max-height: 450px; overflow-y: auto">
@@ -130,12 +132,14 @@
 												<img :src="item.image_link" alt="icn" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover" />
 											</div>
 											<div class="p-1">
+												<span v-if="item.seen == 0" class="badge badge-danger">New</span>
 												<div class="plx-notif-title" style="font-weight: bold">
-													{{ item.title }}
+													{{ item.title }} 
 												</div>
 												<div v-html="item.body" class="plx-notif-body"></div>
 												<div class="plx-notif-date-time">
-													<span> <i class="far fa-clock mr-1"></i> {{ getMoment(item.created_at) }} </span>
+													<!-- <span> <i class="far fa-clock mr-1"></i> Just Now </span> -->
+													<span> <i class="far fa-clock mr-1"></i> {{ moment(item.created_at, "YYYY-MM-DD HH:mm:ss").add(8, 'hours').fromNow() }} </span>
 												</div>
 											</div>
 										</div>
@@ -145,7 +149,7 @@
 							</div>
 
 							<div class="dropdown-divider"></div>
-							<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+							<a href="#" @click="clearNotiff()" class="dropdown-item dropdown-footer">Mark all as read</a>
 						</div>
 					</li>
 
@@ -243,6 +247,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
 	props: ["is_auth"],
 	data() {
@@ -260,6 +266,14 @@ export default {
 		//     window.location.href = "/login";
 		//   });
 		// },
+		clearNotiff(){
+			console.log('test')
+			axios.get(`/clearCustomerNotifications`).then((res)=>{
+				console.log(res.data)
+				this.getUserNotifications()
+				toastr.info('Notifications Cleared')
+			})
+		},
 		getCurrentAuth() {
 			axios.get("/me").then((res) => {
 				this.user = res.data;
@@ -295,6 +309,13 @@ export default {
 					dangerouslyUseHTMLString: true,
 					message: `<span style="color: #2c9144;">${data.notification_data.body}</span>`,
 				});
+			} else {
+				console.log('other notif')
+				this.$notify({
+					title: data.notification_data.title,
+					dangerouslyUseHTMLString: true,
+					message: `<span style="color: #2c9144;">${data.notification_data.body}</span>`,
+				});
 			}
 		},
 
@@ -308,8 +329,8 @@ export default {
 		},
 
 		getMoment(datetime) {
-			var a = moment(datetime);
-			return moment(a).fromNow();
+			// var a = moment(datetime);
+			return moment(datetime).utcOffset(420).fromNow();
 		},
 
 		logout() {
@@ -345,6 +366,9 @@ export default {
 	mounted() {
 		this.getCartCounter();
 		this.getCurrentAuth();
+	},
+	created(){
+ 		this.moment = moment;
 	},
 	// beforeRouteLeave(to, from, next) {
 

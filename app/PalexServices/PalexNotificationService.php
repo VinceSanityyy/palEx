@@ -13,6 +13,22 @@ class PalexNotificationService
     {
     }
 
+    public function send_feeds_notification($title, $userId)
+    {
+        $other_data = new stdClass;
+        $other_data->title = $title;
+        $data = [
+            'title' => 'Admin posted a new update',
+            'body' => 'Check the newsfeed page for more info',
+            'type' => 'news',
+            'link' => url('/customer/feeds'),
+            'link_end_point' => '/customer/feeds',
+            'user_id' => $userId,
+            'image_link' => '/img/update.png'
+        ];
+            $this->create_and_send($data, $userId);
+    }
+
     public function send_order_notification($order_data)
     {
 
@@ -42,7 +58,7 @@ class PalexNotificationService
     }
 
 
-    public function send_order_update_notif_to_customer($order_data)
+    public function send_order_update_notif_to_customer($order_data, $status)
     {
 
         $Order = Order::find($order_data->id)->load('vendor');
@@ -58,7 +74,7 @@ class PalexNotificationService
         $notif_data =   [
             'user_id' => $order_data->customer_id,
             'title' => 'Order Reserved. #' . $order_data->id,
-            'body' => 'Your Order is now reserved by <b>' . $Order->vendor->name . '</b>.',
+            'body' => 'Your Order is now marked as '.$status.' by <b>' . $Order->vendor->name . '</b>.',
             // 'link' => '/vendor/order/' . $order_data->id,
             'link' => url('/customer/orders/' . $order_data->id,),
             'link_end_point' => '/customer/orders/' . $order_data->id,

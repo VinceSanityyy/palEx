@@ -125,6 +125,7 @@ Route::middleware('isAuth')->group(function () {
         Route::post('/add_customer_address', [App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'add_customer_address']);
         Route::post('/update_customer_address', [App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'update_customer_address']);
         Route::post('/delete_customer_address', [App\Http\Controllers\FrontSide\CustomerSettingsController::class, 'delete_customer_address']);
+        Route::get('/clearCustomerNotifications', [App\Http\Controllers\PalexNotificationController::class, 'markedAsRead']);
     });
 });
 

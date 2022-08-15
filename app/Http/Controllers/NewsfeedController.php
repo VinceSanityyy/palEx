@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Newsfeed;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\PalexServices\PalexNotificationService;
+
 class NewsfeedController extends Controller
 {
     public function getUsers(){
@@ -27,6 +29,11 @@ class NewsfeedController extends Controller
         $news->user_id = \Auth::user()->id;
         $news->image = '';
         $news->save();
+        $notify = new PalexNotificationService;
+        $users = User::where('role',2)->get();
+        foreach ($users as $user){
+            $notify->send_feeds_notification($request->title, $user->id);
+        }
         return response()->json('Success',200);
     }
 }

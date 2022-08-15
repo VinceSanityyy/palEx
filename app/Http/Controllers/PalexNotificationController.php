@@ -38,4 +38,10 @@ class PalexNotificationController extends Controller
 
         return response()->json($class);
     }
+
+    public function markedAsRead(){
+        $notif = PalexNotification::where('user_id', Auth::user()->id)
+            ->update(['seen' => 1]);
+        return response()->json('success',200);
+    }
 }
