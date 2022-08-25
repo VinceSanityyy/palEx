@@ -69,7 +69,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Vendor Product</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -83,6 +83,11 @@
                 <input v-model="price" type="text" class="form-control" />
                 <label>Unit</label>
                 <input v-model="unit" type="text" class="form-control" />
+                <label>Status</label>
+                <select v-model="status" class="form-control" id="exampleFormControlSelect2">
+                  <option value="1">Available</option>
+                  <option value="0">Out of Stock</option>
+                </select>
                 <label>Category</label>
                 <select v-model="category" class="form-control" id="exampleFormControlSelect2">
                   <option value="Fruits">Fruits</option>
@@ -137,6 +142,7 @@ export default {
       $(document).ready(function () {
         $("#mytableProducts").DataTable({
           responsive: true,
+          retrieve: true
         });
       });
     },
@@ -147,6 +153,7 @@ export default {
       formData.append("unit", this.unit);
       formData.append("category", this.category);
       formData.append("photo", this.photo);
+      formData.append("status", this.status);
       axios.post("/palex_api/vendor/createProduct", formData).then((res) => {
         console.log(res);
         $("#exampleModal").modal("hide");
@@ -180,12 +187,14 @@ export default {
       formData.append("unit", this.unit);
       formData.append("category", this.category);
       formData.append("photo", this.photo);
+      formData.append('status', this.status);
       axios
         .post(`/vendor/updateProruct/${this.product_id}`, formData)
         .then((res) => {
           console.log(res.data);
           $("#exampleModal").modal("hide");
           toastr.success("Done");
+          this.getProducts();
         })
         .catch((err) => {
           var errors = err.response.data.errors;
