@@ -53,12 +53,12 @@ class BacksideController extends Controller
 
     public function updateVendorDetails(Request $request, $id){
 
-
+        // dd($request->all());
         if($request->hasFile('image')){
             $isValid = $request->validate([
                 'image' => ['required', 'image'],
             ]);
-    
+            
             $path = $request->file('image')->store('public/images/vendors/user_id_' . $id);
             $vendor = User::where('id',$id)->with('vendor')->first();
             $vendor->name = $request->store_name;
@@ -68,16 +68,31 @@ class BacksideController extends Controller
             $vendor->save();
 
             $vendorAddress = VendorAddress::where('vendor_id',$id)->first();
-            $vendorAddress->store_name = $request->store_name;
-            $vendorAddress->phone = $request->phone;
-            $vendorAddress->street = $request->street;
-            $vendorAddress->barangay = $request->barangay;
-            $vendorAddress->city = $request->city;
-            $vendorAddress->province = $request->province;
-            $vendorAddress->postal_code = $request->postal_code;
-            $vendorAddress->save();
+            // dd($vendorAddress);
+            if(!empty($vendorAddress)) {
+                $vendorAddress->store_name = $request->store_name;
+                $vendorAddress->vendor_id = \Auth::user()->id;
+                $vendorAddress->phone = $request->phone;
+                $vendorAddress->street = $request->street;
+                $vendorAddress->barangay = $request->barangay;
+                $vendorAddress->city = $request->city;
+                $vendorAddress->province = $request->province;
+                $vendorAddress->postal_code = $request->postal_code;
+                $vendorAddress->save();
+                return response()->json(['message' => 'Vendor details updated successfully'], 200);
+            } else {
+                $vendorAddress = new VendorAddress();
+                $vendorAddress->vendor_id = \Auth::user()->id;
+                $vendorAddress->store_name = $request->store_name;
+                $vendorAddress->phone = $request->phone;
+                $vendorAddress->street = $request->street;
+                $vendorAddress->barangay = $request->barangay;
+                $vendorAddress->city = $request->city;
+                $vendorAddress->province = $request->province;
+                $vendorAddress->postal_code = $request->postal_code;
+                $vendorAddress->save();
+            }
 
-            return response()->json(['message' => 'Vendor details updated successfully'], 200);
 
         }else{
             $vendor = User::where('id',$id)->with('vendor')->first();
@@ -87,16 +102,33 @@ class BacksideController extends Controller
             $vendor->save();
 
             $vendorAddress = VendorAddress::where('vendor_id',$id)->first();
-            $vendorAddress->store_name = $request->store_name;
-            $vendorAddress->phone = $request->phone;
-            $vendorAddress->street = $request->street;
-            $vendorAddress->barangay = $request->barangay;
-            $vendorAddress->city = $request->city;
-            $vendorAddress->province = $request->province;
-            $vendorAddress->postal_code = $request->postal_code;
-            $vendorAddress->save();
+            if(!empty($vendorAddress)) {
+                $vendorAddress->store_name = $request->store_name;
+                $vendorAddress->vendor_id = \Auth::user()->id;
+                $vendorAddress->phone = $request->phone;
+                $vendorAddress->street = $request->street;
+                $vendorAddress->barangay = $request->barangay;
+                $vendorAddress->city = $request->city;
+                $vendorAddress->province = $request->province;
+                $vendorAddress->postal_code = $request->postal_code;
+                $vendorAddress->save();
+    
+                return response()->json(['message' => 'Vendor details updated successfully'], 200);
+            } else {
+                $vendorAddress = new VendorAddress();
+                $vendorAddress->vendor_id = \Auth::user()->id;
+                $vendorAddress->store_name = $request->store_name;
+                $vendorAddress->phone = $request->phone;
+                $vendorAddress->street = $request->street;
+                $vendorAddress->barangay = $request->barangay;
+                $vendorAddress->city = $request->city;
+                $vendorAddress->province = $request->province;
+                $vendorAddress->postal_code = $request->postal_code;
+                $vendorAddress->save();
+    
+                return response()->json(['message' => 'Vendor details updated successfully'], 200);
+            }
 
-            return response()->json(['message' => 'Vendor details updated successfully'], 200);
         }
 
 

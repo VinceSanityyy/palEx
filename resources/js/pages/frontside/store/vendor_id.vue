@@ -10,7 +10,7 @@
 					<blockquote>
 						<h5>{{ vendor.name }}</h5>
 						<small
-							><cite title="Source Title">Manila, Philippines <i class="icon-map-marker"></i></cite
+							><cite title="Source Title"> <i class="icon-map-marker"></i></cite
 						></small>
 					</blockquote>
 					<p>

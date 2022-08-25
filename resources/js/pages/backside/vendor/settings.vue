@@ -26,35 +26,35 @@
 							<div class="card-body">
 								<div class="form-group">
 									<label for="name">Store Name</label>
-									<input v-model="authVendor.store_name" type="text" class="form-control" id="name" />
+									<input v-model="store_name" type="text" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">Email</label>
-									<input v-model="authVendor.user.email" type="email" class="form-control" id="name" />
+									<input v-model="email" type="email" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">Phone</label>
-									<input v-model="authVendor.phone" type="text" class="form-control" id="phone" />
+									<input v-model="phone" type="text" class="form-control" id="phone" />
 								</div>
 								<div class="form-group">
 									<label for="name">Street</label>
-									<input v-model="authVendor.street" type="text" class="form-control" id="name" />
+									<input v-model="street" type="text" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">Barangay</label>
-									<input v-model="authVendor.barangay" type="text" class="form-control" id="name" />
+									<input v-model="barangay" type="text" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">City</label>
-									<input v-model="authVendor.city" type="text" class="form-control" id="name" />
+									<input v-model="city" type="text" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">Province</label>
-									<input v-model="authVendor.province" type="text" class="form-control" id="name" />
+									<input v-model="province" type="text" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">Post Code</label>
-									<input v-model="authVendor.postal_code" type="text" class="form-control" id="name" />
+									<input v-model="postal_code" type="text" class="form-control" id="name" />
 								</div>
 								<div class="form-group">
 									<label for="name">Display Image</label>
@@ -79,30 +79,34 @@ import axios from "axios";
 export default {
 	data() {
 		return {
-			authVendor: {
-				user: {
-					email: "",
-				},
-			},
+			// authVendor: [],
+			email:'',
+			store_name:'',
+			phone: '',
+			street: '',
+			barangay: '',
+			city: '',
+			province: '',
+			postal_code: '',
 			authUser: {},
 			image: "",
 		};
 	},
 	created() {
 		this.getCurrentAuth();
-		this.getCurrentVendorDetails();
+		// this.getCurrentVendorDetails();
 	},
 	methods: {
 		updateVendor() {
 			const formData = new FormData();
-			formData.append("store_name", this.authVendor.store_name);
-			formData.append("phone", this.authVendor.phone);
-			formData.append("email", this.authVendor.user.email);
-			formData.append("street", this.authVendor.street);
-			formData.append("barangay", this.authVendor.barangay);
-			formData.append("city", this.authVendor.city);
-			formData.append("province", this.authVendor.province);
-			formData.append("postal_code", this.authVendor.postal_code);
+			formData.append("store_name", this.store_name);
+			formData.append("phone", this.phone);
+			formData.append("email", this.email);
+			formData.append("street", this.street);
+			formData.append("barangay", this.barangay);
+			formData.append("city", this.city);
+			formData.append("province", this.province);
+			formData.append("postal_code", this.postal_code);
 			formData.append("image", this.image);
 			axios
 				.post(`/vendor/update/${this.authUser.id}`, formData)
