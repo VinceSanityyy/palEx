@@ -30,7 +30,7 @@ class ProductController extends Controller
         }
     }
     public function getProductsPerVendor(){
-        $products = Product::where('user_id',\Auth::user()->id)->where('status',1)->get();
+        $products = Product::where('user_id',\Auth::user()->id)->get();
         return response()->json($products);
     }
     public function updateProduct(Request $request,$id){
