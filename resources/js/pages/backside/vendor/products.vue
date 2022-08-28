@@ -130,6 +130,7 @@ export default {
       photo: "",
       editMode: false,
       product_id: "",
+      status:''
     };
   },
   // mounted() {
