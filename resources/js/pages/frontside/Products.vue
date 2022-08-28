@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div id="products-page" class="container mt-3">
     <div class="row">
       <div class="col-12">
         <el-row>
@@ -29,13 +29,19 @@
                 <div class="product-name">
                   <span>{{ item.name }}</span>
                 </div>
+				<div>
+					<span v-if="item.status == '1'" class="badge badge-info">Available</span>
+					<span v-if="item.status == '0'" class="badge badge-danger">Out of Stock</span>
+				</div>
                 <div class="category">
                   <span>{{ item.category }}</span>
                 </div>
                 <div class="product-price w-100">
                   <div class="d-flex justify-content-between px-1">
                     <span class="price">₱{{ item.price }} / {{ item.unit }}</span>
-                    <button class="btn btn-sm btn-primary" type="button" @click="ShowAddToCartModal(item)"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
+					<button class="btn btn-sm btn-primary" type="button" @click="ShowAddToCartModal(item)" :disabled="item.status == '0'">
+						<i class="fas fa-cart-plus"></i> &nbsp; Add To Cart
+					</button>
                   </div>
                 </div>
                 <div class="vendor">
@@ -140,6 +146,7 @@ export default {
   },
   methods: {
     ShowAddToCartModal(item) {
+	  if (item.status == "0") return;
       this.$events.fire("ShowAddToCartModal", item);
     },
     getProducts() {

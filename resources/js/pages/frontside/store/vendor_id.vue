@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="products-page-vendor">
 		<div class="container cus-container border-success border-bottom pb-0">
 			<div class="row">
 				<div class="col-md-6 img">
@@ -15,13 +15,14 @@
 					</blockquote>
 					<p>
 						Email :{{ vendor.email }}<br />
-						Address: {{vendor.vendor[0].street}}, {{vendor.vendor[0].barangay}}, {{vendor.vendor[0].city}}, {{vendor.vendor[0].province}}, {{vendor.vendor[0].postal_code}}<br />
-						Contact Number: {{vendor.phone}}
+						Address: {{ vendor.vendor[0].street }}, {{ vendor.vendor[0].barangay }}, {{ vendor.vendor[0].city }}, {{ vendor.vendor[0].province }},
+						{{ vendor.vendor[0].postal_code }}<br />
+						Contact Number: {{ vendor.phone }}
 					</p>
 					<el-button icon="el-icon-chat-dot-round" type="warning" plain @click="createConversation()">Inquire Now!</el-button>
 					<!-- <el-button icon="el-icon-chat-dot-round" type="warning" plain > -->
-						<!-- <a :href="'sms: '+ vendor.phone+'?body=Hello!'" style="color: #E6A23C;" >Send Message Thru SMS!</a> -->
-						<!-- <a href="sms: +639270277397" style="color: #E6A23C;" >Send Message Thru SMS!</a> -->
+					<!-- <a :href="'sms: '+ vendor.phone+'?body=Hello!'" style="color: #E6A23C;" >Send Message Thru SMS!</a> -->
+					<!-- <a href="sms: +639270277397" style="color: #E6A23C;" >Send Message Thru SMS!</a> -->
 
 					<!-- </el-button> -->
 				</div>
@@ -65,10 +66,14 @@
 									<div class="category">
 										<span>{{ item.category }}</span>
 									</div>
+									<div>
+										<span v-if="item.status == '1'" class="badge badge-info">Available</span>
+										<span v-if="item.status == '0'" class="badge badge-danger">Out of Stock</span>
+									</div>
 									<div class="product-price w-100">
 										<div class="d-flex justify-content-between px-1">
 											<span class="price">₱{{ item.price }} / {{ item.unit }}</span>
-											<button class="btn btn-sm btn-primary" type="button" @click="ShowAddToCartModal(item)">
+											<button class="btn btn-sm btn-primary" type="button" @click="ShowAddToCartModal(item)" :disabled="item.status == '0'">
 												<i class="fas fa-cart-plus"></i> &nbsp; Add To Cart
 											</button>
 										</div>
@@ -138,6 +143,7 @@ export default {
 	},
 	methods: {
 		ShowAddToCartModal(item) {
+			if (item.status == "0") return;
 			this.$events.fire("ShowAddToCartModal", item);
 		},
 		createConversation() {

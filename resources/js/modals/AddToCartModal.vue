@@ -26,6 +26,10 @@
 							<div class="category mb-1">
 								<span style="color: black">Category: </span><span> {{ item.category }}</span>
 							</div>
+							<div>
+								<span v-if="item.status == '1'" class="badge badge-info">Available</span>
+								<span v-if="item.status == '0'" class="badge badge-danger">Out of Stock</span>
+							</div>
 							<div class="vendor mb-1">
 								<span style="color: black">Store: </span>
 								<router-link :to="`/store/${item.vendor.id}`">
@@ -41,7 +45,11 @@
 							<div class="d-flex justify-content-between">
 								<el-input-number size="small" v-model="qty" :min="1" step-strictly></el-input-number>
 								<!-- <el-input-number size="small" v-model="qty"></el-input-number> -->
-								<button class="btn btn-sm btn-primary" type="button" @click="addToCart()"><i class="fas fa-cart-plus"></i> &nbsp; Add To Cart</button>
+
+								<!--  -->
+								<button class="btn btn-sm btn-primary" type="button" @click="addToCart()" :disabled="item.status == '0'">
+									<i class="fas fa-cart-plus"></i> &nbsp; Add To Cart
+								</button>
 							</div>
 						</div>
 					</div>
@@ -66,6 +74,7 @@ export default {
 	},
 	methods: {
 		addToCart() {
+			if (this.item.status == "0") return;
 			if (this.is_auth) {
 				this.$events.fire("LoadingOverlayShow");
 				let params = {
