@@ -310,6 +310,11 @@ export default {
 				.get(`/getUserChatList`)
 				.then((res) => {
 					this.chatList = res.data;
+						this.$notify({
+						title: 'New Message',
+						dangerouslyUseHTMLString: true,
+						message: `Check your inbox for more info`,
+					});
 				})
 				.catch((err) => {
 					console.error(err);

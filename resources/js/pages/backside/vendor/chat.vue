@@ -313,6 +313,12 @@ export default {
 			axios
 				.get(`/getUserChatList`)
 				.then((res) => {
+					this.chatList = res.data;
+						this.$notify({
+						title: 'New Message',
+						dangerouslyUseHTMLString: true,
+						message: `Check your inbox for more info`,
+					});
 					if (this.chatList.length == 0) {
 						this.chatList = res.data;
 						this.getConversationReplies(this.chatList[0].id);

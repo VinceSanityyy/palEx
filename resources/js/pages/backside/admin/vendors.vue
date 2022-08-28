@@ -9,7 +9,7 @@
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active">Usermanagement</li>
+							<li class="breadcrumb-item active">User management</li>
 						</ol>
 					</div>
 				</div>
@@ -103,7 +103,8 @@ export default{
         myTable(){
             $(document).ready(function(){
                 $('#mytable').DataTable({
-                    responsive: true
+                    responsive: true,
+                    retrieve: true
                 })
             })
         },
