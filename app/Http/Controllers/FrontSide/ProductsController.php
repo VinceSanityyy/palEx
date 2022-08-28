@@ -11,12 +11,12 @@ class ProductsController extends Controller
 {
     public function getProducts()
     {
-        $products = Product::with('vendor')->orderBy('name')->where('status','1')->get();
+        $products = Product::with('vendor')->orderBy('name')->get();
         return response()->json($products, 200);
     }
     public function getProductsByVendorId($vendor_id)
     {
-        $products = Product::with('vendor')->where('user_Id', $vendor_id)->where('status','1')->orderBy('name')->get();
+        $products = Product::with('vendor')->where('user_Id', $vendor_id)->orderBy('name')->get();
         return response()->json($products, 200);
     }
 
