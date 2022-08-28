@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\NewsFeed;
+use App\Models\Newsfeed;
 use App\Models\VendorAddress;
 
 class BacksideController extends Controller
