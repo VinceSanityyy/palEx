@@ -36,4 +36,9 @@ class NewsfeedController extends Controller
         }
         return response()->json('Success',200);
     }
+
+    public function getNewsfeedCount(){
+        $news =  Newsfeed::count();
+        return response()->json($news);
+    }
 }

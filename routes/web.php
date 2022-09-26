@@ -94,6 +94,8 @@ Route::middleware('isAuth')->group(function () {
         //Feeds
         Route::post('/addFeed', [App\Http\Controllers\NewsfeedController::class, 'createFeeds']);
         Route::get('/getFeedsAdmin', [App\Http\Controllers\BacksideController::class, 'getFeeds']);
+        Route::get('/getNewsfeedCount', [App\Http\Controllers\NewsfeedController::class, 'getNewsfeedCount']);
+        
     });
 
     Route::middleware('isCustomer')->group(function () {

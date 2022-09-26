@@ -30,9 +30,9 @@
 							<div class="icon">
 								<i class="ion ion-bag"></i>
 							</div>
-							<a href="#" class="small-box-footer"
-								>More info <i class="fas fa-arrow-circle-right"></i
-							></a>
+							<router-link class="small-box-footer" to="/admin/vendors">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -47,9 +47,9 @@
 							<div class="icon">
 								<i class="ion ion-stats-bars"></i>
 							</div>
-							<a href="#" class="small-box-footer"
-								>More info <i class="fas fa-arrow-circle-right"></i
-							></a>
+							<router-link class="small-box-footer" to="/admin/vendors">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -64,9 +64,9 @@
 							<div class="icon">
 								<i class="ion ion-person-add"></i>
 							</div>
-							<a href="#" class="small-box-footer"
-								>More info <i class="fas fa-arrow-circle-right"></i
-							></a>
+							<router-link class="small-box-footer" to="/admin/vendors">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -74,16 +74,16 @@
 						<!-- small box -->
 						<div class="small-box bg-danger">
 							<div class="inner">
-								<h3>65</h3>
+								<h3>{{newsfeeds}}</h3>
 
-								<p>Unique Visitors</p>
+								<p>Total News Posted</p>
 							</div>
 							<div class="icon">
 								<i class="ion ion-pie-graph"></i>
 							</div>
-							<a href="#" class="small-box-footer"
-								>More info <i class="fas fa-arrow-circle-right"></i
-							></a>
+							<router-link class="small-box-footer" to="/admin/feeds">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -101,6 +101,7 @@
 				vendorsCount: 0,
 				customersCount: 0,
 				acceptedVendors: 0,
+				newsfeeds: 0
 			};
 		},
 		methods: {
@@ -119,11 +120,17 @@
 					this.acceptedVendors = res.data;
 				});
 			},
+			getNewsfeedCount(){
+				axios.get("/getNewsfeedCount").then((res) => {
+					this.newsfeeds = res.data;
+				});
+			}
 		},
 		created() {
 			this.getVendorsCount();
 			this.getCustomersCount();
 			this.getAcceptedVendorsCount();
+			this.getNewsfeedCount();
 		},
 	};
 </script>

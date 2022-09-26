@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-           <select v-model="role" name="role" class="form-control" id="role">
+           <select @change="disableProof($event)" v-model="role" name="role" class="form-control" id="role">
                     <option value = "" selected disabled>Role</option>
                     <option value = "1">Vendor</option>
                     <option value = "2">Customer</option>
@@ -48,21 +48,21 @@
         </div>
           <div class="input-group mb-3">
           <label for="exampleInputEmail1">Proof (ID, Permit, etc..) For vendors only</label>
-          <input @change="onFileChange" type="file" name="" id="">
+          <input :disabled="proof" @change="onFileChange" type="file" name="" id="">
         </div>
         <div class="input-group mb-3">
-          <input v-model="password" type="password" class="form-control" placeholder="Password">
+          <input v-model="password" id="password" type="password" class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+              <span @click="seePassword" class="fas fa-lock" id="togglePass"></span>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input v-model="confirmPass" type="password" class="form-control" placeholder="Retype password">
+          <input v-model="confirmPass" type="password" id="confirmPassword" class="form-control" placeholder="Retype password">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+              <span @click="seeConfirmPassword" class="fas fa-lock" id="toggleConfirmPass"></span>
             </div>
           </div>
         </div>
@@ -94,6 +94,7 @@ data(){
         phone:'',
         role:'',
         image:'',
+        proof: false
         }
     },
     methods:{
@@ -147,6 +148,22 @@ data(){
           axios.post('/logout').then((res)=>{
              window.location.href = '/login'
           })
+        },
+        disableProof(e){
+          let role = e.target.value
+          role == 1 ? this.proof = false : this.proof = true
+          
+        },
+        seePassword(){
+          console.log('asd')
+          const pass = document.getElementById('password')
+            const type = pass.getAttribute("type") === "password" ? "text" : "password"
+            pass.setAttribute("type",type)
+        },
+        seeConfirmPassword(){
+          const pass = document.getElementById('confirmPassword')
+            const type = pass.getAttribute("type") === "password" ? "text" : "password"
+            pass.setAttribute("type",type)
         }
     },
     created(){
