@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Newsfeed;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 class ProductsController extends Controller
 {
     public function getProducts()
@@ -38,5 +39,14 @@ class ProductsController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th);
         }
+    }
+
+    public function filterProducts(Request $request){
+
+        $result = Product::where('products.name','LIKE','%'.$request->filter.'%')
+            ->join('users','users.id','products.user_id')->select('products.*')
+            ->orWhere('users.name','LIKE','%'.$request->filter.'%')
+            ->with('vendor')->get();
+        return response()->json($result);
     }
 }

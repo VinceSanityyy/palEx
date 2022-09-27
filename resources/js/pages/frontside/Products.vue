@@ -4,7 +4,7 @@
       <div class="col-12">
         <el-row>
           <el-col :xs="24" :sm="16" :md="18" :lg="18" :xl="20" class="p-2">
-            <el-input placeholder="Type something" v-model="search">
+            <el-input @input="filterProducts()" placeholder="Type something" v-model="search">
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </el-col>
@@ -162,6 +162,15 @@ export default {
           this.$events.fire("LoadingOverlayHide");
         });
     },
+    filterProducts(){
+      // console.log(this.search)
+      axios.post(`/palex/api/filterProducts`,{
+        filter: this.search
+      }).then((res)=>{
+        // console.log(res.data)
+        this.products = res.data
+      })
+    }
   },
   mounted() {
     this.$events.fire("LoadingOverlayShow");

@@ -28,7 +28,9 @@
 							<div class="icon">
 								<i class="ion ion-bag"></i>
 							</div>
-							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							<router-link class="small-box-footer" to="/vendor/orders">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 
@@ -42,7 +44,9 @@
 							<div class="icon">
 								<i class="ion ion-stats-bars"></i>
 							</div>
-							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							<router-link class="small-box-footer" to="/vendor/orders">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 
@@ -56,7 +60,9 @@
 							<div class="icon">
 								<i class="ion ion-person-add"></i>
 							</div>
-							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							<router-link class="small-box-footer" to="/vendor/products">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 
@@ -70,7 +76,9 @@
 							<div class="icon">
 								<i class="ion ion-pie-graph"></i>
 							</div>
-							<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+							<router-link class="small-box-footer" to="/vendor/chat">
+								More info <i class="fas fa-arrow-circle-right"></i>
+							</router-link>
 						</div>
 					</div>
 

@@ -42,6 +42,7 @@ Route::get('/test', [App\Http\Controllers\FrontsideController::class, 'index']);
 Route::get('/getVendorProfile/{vendor_id}', [App\Http\Controllers\FrontsideController::class, 'getVendorProfile']);
 Route::get('/getProducts', [App\Http\Controllers\FrontSide\ProductsController::class, 'getProducts']);
 Route::get('/getProducts/{vendor_id}', [App\Http\Controllers\FrontSide\ProductsController::class, 'getProductsByVendorId']);
+Route::post('/palex/api/filterProducts',[App\Http\Controllers\FrontSide\ProductsController::class, 'filterProducts']);
 
 
 Route::get('/404', function () {

@@ -92,14 +92,7 @@
                 <select v-model="category" class="form-control" id="exampleFormControlSelect2">
                   <option value="Fruits">Fruits</option>
                   <option value="Vegetables">Vegetables</option>
-                  <option value="Wet">Wet</option>
-                  <option value="Dry">Dry</option>
                   <option value="Meats">Meats</option>
-                  <option value="Beverages">Beverages</option>
-                  <option value="Seafoods">Seafoods</option>
-                  <option value="Fibers">Fibers</option>
-                  <option value="Bakery">Bakery</option>
-                  <option value="Others">Others</option>
                 </select>
                 <label for="exampleFormControlFile1">Image</label>
                 <input @change="onFileChange" type="file" class="form-control-file" id="exampleFormControlFile1" />
