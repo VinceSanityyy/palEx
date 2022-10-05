@@ -69,6 +69,7 @@
       </p> -->
         <p class="mb-0">
           <a href="/register" class="text-center">Register Here</a>
+          <a href="/" class="text-right" style="float:right">Go to stores</a>
         </p>
       </div>
       <!-- /.login-card-body -->
