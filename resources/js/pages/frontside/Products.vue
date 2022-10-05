@@ -9,8 +9,8 @@
             </el-input>
           </el-col>
           <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="4" class="p-2">
-            <el-select v-model="value" clearable placeholder="Filter" class="w-100">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            <el-select @change="filterProductsByOption()" v-model="selectedFilter" clearable placeholder="Filter" class="w-100">
+              <el-option  v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -121,8 +121,12 @@ export default {
   data() {
     return {
       search: "",
-      value: null,
+      selectedFilter: '',
       options: [
+        {
+          value: "",
+          label: "All Products",
+        },
         {
           value: "Fruits",
           label: "Fruits",
@@ -135,6 +139,7 @@ export default {
           value: "Meats",
           label: "Meats",
         },
+        
       ],
       products: [
         {
@@ -166,6 +171,14 @@ export default {
       // console.log(this.search)
       axios.post(`/palex/api/filterProducts`,{
         filter: this.search
+      }).then((res)=>{
+        // console.log(res.data)
+        this.products = res.data
+      })
+    },
+    filterProductsByOption(){
+      axios.post(`/palex/api/filterProductsByOption`,{
+        filter: this.selectedFilter
       }).then((res)=>{
         // console.log(res.data)
         this.products = res.data

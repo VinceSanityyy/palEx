@@ -49,4 +49,10 @@ class ProductsController extends Controller
             ->with('vendor')->get();
         return response()->json($result);
     }
+
+    public function filterProductsByOption(Request $request)
+    {
+        $result = Product::where('products.category','LIKE','%'.$request->filter.'%')->with('vendor')->get();
+        return response()->json($result);
+    }
 }
